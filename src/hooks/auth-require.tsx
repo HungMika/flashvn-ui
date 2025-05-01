@@ -1,19 +1,33 @@
-import { useState, useEffect } from "react";
+'use client';
 
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/services/auth-store';
+
+export const useAuthRedirect = ({
+  redirectIfFound = false,
+  redirectTo = '/dashboard',
+}: {
+  redirectIfFound?: boolean;
+  redirectTo?: string;
+}) => {
+  const router = useRouter();
+  const user = useAuthStore((state) => state.user);
+  const hasHydrated = useAuthStore((state) => state.hasHydrated);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    if (!hasHydrated) return;
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+    if (redirectIfFound && user) {
+      // Nếu đã login mà đang ở trang login => chuyển hướng vào dashboard
+      router.push(redirectTo);
+    }
 
-  return debouncedValue;
-}
+    if (!redirectIfFound && !user) {
+      // Nếu chưa login mà vào dashboard => chuyển hướng ra login
+      router.push('/auth');
+    }
+  }, [user, hasHydrated, router, redirectIfFound, redirectTo]);
 
-export default useDebounce;
+  return { user, hasHydrated };
+};
