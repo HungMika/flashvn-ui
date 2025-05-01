@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useAuthRedirect } from '@/hooks/auth-require';
-import { AuthScreen } from '@/features/auth/auth-components/auth-screen';
+import { AuthScreen } from '@/features/auth/components/auth-screen';
 
 const AuthPage = () => {
   const { user, hasHydrated } = useAuthRedirect({

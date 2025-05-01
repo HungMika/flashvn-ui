@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 //API services
 import { SignInflow } from '../auth-type';
-import { forgotPassword } from '@/services/auth';
+import { forgotPassword } from '@/features/auth/api/auth';
 
 interface SignInCardProps {
   setstate: (state: SignInflow) => void;

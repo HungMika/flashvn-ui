@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/services/auth-store';
+import { useAuthStore } from '@/features/auth/api/auth-store';
 
 export const useAuthRedirect = ({
   redirectIfFound = false,

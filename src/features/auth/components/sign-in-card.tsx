@@ -1,30 +1,30 @@
-"use client";
+'use client';
 //hooks
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 //UI components
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 //Package
-import toast from "react-hot-toast";
-import { Eye, EyeOff, TriangleAlert } from "lucide-react";
+import toast from 'react-hot-toast';
+import { Eye, EyeOff, TriangleAlert } from 'lucide-react';
 
 //API services
-import { logIn } from "@/services/auth";
-import { SignInflow } from "../auth-type";
-import { useAuthStore } from "@/services/auth-store";
+import { logIn } from '@/features/auth/api/auth';
+import { SignInflow } from '../auth-type';
+import { useAuthStore } from '@/features/auth/api/auth-store';
 
 interface SignInCardProps {
   setstate: (state: SignInflow) => void;
 }
 
 export const SignInCard = ({ setstate }: SignInCardProps) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
 
   const router = useRouter();
@@ -33,23 +33,23 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPending(true);
-    setError("");
+    setError('');
 
     if (!username || !password) {
-      setError("Please fill all the fields.");
+      setError('Please fill all the fields.');
       return;
     }
 
     //TODO: call signIn api here
     try {
       const user = await logIn(username, password);
-      toast.success("Logged in successfully.");
+      toast.success('Logged in successfully.');
 
       setUser(user);
-      router.push("/dashboard");
+      router.push('/dashboard');
     } catch (err: any) {
       const backendMessage =
-        err?.response?.data?.message || "Login failed. Please try again.";
+        err?.response?.data?.message || 'Login failed. Please try again.';
 
       setError(backendMessage);
     } finally {
@@ -93,7 +93,7 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={pending}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Password"
             />
             <div
@@ -107,9 +107,9 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
             type="submit"
             className="w-full font-semibold"
             disabled={pending}
-            size={"lg"}
+            size={'lg'}
           >
-            {pending ? "Logging in ..." : "Continue"}
+            {pending ? 'Logging in ...' : 'Continue'}
           </Button>
         </form>
         <Separator />
@@ -117,16 +117,16 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
         <div className="flex flex-col gap-y-2.5">
           <p
             className="text-center text-sm underline text-blue-400 hover:text-blue-500 cursor-pointer"
-            onClick={() => setstate("ForgotPassword")}
+            onClick={() => setstate('ForgotPassword')}
           >
             Forgot your password?
           </p>
         </div>
         <p className="text-xs text-muted-foreground">
-          Don&apos;t have an account?{" "}
+          Don&apos;t have an account?{' '}
           <span
             className="text-sky-700 font-semibold hover:underline cursor-pointer"
-            onClick={() => setstate("SignUp")}
+            onClick={() => setstate('SignUp')}
           >
             Sign up
           </span>

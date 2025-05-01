@@ -1,11 +1,6 @@
 'use client';
 //UI components
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -14,7 +9,7 @@ import { TriangleAlert, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useState, useRef } from 'react';
 //API services
-import { signUp } from '@/services/auth';
+import { signUp } from '@/features/auth/api/auth';
 import { SignInflow } from '../auth-type';
 
 interface SignUpCardProps {
@@ -166,7 +161,12 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
               />
             )}
           </div>
-          <Button type="submit" className="w-full font-semibold" size="lg" disabled={pending}>
+          <Button
+            type="submit"
+            className="w-full font-semibold"
+            size="lg"
+            disabled={pending}
+          >
             Create Account
           </Button>
         </form>
