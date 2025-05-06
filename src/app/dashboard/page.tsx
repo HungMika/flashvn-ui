@@ -1,74 +1,42 @@
 'use client';
 
-// React & hooks
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-
-// UI components
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import toast from 'react-hot-toast';
-import { fetchTodo } from '@/services/test';
 
-type Todo = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-};
+const games = [
+  { name: 'Card Only', path: 'mil-card' },
+  { name: 'Bingo', path: 'mil-bingo' },
+  { name: 'Future Teller', path: 'future-teller' },
+  { name: 'Mil Race', path: 'mil-race' },
+  { name: 'Trust-or-self', path: 'trust-or-self' },
+];
 
 export default function DashboardPage() {
-  const [enabled, setEnabled] = useState(false);
+  const router = useRouter();
 
-  const {
-    data: todo,
-    isLoading,
-    error,
-  } = useQuery<Todo>({
-    queryKey: ['sample-todo'],
-    queryFn: fetchTodo,
-    enabled,
-  });
-
-  const onCheck = () => {
-    setEnabled(true);
-    toast('Fetching...');
+  const handleNavigate = (path: string) => {
+    router.push(`/dashboard/${path}`);
   };
-
-  let errorMessage: string | null = null;
-  if (error instanceof Error) {
-    errorMessage = error.message;
-  } else if (error) {
-    errorMessage = 'Unknown.';
-  }
 
   return (
     <div className="p-6">
-      <h1 className="text-xl font-bold mb-2">Dashboard</h1>
-      <p className="mb-4">Welcome to the dashboard!</p>
+      <h1 className="text-2xl font-bold mb-4">FLASHVN Dashboard</h1>
+      <p className="mb-6 text-muted-foreground">
+        Select page to manage your game.
+      </p>
 
-      <Button variant="default" onClick={onCheck}>
-        fetch sample data
-      </Button>
-
-      {isLoading && <p className="mt-4">loading...</p>}
-      {errorMessage && (
-        <p className="mt-4 text-red-500">
-          Error: {error instanceof Error ? error.message : 'Unknown.'}
-        </p>
-      )}
-
-      {todo && (
-        <div className="mt-4 border p-4 rounded shadow-sm">
-          <p>
-            <strong>Title:</strong> {todo.title}
-          </p>
-          <p>
-            <strong>State:</strong>{' '}
-            {todo.completed ? 'completed' : 'uncompleted'}
-          </p>
-        </div>
-      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {games.map((game) => (
+          <Button
+            key={game.path}
+            className="text-lg py-6"
+            onClick={() => handleNavigate(game.path)}
+            variant="secondary"
+          >
+            {game.name}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }
