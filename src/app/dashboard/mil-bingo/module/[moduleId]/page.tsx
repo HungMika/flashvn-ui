@@ -26,7 +26,7 @@ type Question = {
   wrongAnswers: string[];
 };
 
-export default function ModulePage() {
+export default function ModuleQuestionPage() {
   const { moduleId } = useParams() as { moduleId: string };
   const [showShowcase, setShowShowcase] = useState(false);
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);

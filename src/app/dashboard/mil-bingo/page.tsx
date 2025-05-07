@@ -14,7 +14,7 @@ interface Module {
   keywords: string[];
 }
 
-export default function DashboardPage() {
+export default function ModuleDashboardPage() {
   const queryClient = useQueryClient();
 
   const user = useAuthStore((state) => state.user);

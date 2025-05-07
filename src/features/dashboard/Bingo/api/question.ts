@@ -1,10 +1,14 @@
+//flashvn-ui\src\features\dashboard\Bingo\api\question.ts
 import axios from 'axios';
 
-// [GET]
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+// [GET] /bingo/modules/:moduleId/questions
 export const getQuestionsByModule = async (moduleId: string) => {
   try {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/question/show/all/${moduleId}`
+      `${BASE_URL}/bingo/modules/${moduleId}/questions`,
+      { withCredentials: true }
     );
 
     const data = res.data;
@@ -21,13 +25,12 @@ export const getQuestionsByModule = async (moduleId: string) => {
   }
 };
 
-
-
-// [GET]
+// [GET] /bingo/questions/:id
 export const getQuestionById = async (questionId: string) => {
   try {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/question/show/${questionId}`
+      `${BASE_URL}/bingo/questions/${questionId}`,
+      { withCredentials: true }
     );
     return res.data;
   } catch (error) {
@@ -35,7 +38,7 @@ export const getQuestionById = async (questionId: string) => {
   }
 };
 
-// [POST]
+// [POST] /bingo/modules/:moduleId/questions
 export const createQuestion = async (
   moduleId: string,
   questionData: {
@@ -47,7 +50,7 @@ export const createQuestion = async (
 ) => {
   try {
     const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/question/create/${moduleId}`,
+      `${BASE_URL}/bingo/modules/${moduleId}/questions`,
       questionData,
       { withCredentials: true }
     );
@@ -57,7 +60,7 @@ export const createQuestion = async (
   }
 };
 
-// [PATCH]
+// [PATCH] /bingo/questions/:id
 export const updateQuestion = async (
   questionId: string,
   updateData: {
@@ -69,7 +72,7 @@ export const updateQuestion = async (
 ) => {
   try {
     const res = await axios.patch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/question/update/${questionId}`,
+      `${BASE_URL}/bingo/questions/${questionId}`,
       updateData,
       { withCredentials: true }
     );
@@ -79,15 +82,29 @@ export const updateQuestion = async (
   }
 };
 
-// [DELETE]
+// [DELETE] /bingo/questions/:id
 export const deleteQuestion = async (questionId: string) => {
   try {
     const res = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/question/delete/${questionId}`,
+      `${BASE_URL}/bingo/questions/${questionId}`,
       { withCredentials: true }
     );
     return res.data;
   } catch (error) {
     throw new Error('Failed to delete question');
+  }
+};
+
+// [POST] /bingo/questions/search
+export const searchQuestions = async (query: string) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/bingo/questions/search`,
+      { query },
+      { withCredentials: true }
+    );
+    return res.data;
+  } catch (error) {
+    return [];
   }
 };

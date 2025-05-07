@@ -92,7 +92,7 @@ export const ModuleCard = ({ module, onDeleted, onUpdated }: ModuleCardProps) =>
           className="flex flex-col gap-2 cursor-pointer min-h-[60px] justify-center"
           onClick={async () => {
             setIsLoading(true);
-            router.replace(`/dashboard/module/${module._id}`);
+            router.push(`/dashboard/mil-bingo/module/${module._id}`);
           }}
         >
           {loading ? (

@@ -21,9 +21,8 @@ export const generateBingoCards = async (moduleId: string) => {
       {},
       { withCredentials: true }
     );
-    console.log("API URL:", `${process.env.NEXT_PUBLIC_API_BASE_URL}/bingo/generate/${moduleId}`);
 
-    return res.data; // Trả về danh sách bingo cards đã tạo
+    return res.data;
 
   } catch (error) {
     throw new Error('Failed to generate bingo cards');
@@ -32,7 +31,7 @@ export const generateBingoCards = async (moduleId: string) => {
 
 export const getBingoCardByIndex = async (moduleId: string, index: number) => {
   try {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/bingo/show/${moduleId}/${index}`);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/bingo/${moduleId}/${index}`);
     return res.data; // Trả về chi tiết 1 bingo card
   } catch (error) {
     throw new Error('Failed to fetch bingo card');
