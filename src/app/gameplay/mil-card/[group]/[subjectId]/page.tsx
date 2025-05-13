@@ -1,9 +1,8 @@
-// src/app/gameplay/[group]/[subjectId]/page.tsx
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { getQuestionsBySubject } from '@/features/dashboard/Card/api/question';
 import Dice from '@/components/dice/dice';
 import { CircleArrowLeft, Loader } from 'lucide-react';
@@ -20,35 +19,32 @@ export default function GameplayPage() {
   const { subjectId } = useParams() as { subjectId: string };
   const router = useRouter();
 
-  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([]);
   const [answeredQuestions, setAnsweredQuestions] = useState<Set<string>>(new Set());
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchQuestions = async () => {
-    try {
-      setLoading(true);
-      if (!subjectId) throw new Error('Subject ID is undefined');
-      const data = await getQuestionsBySubject(subjectId);
-
-      setQuestions(shuffleArray(data));
-    } catch (error) {
-      toast.error('Không thể tải câu hỏi!');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchQuestions();
-  }, [subjectId]);
 
   const shuffleArray = (array: Question[]) => {
     return array.sort(() => Math.random() - 0.5);
   };
+
+  const {
+    data: questions = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['questions', subjectId],
+    queryFn: async () => {
+      if (!subjectId) throw new Error('Subject ID is undefined');
+      const data = await getQuestionsBySubject(subjectId);
+      return shuffleArray(data);
+    },
+    onError: () => {
+      toast.error('Không thể tải câu hỏi!');
+    },
+    enabled: !!subjectId, // chỉ gọi khi có subjectId
+  });
 
   const nextQuestion = () => {
     setShowResult(false);
@@ -57,7 +53,7 @@ export default function GameplayPage() {
     const remainingQuestions = questions.filter((q) => !answeredQuestions.has(q._id));
 
     if (remainingQuestions.length === 0) {
-      toast.success('Hoàn thành tất cả câu hỏi!'); 
+      toast.success('Hoàn thành tất cả câu hỏi!');
       setTimeout(() => router.back(), 3000);
       return;
     }
@@ -71,7 +67,6 @@ export default function GameplayPage() {
 
   const checkAnswer = () => {
     if (!selectedAnswer) return;
-
     setShowResult(true);
     setAnsweredQuestions((prev) => new Set(prev).add(currentQuestion?._id || ''));
   };
@@ -85,20 +80,21 @@ export default function GameplayPage() {
     if (questions.length > 0) nextQuestion();
   }, [questions]);
 
-  // Mapping A, B, C, D
   const getAnswerLabel = (index: number) => {
     return String.fromCharCode(65 + index);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      {loading ? (
+      {isLoading ? (
         <div className="h-full flex-1 flex items-center justify-center flex-col gap-2">
           <Loader className="size-6 animate-spin text-muted-foreground" />
         </div>
-      ) : questions.length === 0 ? (
+      ) : isError || questions.length === 0 ? (
         <div className="flex flex-col items-center gap-4">
-          <div className="text-center text-lg font-semibold text-red-600">Chủ đề này chưa có câu hỏi.</div>
+          <div className="text-center text-lg font-semibold text-red-600">
+            {isError ? 'Lỗi tải dữ liệu' : 'Chủ đề này chưa có câu hỏi.'}
+          </div>
           <button
             onClick={() => router.back()}
             className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg"
