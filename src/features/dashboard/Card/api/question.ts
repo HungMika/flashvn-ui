@@ -53,7 +53,7 @@ export const getQuestionById = async (questionId: string) => {
     },
   ) => {
     try {
-      const res = await axios.patch(`${BASE_URL}/question/${questionId}`,
+      const res = await axios.patch(`${BASE_URL}/questions/${questionId}`,
         updateData,
         { withCredentials: true },
       );
@@ -66,7 +66,7 @@ export const getQuestionById = async (questionId: string) => {
   //[DELETE] question
   export const deleteQuestion = async (questionId: string) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/question/${questionId}`,
+      const res = await axios.delete(`${BASE_URL}/questions/${questionId}`,
         { withCredentials: true },
       );
       return res.data;

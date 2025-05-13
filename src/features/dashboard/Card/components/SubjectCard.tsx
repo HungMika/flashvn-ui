@@ -82,7 +82,7 @@ export const SubjectCard = ({ id, title, ageGroup, onChange }: SubjectCardProps)
   const handleNavigate = () => {
     if (navigating) return;
     setNavigating(true);
-    router.replace(`/dashboard/age-group/${ageGroup}/subject/${id}`);
+    router.replace(`/dashboard/mil-card/group/${ageGroup}/subject/${id}`);
   };
 
   return (
