@@ -14,7 +14,7 @@ import { SignInflow } from '../auth-type';
 import { useRouter } from 'next/navigation';
 
 interface SignUpCardProps {
-  setstate: (state: SignInflow) => void;
+  setstate?: (state: SignInflow) => void;
 }
 
 export const SignUpCard = ({ setstate }: SignUpCardProps) => {

@@ -63,7 +63,7 @@ export const ModuleBar = ({ moduleId, disabled, onStart }: ModuleBarProps) => {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/dashboard/mil-bingo")}
           className="border border-muted p-2"
         >
           <ArrowLeft className="w-5 h-5" />

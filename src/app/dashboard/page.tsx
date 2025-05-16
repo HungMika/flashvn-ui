@@ -2,7 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaSpinner } from 'react-icons/fa';
+import { useState } from 'react';
 
 const routes = [
   { name: 'Account management', path: 'account' },
@@ -15,8 +16,10 @@ const routes = [
 
 export default function DashboardPage() {
   const router = useRouter();
+  const [loadingPath, setLoadingPath] = useState<string | null>(null);
 
   const handleNavigate = (path: string) => {
+    setLoadingPath(path);
     router.push(`/dashboard/${path}`);
   };
 
@@ -30,11 +33,16 @@ export default function DashboardPage() {
           <li key={route.path}>
             <Button
               onClick={() => handleNavigate(route.path)}
-              className="w-full justify-between text-left text-md py-5 font-medium cursor-pointer"
+              className="w-full justify-between text-left text-md py-5 font-medium"
               variant="outline"
+              disabled={loadingPath !== null} // prevent multiple clicks
             >
               {route.name}
-              <FaArrowRight className="ml-2" />
+              {loadingPath === route.path ? (
+                <FaSpinner className="ml-2 animate-spin" />
+              ) : (
+                <FaArrowRight className="ml-2" />
+              )}
             </Button>
           </li>
         ))}

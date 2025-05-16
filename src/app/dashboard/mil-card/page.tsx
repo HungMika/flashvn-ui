@@ -7,6 +7,9 @@ import { AgeGroupSelector } from '@/features/dashboard/Card/components/AgeGroupS
 import { SubjectCard } from '@/features/dashboard/Card/components/SubjectCard';
 import { AddSubjectModal } from '@/features/dashboard/Card/components/add-subject-modal';
 import { useAuthStore } from '@/features/auth/api/auth-store';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type Subject = {
   _id: string;
@@ -18,6 +21,7 @@ type Subject = {
 export default function DashboardPage() {
   const [selectedAge, setSelectedAge] = useState<string>('');
   const user = useAuthStore((state) => state.user);
+  const router = useRouter();
 
   const {
     data: subjects = [],
@@ -34,7 +38,17 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="p-6 flex-1">
-        <h2 className="text-xl font-semibold mb-4">Select group</h2>
+        <div className="relative flex items-center justify-center mb-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push('/dashboard')}
+            className="absolute left-0 border border-muted p-2 cursor-pointer"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <h1 className="text-2xl font-bold">Select group</h1>
+        </div>
 
         <AgeGroupSelector selectedAge={selectedAge} onSelect={setSelectedAge} />
 
