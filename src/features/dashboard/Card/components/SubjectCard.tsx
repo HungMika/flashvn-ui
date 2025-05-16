@@ -114,7 +114,7 @@ export const SubjectCard = ({ id, title, ageGroup, onChange }: SubjectCardProps)
             }}
           >
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="outline" size="icon">
                 <Pencil className="w-4 h-4 text-blue-500" />
               </Button>
             </DialogTrigger>
@@ -153,7 +153,7 @@ export const SubjectCard = ({ id, title, ageGroup, onChange }: SubjectCardProps)
             </DialogContent>
           </Dialog>
 
-          <Button variant="ghost" size="icon" onClick={handleDelete} disabled={deleteMutation.isLoading}>
+          <Button variant="outline" size="icon" onClick={handleDelete} disabled={deleteMutation.isLoading}>
             {deleteMutation.isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin text-red-500" />
             ) : (

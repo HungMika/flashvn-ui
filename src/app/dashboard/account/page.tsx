@@ -6,6 +6,7 @@ import { findAll, resetPassword } from '@/features/auth/api/user';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useConfirm } from '@/hooks/use-confirm';
+import { ArrowLeft } from 'lucide-react';
 
 interface User {
   _id: string;
@@ -49,7 +50,17 @@ export default function AccountPage() {
     <>
       <ConfirmDialog />
       <div className="p-6 max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4 text-center">Account Management</h1>
+        <div className="relative flex items-center justify-center mb-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push('/dashboard')}
+            className="absolute left-0 border border-muted p-2 cursor-pointer"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <h1 className="text-2xl font-bold">Account Management</h1>
+        </div>{' '}
         <Table>
           <TableHeader>
             <TableRow>

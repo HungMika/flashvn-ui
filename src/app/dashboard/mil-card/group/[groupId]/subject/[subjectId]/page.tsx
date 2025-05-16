@@ -38,7 +38,7 @@ export default function SubjectPage() {
       queryClient.invalidateQueries(['questions', subjectId]);
     },
     onError: () => {
-      toast.error('Delete fail!');
+      toast.error('Delete failed!');
     },
   });
 
