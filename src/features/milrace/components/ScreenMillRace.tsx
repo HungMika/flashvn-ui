@@ -1,19 +1,39 @@
 'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import PopupQuestion from './PopupQuestion';
 import GameMobile from './GameMobile';
 import GamePC from './GamePC';
 import { createMilraceGameHistory } from '../api/milraceGameHistory';
+import { MilraceQuestionSet, Player, PlayerHistoryData } from '@/types/milrace';
 
-export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPopupHowtoplay, questionSet }) {
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(1);
-  const [showPopup, setShowPopup] = useState(false);
-  const [questionCallback, setQuestionCallback] = useState(null);
-  const [rolling, setRolling] = useState(false);
-  const [activeTab, setActiveTab] = useState('tab1');
-  const [isMobileScreen, setIsMobileScreen] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+interface ScreenMillRaceProps {
+  onNext: () => void;
+  playersArr: Player[];
+  setPlayersArr: React.Dispatch<React.SetStateAction<Player[]>>;
+  onPopupHowtoplay: () => void;
+  questionSet: MilraceQuestionSet;
+}
 
-  const soundsRef = useRef({
+type QuestionCallback = (isCorrect: boolean) => void;
+
+export default function ScreenMillRace({
+  onNext,
+  playersArr,
+  setPlayersArr,
+  onPopupHowtoplay,
+  questionSet,
+}: ScreenMillRaceProps) {
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(1);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [questionCallback, setQuestionCallback] = useState<QuestionCallback | null>(null);
+  const [rolling, setRolling] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<string>('tab1');
+  const [isMobileScreen, setIsMobileScreen] = useState<boolean>(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false,
+  );
+
+  const soundsRef = useRef<{ move: HTMLAudioElement | null; win: HTMLAudioElement | null }>({
     move: null,
     win: null,
   });
@@ -25,7 +45,7 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
 
     window.addEventListener('resize', handleResize);
 
-    // Gọi luôn khi mount
+    // Call immediately on mount
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
@@ -47,48 +67,45 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
 
   const playMoveSound = () => {
     if (soundsRef.current.move) {
-      const sound = soundsRef.current.move.cloneNode();
+      const sound = soundsRef.current.move.cloneNode() as HTMLAudioElement;
       sound.play();
     }
   };
 
   const playWinSound = () => {
     if (soundsRef.current.win) {
-      const sound = soundsRef.current.win.cloneNode();
+      const sound = soundsRef.current.win.cloneNode() as HTMLAudioElement;
       sound.play();
     }
   };
 
-  function displayPlayersOnBoard() {
-    // 1. Xoá toàn bộ token-container cũ
+  function displayPlayersOnBoard(players = playersArr) {
     document.querySelectorAll('.token-container').forEach((el) => el.remove());
 
-    // 2. Gom nhóm người chơi theo vị trí
-    const byCell = new Map();
-    playersArr.forEach((player) => {
+    // Group players by cell element
+    const byCell = new Map<Element, Player[]>();
+    players.forEach((player) => {
       const cellId = `c${player.position}`;
       const cellEls = document.querySelectorAll(`#${cellId}`);
       cellEls.forEach((cellEl) => {
         if (!byCell.has(cellEl)) {
           byCell.set(cellEl, []);
         }
-        byCell.get(cellEl).push(player);
+        byCell.get(cellEl)!.push(player);
       });
     });
 
-    // 3. Tạo token-container cho cả PC và mobile
+    // Create token containers and tokens
     byCell.forEach((playersInCell, cellEl) => {
       const container = document.createElement('div');
       container.classList.add('token-container');
 
-      // Dựa vào class của cell để xác định là PC hay mobile
       if (cellEl.classList.contains('cell_pc')) {
         container.classList.add('token-container-pc');
       } else if (cellEl.classList.contains('cell_m')) {
         container.classList.add('token-container-m');
       }
 
-      // Tạo token
       playersInCell.forEach((player, i) => {
         const token = document.createElement('div');
         token.id = `token${player.index}`;
@@ -96,38 +113,37 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
 
         if (cellEl.classList.contains('cell_pc')) {
           token.style.left = `${-(70 + (playersInCell.length - 1) * 17) / 2 + i * 17}px`;
-
           token.classList.add('token-pc');
         } else if (cellEl.classList.contains('cell_m')) {
           token.style.left = `${-(35 + (playersInCell.length - 1) * 8) / 2 + i * 8}px`;
-
           token.classList.add('token-m');
         }
 
-        token.style.zIndex = i;
-        token.style.setProperty('--i', i); // Dùng trong CSS để canh lệch trái
+        token.style.zIndex = i.toString();
+        token.style.setProperty('--i', i.toString());
         container.appendChild(token);
       });
 
-      // Đảm bảo cell có position: relative
-      cellEl.style.position = 'relative';
+      (cellEl as HTMLElement).style.position = 'relative';
       cellEl.appendChild(container);
     });
   }
+
   useEffect(() => {
     displayPlayersOnBoard();
-    // displayPlayerList();
   }, []);
+
   useEffect(() => {
-    // displayPlayerList();
+    // Optional: some effect on currentPlayerIndex change
   }, [currentPlayerIndex]);
 
-  const askQuestion = () => {
+  const askQuestion = (): Promise<boolean> => {
     return new Promise((resolve) => {
       setShowPopup(true);
-      setQuestionCallback(() => resolve); // Lưu lại callback để truyền sang component con
+      setQuestionCallback(() => resolve);
     });
   };
+
   async function rollDice() {
     setRolling(true);
     const currentPlayer = playersArr[currentPlayerIndex - 1];
@@ -135,29 +151,25 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
     const WIN_POSITION = 32;
     let moved = false;
 
-    // --- 1. Tung xúc xắc và tính toán vị trí tiềm năng ---
     let diceRoll = getRandomInt(1, 6);
     console.log(`Rolling... Rolled a ${diceRoll}`);
-    await sleep(200); // Chờ xúc xắc quay xong
-    rollTheDice(diceRoll); // Chỉ là hiệu ứng hình ảnh
-    await sleep(3200); // Chờ xúc xắc quay xong
+    await sleep(200);
+    rollTheDice(diceRoll);
+    await sleep(3200);
 
     let potentialPosition = startPosition + diceRoll;
-    let finalPosition = startPosition; // Mặc định là đứng yên
+    let finalPosition = startPosition;
 
-    // --- 2. Xác định vị trí cuối cùng và thực hiện di chuyển (nếu có) ---
     if (potentialPosition === WIN_POSITION) {
-      // Đi đúng tới ô Win
       console.log(`Player ${currentPlayer.name} moves from ${startPosition} to WIN position (${WIN_POSITION})!`);
       if (isMobileScreen) {
         setActiveTab('tab1');
         await sleep(1500);
       }
-      await animatePlayerMove(currentPlayer, startPosition, diceRoll); // Di chuyển đủ số bước
+      await animatePlayerMove(currentPlayer, startPosition, diceRoll);
       finalPosition = WIN_POSITION;
       moved = true;
     } else if (potentialPosition < WIN_POSITION) {
-      // Di chuyển bình thường, chưa tới ô Win
       console.log(`Player ${currentPlayer.name} moves from ${startPosition} to ${potentialPosition}.`);
       if (isMobileScreen) {
         setActiveTab('tab1');
@@ -167,158 +179,128 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
       finalPosition = potentialPosition;
       moved = true;
     } else {
-      // potentialPosition > WIN_POSITION (Quá ô Win) -> Đứng yên
       console.log(`Player ${currentPlayer.name} rolled ${diceRoll}, overshoot! Stays at position ${startPosition}`);
-      // finalPosition vẫn là startPosition, không cần làm gì thêm
-      // currentPlayer.position cũng không thay đổi
       moved = false;
     }
 
-    // --- 3. Cập nhật vị trí chính thức (nếu có di chuyển) và UI ---
     if (moved) {
       currentPlayer.position = finalPosition;
-      displayPlayersOnBoard(playersArr); // Cập nhật token trên bàn cờ
-      // displayPlayerList(); // Cập nhật danh sách người chơi
-      await sleep(1000); // Chờ ngắn sau khi di chuyển xong
+      displayPlayersOnBoard(playersArr);
+      await sleep(1000);
     }
 
-    // --- 4. Kiểm tra chiến thắng NGAY SAU KHI di chuyển ---
     if (await checkEndGame()) {
-      // Hàm checkEndGame đã xử lý hiển thị kết quả và âm thanh
       console.log('Game ended after move.');
-      // Không kích hoạt lại nút, không chuyển lượt
       return;
     }
 
-    // --- 5. Xử lý ô đặc biệt (chia hết cho 3) nếu người chơi đã di chuyển và chưa thắng ---
     if (moved && finalPosition > 0 && finalPosition < WIN_POSITION && finalPosition % 3 === 0) {
       await sleep(1500);
       console.log(`Player ${currentPlayer.name} landed on ${finalPosition} (multiple of 3). Asking a question...`);
 
-      const answeredCorrectly = await askQuestion(); // Hàm này sẽ resolve khi popup đóng
+      const answeredCorrectly = await askQuestion();
       currentPlayer.answered += 1;
       if (!answeredCorrectly) {
-        // Trả lời sai, xử lý lùi bước (hàm closeAnswerPopup nên xử lý việc này)
-        // Logic lùi bước đã được chuyển vào hàm closeAnswerPopup và animatePlayerMoveBack
         console.log(
           `Player ${currentPlayer.name} answered wrong. Logic to move back is handled within question popup closure.`,
         );
-        // Cần chờ một chút để đảm bảo popup đóng và di chuyển lùi hoàn tất
-        await sleep(1000); // Điều chỉnh nếu cần
+        await sleep(1000);
         await animatePlayerMoveBack(currentPlayer, 2);
-        // Cập nhật lại UI sau khi có thể đã bị lùi
         displayPlayersOnBoard(playersArr);
-        // displayPlayerList();
       } else {
         console.log(`Player ${currentPlayer.name} answered correctly.`);
         currentPlayer.correctAnswers += 1;
       }
     }
-    // --- 6. Chuyển lượt chơi ---
-    // Chỉ chuyển lượt nếu game chưa kết thúc
+
     setCurrentPlayerIndex((currentPlayerIndex % playersArr.length) + 1);
     console.log(`--- Next turn: Player ${playersArr[currentPlayerIndex - 1].name} ---`);
-    // displayPlayerList(); // Cập nhật highlight người chơi hiện tại
 
     await sleep(1500);
     setRolling(false);
   }
 
-  // --- Hàm MỚI để di chuyển token từng bước ---closePopup
-  async function animatePlayerMove(player, startPosition, steps) {
-    const STEP_DELAY = 400; // Thời gian delay giữa các bước (miliseconds), bạn có thể điều chỉnh
-    const MAX_POSITION = 32; // Vị trí ô cuối cùng (ô win)
+  async function animatePlayerMove(player: Player, startPosition: number, steps: number) {
+    const STEP_DELAY = 400;
+    const MAX_POSITION = 32;
 
     let currentStepPosition = startPosition;
 
     for (let i = 1; i <= steps; i++) {
-      currentStepPosition++; // Di chuyển đến ô tiếp theo
+      currentStepPosition++;
       playMoveSound();
-      // Đảm bảo không vượt quá ô cuối cùng
       if (currentStepPosition > MAX_POSITION) {
         currentStepPosition = MAX_POSITION;
       }
 
-      // *** Cập nhật tạm thời vị trí của player ĐỂ HIỂN THỊ ***
       player.position = currentStepPosition;
-      // Vẽ lại toàn bộ bàn cờ với vị trí tạm thời của người chơi
       displayPlayersOnBoard(playersArr);
 
-      // Nếu đã đến ô cuối cùng, dừng hoạt ảnh sớm
       if (currentStepPosition === MAX_POSITION) {
-        break; // Thoát khỏi vòng lặp for
+        break;
       }
 
-      // Chờ một chút trước khi thực hiện bước tiếp theo
       await sleep(STEP_DELAY);
     }
-
-    // Quan trọng: Sau khi vòng lặp kết thúc, player.position đang ở vị trí cuối cùng
-    // của hoạt ảnh. Hàm rollDice sẽ cập nhật lại giá trị này một lần nữa
-    // để đảm bảo tính chính xác cuối cùng (đặc biệt nếu có logic phức tạp hơn).
   }
-  // --- Hàm MỚI để di chuyển token lùi từng bước ---
-  async function animatePlayerMoveBack(player, steps) {
-    const STEP_DELAY = 400; // Thời gian delay giữa các bước (miliseconds)
-    const MIN_POSITION = 0; // Vị trí ô bắt đầu
 
-    let currentStepPosition = player.position; // Bắt đầu từ vị trí hiện tại
+  async function animatePlayerMoveBack(player: Player, steps: number) {
+    const STEP_DELAY = 400;
+    const MIN_POSITION = 0;
 
-    // Tính số bước thực tế có thể lùi (không thể lùi quá ô 0)
+    let currentStepPosition = player.position;
     const actualStepsToTake = Math.min(steps, currentStepPosition - MIN_POSITION);
 
     if (actualStepsToTake <= 0) {
       console.log(`Player ${player.name} is already at or near the start, cannot move back ${steps} steps.`);
-      return; // Không cần di chuyển
+      return;
     }
 
     console.log(`Moving player ${player.name} back ${actualStepsToTake} steps.`);
 
     for (let i = 1; i <= actualStepsToTake; i++) {
-      currentStepPosition--; // Di chuyển lùi một ô
+      currentStepPosition--;
       playMoveSound();
-      // *** Cập nhật tạm thời vị trí của player ĐỂ HIỂN THỊ ***
       player.position = currentStepPosition;
-      // Vẽ lại toàn bộ bàn cờ với vị trí tạm thời của người chơi
       displayPlayersOnBoard(playersArr);
-
-      // Chờ một chút trước khi thực hiện bước tiếp theo
       await sleep(STEP_DELAY);
     }
 
-    // Sau vòng lặp, player.position đã ở vị trí cuối cùng sau khi lùi
     console.log(`Player ${player.name} moved back to position ${player.position}.`);
   }
-  async function checkEndGame() {
-    const winningPosition = 32; // Giả sử đây là vị trí chiến thắng
-    let winners = playersArr.filter((player) => player.position === winningPosition);
+
+  async function checkEndGame(): Promise<boolean> {
+    const winningPosition = 32;
+    const winners = playersArr.filter((player) => player.position === winningPosition);
 
     if (winners.length > 0) {
-      createGameHistory(playersArr, questionSet.title);
+      await createGameHistory(playersArr, questionSet.title);
       console.log('Winner found!');
       playWinSound();
       await sleep(1500);
 
-      onNext(); // Hiển thị màn hình kết quả
-      return true; // Trả về true nếu có người thắng
+      onNext();
+      return true;
     }
 
-    return false; // Trả về false nếu chưa có ai thắng
+    return false;
   }
 
-  async function createGameHistory(players, questionSetTitle) {
+  async function createGameHistory(players: Player[], questionSetTitle: string) {
     try {
       const res = await createMilraceGameHistory(questionSetTitle, players);
       if (res.success) {
         console.log('Lịch sử trò chơi đã được tạo thành công.');
       } else {
-        alert(res.message || res.error);
+        alert(res.message || (res as any).error);
       }
     } catch (error) {
       console.error('Lỗi khi tạo lịch sử trò chơi:', error);
     }
   }
+
   console.log(playersArr);
+
   return (
     <div className="min-h-screen min-w-screen">
       {/* Mobile View */}
@@ -339,9 +321,9 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
           playersArr={playersArr}
           currentPlayerIndex={currentPlayerIndex}
           rolling={rolling}
-          questionSetTitle={questionSet.title || ''}
-          onPopupHowtoplay={onPopupHowtoplay}
           rollDice={rollDice}
+          onPopupHowtoplay={onPopupHowtoplay}
+          questionSetTitle={questionSet.title || ''}
         />
       </div>
 
@@ -359,10 +341,18 @@ export default function ScreenMillRace({ onNext, playersArr, setPlayersArr, onPo
   );
 }
 
-function sleep(ms) {
+// Helper function
+function getRandomInt(min: number, max: number): number {
+  // Inclusive min, max
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-function getRotationForResult(result) {
+function getRotationForResult(result: number) {
   switch (result) {
     case 1:
       return { x: 0, y: 0 }; // Mặt Front
@@ -380,14 +370,7 @@ function getRotationForResult(result) {
       return { x: 0, y: 0 }; // Mặc định là mặt 1
   }
 }
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function rollTheDice(result) {
+function rollTheDice(result: number): void {
   const targetRotation = getRotationForResult(result);
 
   const randomSpinsX = Math.floor(Math.random() * 6 + 4); // Quay ít nhất 4 vòng X
@@ -395,8 +378,9 @@ function rollTheDice(result) {
 
   const finalRotationX = targetRotation.x + randomSpinsX * 360;
   const finalRotationY = targetRotation.y + randomSpinsY * 360;
-  const dice = document.querySelectorAll('.dice');
-  dice.forEach((element) => {
+
+  const diceElements = document.querySelectorAll<HTMLElement>('.dice');
+  diceElements.forEach((element) => {
     element.style.transform = `rotateX(${finalRotationX}deg) rotateY(${finalRotationY}deg)`;
   });
 }

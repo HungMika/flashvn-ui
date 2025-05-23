@@ -1,11 +1,30 @@
-import { useEffect, useState } from 'react';
+'use client';
+
+import { Dispatch, SetStateAction } from 'react';
 import GameBoardMobile from './GameBoardMobile';
 import ScoreBoard from './ScoreBoard';
+import { Player } from '@/types/milrace';
 
-export default function GameMobile({ playersArr, currentPlayerIndex, rolling, rollDice, activeTab, setActiveTab }) {
+interface GameMobileProps {
+  playersArr: Player[];
+  currentPlayerIndex: number;
+  rolling: boolean;
+  rollDice: () => void;
+  activeTab: string;
+  setActiveTab: Dispatch<SetStateAction<string>>;
+}
+
+export default function GameMobile({
+  playersArr,
+  currentPlayerIndex,
+  rolling,
+  rollDice,
+  activeTab,
+  setActiveTab,
+}: GameMobileProps) {
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden">
-      {/* Nội dung chiếm phần còn lại */}
+      {/* Nội dung chính */}
       <div className="flex-1 overflow-auto bg-[#bbdff6]">
         <div className={`${activeTab === 'tab1' ? '' : 'hidden'} w-full h-full p-2 bg-[#bbdff6]`}>
           <GameBoardMobile />
@@ -48,7 +67,7 @@ export default function GameMobile({ playersArr, currentPlayerIndex, rolling, ro
         </div>
       </div>
 
-      {/* Thanh tab nằm dưới cùng */}
+      {/* Thanh tab */}
       <div className="flex h-16 border-t border-gray-300 font-bold">
         <button
           className={`flex-1 text-center ${activeTab === 'tab1' ? 'bg-blue-200' : 'bg-white'}`}

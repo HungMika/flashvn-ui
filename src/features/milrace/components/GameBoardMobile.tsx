@@ -25,7 +25,7 @@ export default function GameBoardMobile() {
               <div>31</div>
             </div>
           </td>
-          <td colSpan="2">
+          <td colSpan={2}>
             <div className="cell_m cell-win bg-amber-300" id="c32">
               <div className="flex flex-col items-center">
                 <img src="/milrace/img/token/w.png" alt="" className="w-9" />

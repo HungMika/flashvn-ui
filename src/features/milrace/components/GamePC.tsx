@@ -1,5 +1,17 @@
-import { useEffect, useState } from 'react';
+'use client';
+
+import React from 'react';
 import ScoreBoard from './ScoreBoard';
+import { Player } from '@/types/milrace';
+
+interface GamePCProps {
+  playersArr: Player[];
+  currentPlayerIndex: number;
+  rolling: boolean;
+  questionSetTitle: string;
+  onPopupHowtoplay: () => void;
+  rollDice: () => void;
+}
 
 export default function GamePC({
   playersArr,
@@ -8,11 +20,11 @@ export default function GamePC({
   questionSetTitle,
   onPopupHowtoplay,
   rollDice,
-}) {
+}: GamePCProps) {
   return (
-    <div className="bg-[#bbdff6] w-full h-full ">
+    <div className="bg-[#bbdff6] w-full h-full">
       <button
-        onClick={() => onPopupHowtoplay()}
+        onClick={onPopupHowtoplay}
         className="fixed top-2 right-2 border-2 border-black w-8 h-8 rounded-full lg:w-9 lg:h-9 lg:text-xl"
       >
         ?
@@ -59,7 +71,7 @@ export default function GamePC({
                 <td>
                   <div></div>
                 </td>
-                <td rowSpan="2">
+                <td rowSpan={2}>
                   <div className="cell_pc cell-win bg-amber-300" id="c32">
                     <div className="flex flex-col items-center">
                       <img src="/milrace/img/token/w.png" alt="" className="w-14" />

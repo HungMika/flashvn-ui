@@ -1,50 +1,37 @@
 import axios from '@/lib/axios';
-
-export type MilraceQuestion = {
-  index: number;
-  question: string;
-  choices: Record<string, string>; // { A: "...", B: "...", ... }
-  ans: string;
-  _id?: string;
-};
-
-export type MilraceQuestionSet = {
-  _id?: string;
-  title: string;
-  questions: MilraceQuestion[];
-  createdAt?: string;
-  updatedAt?: string;
-};
+import { ApiResponse, MilraceQuestionSet } from '@/types/milrace';
 
 // [GET] /milraceQuestion
-export const getAllMilraceQuestionSets = async (): Promise<MilraceQuestionSet[]> => {
+export const getAllMilraceQuestionSets = async (): Promise<ApiResponse<MilraceQuestionSet[]>> => {
   const res = await axios.get('/milrace/milraceQuestion');
-  return res.data;
+  return res.data; // { success, message, data: MilraceQuestionSet[] }
 };
 
 // [GET] /milraceQuestion/:id
-export const getMilraceQuestionSetById = async (id: string): Promise<MilraceQuestionSet> => {
+export const getMilraceQuestionSetById = async (id: string): Promise<ApiResponse<MilraceQuestionSet>> => {
   const res = await axios.get(`/milrace/milraceQuestion/${id}`);
-  return res.data;
+  return res.data; // { success, message, data: MilraceQuestionSet }
 };
 
 // [POST] /milraceQuestion
-export const createMilraceQuestionSet = async (payload: MilraceQuestionSet): Promise<MilraceQuestionSet> => {
+export const createMilraceQuestionSet = async (
+  payload: MilraceQuestionSet,
+): Promise<ApiResponse<MilraceQuestionSet>> => {
   const res = await axios.post('/milrace/milraceQuestion', payload);
-  return res.data;
+  return res.data; // { success, message, data: MilraceQuestionSet }
 };
 
 // [PUT] /milraceQuestion/:id
 export const updateMilraceQuestionSet = async (
   id: string,
   payload: Partial<MilraceQuestionSet>,
-): Promise<MilraceQuestionSet> => {
+): Promise<ApiResponse<MilraceQuestionSet>> => {
   const res = await axios.put(`/milrace/milraceQuestion/${id}`, payload);
-  return res.data;
+  return res.data; // { success, message, data: MilraceQuestionSet }
 };
 
 // [DELETE] /milraceQuestion/:id
-export const deleteMilraceQuestionSet = async (id: string): Promise<{ message: string }> => {
+export const deleteMilraceQuestionSet = async (id: string): Promise<ApiResponse<{ message: string }>> => {
   const res = await axios.delete(`/milrace/milraceQuestion/${id}`);
-  return res.data;
+  return res.data; // { success, message, data: { message: string } }
 };

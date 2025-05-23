@@ -1,6 +1,12 @@
 'use client';
 
-export default function ScreenMilRaceResult({ playersArr, questionSetName }) {
+import { Player } from '@/types/milrace';
+
+interface ScreenMilRaceResultProps {
+  playersArr: Player[];
+}
+
+export default function ScreenMilRaceResult({ playersArr }: ScreenMilRaceResultProps) {
   const winner = playersArr.find((p) => p.position === 32);
   const others = playersArr.filter((p) => p.position !== 32).sort((a, b) => b.position - a.position);
 

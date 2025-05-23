@@ -1,14 +1,21 @@
 'use client';
 
+import { Question } from '@/types/milrace';
 import { useEffect, useRef, useState } from 'react';
 
-export default function PopupQuestion({ questionsArr, playerName, onFinish }) {
-  const btnAnswerRef = useRef(null);
-  const btnCloseAnswerRef = useRef(null);
-  const [remainingQuestions, setRemainingQuestions] = useState([...questionsArr]);
+interface PopupQuestionProps {
+  questionsArr: Question[];
+  playerName: string;
+  onFinish: (isCorrect: boolean) => void;
+}
 
-  const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [selectedChoice, setSelectedChoice] = useState(null);
+export default function PopupQuestion({ questionsArr, playerName, onFinish }: PopupQuestionProps) {
+  const btnAnswerRef = useRef<HTMLButtonElement>(null);
+  const btnCloseAnswerRef = useRef<HTMLButtonElement>(null);
+
+  const [remainingQuestions, setRemainingQuestions] = useState<Question[]>([...questionsArr]);
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
   const [answerResult, setAnswerResult] = useState('');
   const [disableAnswerBtn, setDisableAnswerBtn] = useState(true);
@@ -16,6 +23,7 @@ export default function PopupQuestion({ questionsArr, playerName, onFinish }) {
   useEffect(() => {
     init();
   }, []);
+
   function init() {
     const randomQ = questionsArr[Math.floor(Math.random() * questionsArr.length)];
     setCurrentQuestion(randomQ);
@@ -24,35 +32,33 @@ export default function PopupQuestion({ questionsArr, playerName, onFinish }) {
     setAnswerResult('');
     setDisableAnswerBtn(true);
     getRandomQuestion();
-    btnCloseAnswerRef.current.style.display = 'none';
+    if (btnCloseAnswerRef.current) btnCloseAnswerRef.current.style.display = 'none';
   }
+
   const getRandomQuestion = () => {
     let newRemaining = [...remainingQuestions];
 
-    // Nếu hết câu hỏi, khởi tạo lại
     if (newRemaining.length === 0) {
       newRemaining = [...questionsArr];
     }
 
-    // Lấy ngẫu nhiên một câu hỏi
     const randomIndex = Math.floor(Math.random() * newRemaining.length);
     const question = newRemaining[randomIndex];
-
-    // Cập nhật danh sách còn lại (sau khi xoá câu đã chọn)
     newRemaining.splice(randomIndex, 1);
+
     setRemainingQuestions(newRemaining);
     setCurrentQuestion(question);
   };
 
-  const handleSelectChoice = (key) => {
+  const handleSelectChoice = (key: string) => {
     if (answered) return;
     setSelectedChoice(key);
     setDisableAnswerBtn(false);
   };
 
   const handleSubmit = () => {
-    btnAnswerRef.current.style.display = 'none';
-    btnCloseAnswerRef.current.style.display = 'unset';
+    if (btnAnswerRef.current) btnAnswerRef.current.style.display = 'none';
+    if (btnCloseAnswerRef.current) btnCloseAnswerRef.current.style.display = 'unset';
 
     if (!selectedChoice || !currentQuestion) return;
 
@@ -67,16 +73,17 @@ export default function PopupQuestion({ questionsArr, playerName, onFinish }) {
 
   const handleClose = () => {
     if (!answered) return;
-    btnAnswerRef.current.style.display = 'unset';
-    btnCloseAnswerRef.current.style.display = 'none';
-    if (onFinish) {
+    if (btnAnswerRef.current) btnAnswerRef.current.style.display = 'unset';
+    if (btnCloseAnswerRef.current) btnCloseAnswerRef.current.style.display = 'none';
+
+    if (onFinish && currentQuestion && selectedChoice) {
       const isCorrect = selectedChoice === currentQuestion.ans;
-      onFinish(isCorrect); // Gửi kết quả đúng/sai cho cha
+      onFinish(isCorrect);
     }
   };
 
   return (
-    <div className=" fixed top-0 left-0 h-screen w-screen">
+    <div className="fixed top-0 left-0 h-screen w-screen">
       <div className="fixed w-screen h-screen z-40 bg-black opacity-90"></div>
       <div
         className="relative z-50 bg-sky-50 max-w-[90%] rounded-md
@@ -89,18 +96,17 @@ export default function PopupQuestion({ questionsArr, playerName, onFinish }) {
           </span>
         </div>
         <hr />
-        <div className="py-2 px-3  md:px-4 md:py-3">
-          <h2 className="text-xl font-bold tracking-tight text-center  md:text-2xl">{currentQuestion?.question}</h2>
+        <div className="py-2 px-3 md:px-4 md:py-3">
+          <h2 className="text-xl font-bold tracking-tight text-center md:text-2xl">{currentQuestion?.question}</h2>
           <div className="md:text-xl">
             {Object.entries(currentQuestion?.choices || {}).map(([key, value]) => {
               const isSelected = selectedChoice === key;
-              const isCorrect = answered && key === currentQuestion.ans;
-              const isWrong = answered && key !== currentQuestion.ans && key === selectedChoice;
+              const isCorrect = answered && key === currentQuestion?.ans;
+              const isWrong = answered && key !== currentQuestion?.ans && key === selectedChoice;
 
               const baseClasses =
-                'border-2  border-amber-400 px-1 py-2 rounded cursor-pointer text-left my-2 relative pl-6 -indent-4 transition-all md:pr-2 md:py-3 md:pl-10 md:-indent-5';
+                'border-2 border-amber-400 px-1 py-2 rounded cursor-pointer text-left my-2 relative pl-6 -indent-4 transition-all md:pr-2 md:py-3 md:pl-10 md:-indent-5';
               const hoverClass = 'hover:border-yellow-400';
-
               const selectedClass = isSelected ? 'border-blue-600 bg-blue-200/40' : '';
               const correctClass = isCorrect ? 'border-green-700 bg-green-100 text-green-800 font-bold' : '';
               const wrongClass = isWrong ? 'border-red-600 bg-red-100 text-red-700 font-bold' : '';
