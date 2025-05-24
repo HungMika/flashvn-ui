@@ -28,23 +28,32 @@ export default function AddQuestionPopup({
         </div>
         <button
           onClick={onClose}
-          className="closeButton bg-[#EF6921] text-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex justify-center items-center absolute top-[-8px] sm:top-[4px] right-[-8px] sm:right-[2px] hover:bg-[#1B1B62] transition-colors text-sm"
+          className="closeButton bg-[#EF6921] text-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex justify-center items-center absolute top-[-8px] sm:top-[-10px] right-[-8px] sm:right-[-10px] hover:bg-[#1B1B62] transition-colors text-sm"
         >
           ×
         </button>
         <div className="formContainer p-3 sm:p-5">
           <form onSubmit={handleSubmit}>
-            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Nội dung</label>
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Tiêu đề</label>
+            <input
+              type="text"
+              value={newQuestion.title || ''}
+              onChange={(e) => setNewQuestion({ ...newQuestion, title: e.target.value })}
+              placeholder="Tiêu đề"
+              className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
+            />
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">
+              Nội dung
+            </label>
             <textarea
               value={newQuestion.content || ''}
               onChange={(e) => setNewQuestion({ ...newQuestion, content: e.target.value })}
-              placeholder="Nội dung của tình huống"
-              className="formInput w-full p-3 sm:p-4 border border-gray-300 rounded mb-2 sm:mb-4 text-sm sm:text-base md:text-lg resize-y min-h-[100px]"
+              placeholder="Nội dung"
+              className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
-            {errorMessage && (
-              <p className="text-red-500 text-xs sm:text-sm mb-2 sm:mb-4">{errorMessage}</p>
-            )}
-            <div className="popupButtons flex justify-center gap-2 p-2 border-t border-gray-200 rounded-b-lg">
+
+            {errorMessage && <p className="text-red-500 text-xs sm:text-sm mb-2 sm:mb-4">{errorMessage}</p>}
+            <div className="popupButtons flex justify-end gap-2 p-2 border-t border-gray-200 rounded-b-lg">
               <button
                 type="submit"
                 className="saveButton bg-[#3F99E9] text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-[#1B1B62] transition-colors text-xs sm:text-sm md:text-base"

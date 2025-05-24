@@ -28,27 +28,30 @@ export const fetchQuestionById = async (id: string): Promise<QuestionWithCounts>
   }
 };
 
-export const createQuestion = async (content: string): Promise<QuestionWithCounts> => {
+export const createQuestion = async (content: string, title: string): Promise<QuestionWithCounts> => {
   try {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Không tìm thấy token');
-    const response = await api.post('/', { content }, {
+    const response = await api.post('/', { content, title }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    if (error.response?.data?.message === 'Title already exists') {
+      throw new Error('Tiêu đề đã tồn tại');
+    }
     console.error('Lỗi tạo câu hỏi:', error);
     throw error;
   }
 };
 
-export const updateQuestion = async (id: string, content: string): Promise<QuestionWithCounts> => {
+export const updateQuestion = async (id: string, content: string, trustCount?: number, selfCount?: number): Promise<QuestionWithCounts> => {
   try {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Không tìm thấy token');
-    const response = await api.patch(`/${id}`, { content }, {
+    const response = await api.patch(`/${id}`, { content, trustCount, selfCount }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

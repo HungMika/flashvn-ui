@@ -1,11 +1,11 @@
-import { Question } from '@/features/dashboard/TrustOrSelf/components/types';
+import { QuestionWithCounts } from '@/features/dashboard/TrustOrSelf/components/types';
 import { FaTrash, FaRegEdit, FaPlus, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import Image from 'next/image';
 
 interface DashboardLayoutProps {
-  questions: (Question & { trustCount: number; selfCount: number })[];
+  questions: QuestionWithCounts[];
   loading: boolean;
-  setEditQuestion: (question: Question | null) => void;
+  setEditQuestion: (question: QuestionWithCounts | null) => void;
   setShowEditQuestionPopup: (show: boolean) => void;
   setShowDeleteQuestionPopup: (id: string | null) => void;
   setShowAddQuestionPopup: (show: boolean) => void;
@@ -61,22 +61,23 @@ export default function DashboardLayout({
             <thead>
               <tr className="bg-[#1B1B62] text-white">
                 <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-20">STT</th>
+                <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-32">Tiêu đề</th>
                 <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base max-w-xs break-words">Nội dung</th>
-                <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-20">Trust Count</th>
-                <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-20">Self Count</th>
+                <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-20">Trust</th>
+                <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-20">Self</th>
                 <th className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base w-[150px]">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="border border-gray-200 p-1 sm:p-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">
+                  <td colSpan={6} className="border border-gray-200 p-1 sm:p-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">
                     Đang tải...
                   </td>
                 </tr>
               ) : questions.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="border border-gray-200 p-1 sm:p-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">
+                  <td colSpan={6} className="border border-gray-200 p-1 sm:p-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">
                     Không có dữ liệu
                   </td>
                 </tr>
@@ -84,6 +85,7 @@ export default function DashboardLayout({
                 questions.map((q, index) => (
                   <tr key={q._id} className="border border-gray-200 hover:bg-gray-100 transition-colors">
                     <td className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base text-center">{index + 1}</td>
+                    <td className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base break-words">{q.title || '-'}</td>
                     <td className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base break-words">{q.content}</td>
                     <td className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base text-center">{q.trustCount}</td>
                     <td className="border border-gray-200 p-1 sm:p-2 text-xs sm:text-sm md:text-base text-center">{q.selfCount}</td>

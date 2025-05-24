@@ -1,6 +1,7 @@
 export interface Question {
   _id: string;
   content: string;
+  title: string;
 }
 
 export interface QuestionWithCounts extends Question {

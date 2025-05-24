@@ -51,15 +51,21 @@ export default function EditQuestionPopup({
               readOnly
               className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
-            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Nội dung</label>
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Tiêu đề</label>
             <input
               type="text"
-              value={editQuestion.content}
+              value={editQuestion.title}
+              readOnly
+              className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base bg-gray-100"
+            />
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Nội dung</label>
+            <textarea
+              value={editQuestion.content || ''}
               onChange={(e) => setEditQuestion({ ...editQuestion, content: e.target.value })}
               placeholder="Nội dung"
               className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
-            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Trust Count</label>
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Trust</label>
             <input
               type="number"
               value={editQuestion.trustCount}
@@ -67,13 +73,13 @@ export default function EditQuestionPopup({
               placeholder="Trust Count"
               className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
-            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Self Count</label>
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Self</label>
             <input
               type="number"
               value={editQuestion.selfCount}
               onChange={(e) => setEditQuestion({ ...editQuestion, selfCount: parseInt(e.target.value) })}
               placeholder="Self Count"
-              className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
+              className="formInput w-full p-1 sm:p-2 border border-gray-andin300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
             {errorMessage && (
               <p className="text-red-500 text-xs sm:text-sm mb-2 sm:mb-4">{errorMessage}</p>
@@ -84,7 +90,7 @@ export default function EditQuestionPopup({
                 onClick={handleResetClick}
                 className="resetButton bg-gray-500 text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-[#1B1B62] transition-colors text-xs sm:text-sm md:text-base mb-2 sm:mb-0"
               >
-                Reset Counts
+                Reset 50/50
               </button>
               <div className="flex gap-2">
                 <button
