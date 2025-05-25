@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getAllMilraceQuestionSets, getMilraceQuestionSetById } from '../api/milraceQuestionSet';
 import { PlayerHistoryData, MilraceQuestionSet } from '@/types/milrace';
 import { useModal } from '@/lib/ModalContext';
+import toast from 'react-hot-toast';
 
 interface ScreenAddPlayerProps {
   onNext: () => void;
@@ -24,12 +25,15 @@ const ScreenAddPlayer: React.FC<ScreenAddPlayerProps> = ({ onNext, playersArr, s
         const res = await getAllMilraceQuestionSets();
         if (res.success) {
           setQuestionSets(res.data);
+          if (Array.isArray(res.data) && res.data.length === 0) {
+            toast.error('Không tải được bộ câu hỏi');
+          }
         } else {
           notify(res.message);
         }
       } catch (err) {
         console.error('Lỗi tải bộ câu hỏi:', err);
-        notify('Không tải được bộ câu hỏi');
+        toast.error('Không tải được bộ câu hỏi');
       }
     }
     loadQuestionSets();

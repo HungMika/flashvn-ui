@@ -11,6 +11,9 @@ export default function GameHistoryList() {
     const res = await getAllMilraceGameHistories();
     if (res.success) {
       setHistories(res.data);
+      if (Array.isArray(res.data) && res.data.length === 0) {
+        toast.error('Không có Lịch sử trò chơi nào');
+      }
     } else {
       notify(res.message || res.error);
     }
