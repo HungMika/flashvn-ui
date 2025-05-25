@@ -28,7 +28,7 @@ export default function AddQuestionPopup({
         </div>
         <button
           onClick={onClose}
-          className="closeButton bg-[#EF6921] text-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex justify-center items-center absolute top-[-8px] sm:top-[-10px] right-[-8px] sm:right-[-10px] hover:bg-[#1B1B62] transition-colors text-sm"
+          className="closeButton bg-[#EF6921] text-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex justify-center items-center absolute top-[-8px] right-[-8px] sm:top-[-10px] sm:right-[-10px] hover:bg-[#1B1B62] transition-colors text-sm"
         >
           ×
         </button>
@@ -40,30 +40,41 @@ export default function AddQuestionPopup({
               value={newQuestion.title || ''}
               onChange={(e) => setNewQuestion({ ...newQuestion, title: e.target.value })}
               placeholder="Tiêu đề"
-              className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
+              className="formInput w-full p-1 sm:p-2 border border-gray-200 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
-            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">
-              Nội dung
-            </label>
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Nội dung</label>
             <textarea
               value={newQuestion.content || ''}
               onChange={(e) => setNewQuestion({ ...newQuestion, content: e.target.value })}
               placeholder="Nội dung"
-              className="formInput w-full p-1 sm:p-2 border border-gray-300 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
+              className="formInput w-full p-1 sm:p-2 border border-gray-200 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
             />
-
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Trust</label>
+            <input
+              type="number"
+              value={newQuestion.trustCount ?? 50}
+              onChange={(e) => setNewQuestion({ ...newQuestion, trustCount: parseInt(e.target.value, 10) })}
+              className="formInput w-full p-1 sm:p-2 border border-gray-200 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
+            />
+            <label className="formLabel block text-xs sm:text-sm font-medium mb-1 sm:mb-2 text-gray-700">Self</label>
+            <input
+              type="number"
+              value={newQuestion.selfCount ?? 50}
+              onChange={(e) => setNewQuestion({ ...newQuestion, selfCount: parseInt(e.target.value, 10) })}
+              className="formInput w-full p-1 sm:p-2 border border-gray-200 rounded mb-2 sm:mb-4 text-xs sm:text-sm md:text-base"
+            />
             {errorMessage && <p className="text-red-500 text-xs sm:text-sm mb-2 sm:mb-4">{errorMessage}</p>}
             <div className="popupButtons flex justify-end gap-2 p-2 border-t border-gray-200 rounded-b-lg">
               <button
                 type="submit"
-                className="saveButton bg-[#3F99E9] text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-[#1B1B62] transition-colors text-xs sm:text-sm md:text-base"
+                className="saveButton bg-[#3F99E9] text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-[#1B62B1] transition-colors text-xs sm:text-sm md:text-base"
               >
                 Lưu
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="cancelButton bg-[#F5C035] text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-[#1B1B62] transition-colors text-xs sm:text-sm md:text-base"
+                className="cancelButton bg-[#F5C035] text-white px-3 py-1 sm:p-2 rounded hover:bg-[#B18B00] transition-colors text-xs sm:text-sm md:text-base"
               >
                 Hủy
               </button>

@@ -98,12 +98,12 @@ export const incrementSelfCount = async (id: string): Promise<QuestionWithCounts
   }
 };
 
-// export const resetCounts = async (id: string): Promise<QuestionWithCounts> => {
-//   try {
-//     const response = await api.patch(`/${id}/reset`, {});
-//     return response.data;
-//   } catch (error: any) {
-//     console.error('resetCounts:', error.response?.status, error.message);
-//     throw error;
-//   }
-// };
+export const resetCounts = async (id: string): Promise<QuestionWithCounts> => {
+  try {
+    const response = await api.patch(`/${id}/reset`, {});
+    return response.data;
+  } catch (error: any) {
+    console.error('resetCounts:', error.response?.status, error.message);
+    throw error;
+  }
+};

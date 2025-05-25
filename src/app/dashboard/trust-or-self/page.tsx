@@ -6,7 +6,7 @@ import Dashboard from '@/features/dashboard/TrustOrSelf/components/Dashboard';
 import AddQuestion from '@/features/dashboard/TrustOrSelf/components/AddQuestion';
 import EditQuestion from '@/features/dashboard/TrustOrSelf/components/EditQuestion';
 import DeleteQuestion from '@/features/dashboard/TrustOrSelf/components/DeleteQuestion';
-import { fetchAllQuestions, createQuestion, updateQuestion, deleteQuestion, resetCounts } from '@/features/dashboard/TrustOrSelf/api/api';
+import { fetchAllQuestions, createQuestion, updateQuestion, deleteQuestion } from '@/features/dashboard/TrustOrSelf/api/api';
 
 const ProfilePopup: React.FC<{
   show: boolean;
@@ -23,7 +23,22 @@ const ProfilePopup: React.FC<{
   setCurrentPassword: (password: string) => void;
   profileError: string;
   setProfileError: (error: string) => void;
-}> = ({ show, onClose, profileMode, setProfileMode, profileUsername, setProfileUsername, newUsername, setNewUsername, newPassword, setNewPassword, currentPassword, setCurrentPassword, profileError, setProfileError }) => {
+}> = ({
+  show,
+  onClose,
+  profileMode,
+  setProfileMode,
+  profileUsername,
+  setProfileUsername,
+  newUsername,
+  setNewUsername,
+  newPassword,
+  setNewPassword,
+  currentPassword,
+  setCurrentPassword,
+  profileError,
+  setProfileError,
+}) => {
   return null;
 };
 
@@ -50,7 +65,7 @@ export default function AdminDashboard() {
     loading: true,
     errorMessage: '',
     editQuestion: null,
-    newQuestion: { _id: '', content: '', title: '' },
+    newQuestion: { _id: '', content: '', title: '', trustCount: 50, selfCount: 50 },
     showAddQuestionPopup: false,
     showEditQuestionPopup: false,
     showDeleteQuestionPopup: null,
@@ -66,12 +81,6 @@ export default function AdminDashboard() {
   const updateState = (updates: Partial<typeof state>) => setState((prev) => ({ ...prev, ...updates }));
 
   useEffect(() => {
-    // const token = localStorage.getItem('token');
-    // if (!token) {
-    //   router.replace('/');
-    // } else {
-    //   fetchData();
-    // }
     fetchData();
   }, [router]);
 
@@ -80,34 +89,58 @@ export default function AdminDashboard() {
     try {
       const questionsData = await fetchAllQuestions();
       updateState({ questions: questionsData, errorMessage: '' });
-    } catch (error) {
-      updateState({ errorMessage: 'Không thể tải dữ liệu' });
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        updateState({ errorMessage: 'Bạn cần đăng nhập để xem dữ liệu' });
+      } else {
+        updateState({ errorMessage: 'Không thể tải dữ liệu' });
+      }
     } finally {
       updateState({ loading: false });
     }
   };
 
-  const handleAddQuestion = async (newQuestion: Partial<Question>, callback: () => void): Promise<void> => {
+  const handleAddQuestion = async (
+    newQuestion: Partial<Question>,
+    callback: () => void
+  ): Promise<void> => {
     try {
-      if (!newQuestion.content || !newQuestion.title) throw new Error('Tiêu đề và nội dung là bắt buộc');
+      if (!newQuestion.content || !newQuestion.title)
+        throw new Error('Tiêu đề và nội dung là bắt buộc');
       await createQuestion(newQuestion.content, newQuestion.title);
       await fetchData();
       callback();
       updateState({ errorMessage: '' });
     } catch (error: any) {
-      updateState({ errorMessage: error.message || 'Không thể thêm câu hỏi' });
+      if (error.response?.status === 401) {
+        updateState({ errorMessage: 'Bạn cần đăng nhập để thực hiện thao tác này' });
+      } else {
+        updateState({ errorMessage: error.message || 'Không thể thêm câu hỏi' });
+      }
     }
   };
 
-  const handleEditQuestion = async (editQuestion: QuestionWithCounts, callback: () => void): Promise<void> => {
+  const handleEditQuestion = async (
+    editQuestion: QuestionWithCounts,
+    callback: () => void
+  ): Promise<void> => {
     try {
       if (!editQuestion.content) throw new Error('Nội dung câu hỏi là bắt buộc');
-      await updateQuestion(editQuestion._id, editQuestion.content, editQuestion.trustCount, editQuestion.selfCount);
+      await updateQuestion(
+        editQuestion._id,
+        editQuestion.content,
+        editQuestion.trustCount,
+        editQuestion.selfCount
+      );
       await fetchData();
       callback();
       updateState({ errorMessage: '' });
-    } catch (error) {
-      updateState({ errorMessage: 'Không thể sửa câu hỏi' });
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        updateState({ errorMessage: 'Bạn cần đăng nhập để thực hiện thao tác này' });
+      } else {
+        updateState({ errorMessage: 'Không thể sửa câu hỏi' });
+      }
     }
   };
 
@@ -117,8 +150,12 @@ export default function AdminDashboard() {
       await fetchData();
       callback();
       updateState({ errorMessage: '' });
-    } catch (error) {
-      updateState({ errorMessage: 'Không thể xóa câu hỏi' });
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        updateState({ errorMessage: 'Bạn cần đăng nhập để thực hiện thao tác này' });
+      } else {
+        updateState({ errorMessage: 'Không thể xóa câu hỏi' });
+      }
     }
   };
 
@@ -157,7 +194,10 @@ export default function AdminDashboard() {
           onClose={() => updateState({ showAddQuestionPopup: false })}
           onSave={(newQuestion: Partial<Question>) =>
             handleAddQuestion(newQuestion, () => {
-              updateState({ newQuestion: { _id: '', content: '', title: '' }, showAddQuestionPopup: false });
+              updateState({
+                newQuestion: { _id: '', content: '', title: '', trustCount: 50, selfCount: 50 },
+                showAddQuestionPopup: false,
+              });
             })
           }
         />
