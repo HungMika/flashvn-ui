@@ -1,8 +1,10 @@
 'use client';
 import { getAllMilraceGameHistories } from '@/features/milrace/api/milraceGameHistory';
+import { useModal } from '@/lib/ModalContext';
 import { useEffect, useState } from 'react';
 
 export default function GameHistoryList() {
+  const { notify } = useModal();
   const [histories, setHistories] = useState([]);
 
   const fetchHistories = async () => {
@@ -10,7 +12,7 @@ export default function GameHistoryList() {
     if (res.success) {
       setHistories(res.data);
     } else {
-      alert(res.message || res.error);
+      notify(res.message || res.error);
     }
   };
 

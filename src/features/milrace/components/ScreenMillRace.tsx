@@ -6,6 +6,7 @@ import GameMobile from './GameMobile';
 import GamePC from './GamePC';
 import { createMilraceGameHistory } from '../api/milraceGameHistory';
 import { MilraceQuestionSet, Player, PlayerHistoryData } from '@/types/milrace';
+import { useModal } from '@/lib/ModalContext';
 
 interface ScreenMillRaceProps {
   onNext: () => void;
@@ -24,6 +25,7 @@ export default function ScreenMillRace({
   onPopupHowtoplay,
   questionSet,
 }: ScreenMillRaceProps) {
+  const { notify } = useModal();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(1);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [questionCallback, setQuestionCallback] = useState<QuestionCallback | null>(null);
@@ -292,7 +294,7 @@ export default function ScreenMillRace({
       if (res.success) {
         console.log('Lịch sử trò chơi đã được tạo thành công.');
       } else {
-        alert(res.message || (res as any).error);
+        notify(res.message || (res as any).error);
       }
     } catch (error) {
       console.error('Lỗi khi tạo lịch sử trò chơi:', error);

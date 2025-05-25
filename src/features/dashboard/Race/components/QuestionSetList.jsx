@@ -1,8 +1,10 @@
 'use client';
 import { deleteMilraceQuestionSet, getAllMilraceQuestionSets } from '@/features/milrace/api/milraceQuestionSet';
+import { useModal } from '@/lib/ModalContext';
 import { useEffect, useState } from 'react';
 
 export default function QuestionSetList({ onEdit }) {
+  const { notify, confirm } = useModal();
   const [sets, setSets] = useState([]);
 
   const fetchSets = async () => {
@@ -10,7 +12,7 @@ export default function QuestionSetList({ onEdit }) {
     if (res.success) {
       setSets(res.data);
     } else {
-      alert(res.message || res.error);
+      notify(res.message || res.error);
     }
   };
 
@@ -19,14 +21,12 @@ export default function QuestionSetList({ onEdit }) {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!confirm('Bạn có chắc muốn xoá bộ câu hỏi này?')) return;
-
     const res = await deleteMilraceQuestionSet(id);
     if (res.success) {
       fetchSets(); // reload danh sách
-      alert(res.message || res.error);
+      notify(res.message || res.error);
     } else {
-      alert(res.message || res.error);
+      notify(res.message || res.error);
     }
   };
 
@@ -63,7 +63,10 @@ export default function QuestionSetList({ onEdit }) {
                       <button className="text-blue-600  text-sm" onClick={() => onEdit(set._id)}>
                         Chỉnh sửa
                       </button>
-                      <button onClick={() => handleDelete(set._id)} className="text-red-500 text-sm">
+                      <button
+                        onClick={() => confirm('Bạn có chắc muốn xoá mục này?', () => handleDelete(set._id))}
+                        className="text-red-500 text-sm"
+                      >
                         Xoá
                       </button>
                     </div>

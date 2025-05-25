@@ -1,8 +1,10 @@
 'use client';
 import { createMilraceQuestionSet } from '@/features/milrace/api/milraceQuestionSet';
+import { useModal } from '@/lib/ModalContext';
 import { useState } from 'react';
 
 export default function AddQuestionSetPage({ onBack }) {
+  const { notify } = useModal();
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState([
     {
@@ -12,7 +14,7 @@ export default function AddQuestionSetPage({ onBack }) {
       ans: 'A',
     },
   ]);
-
+  
   const addQuestion = () => {
     const nextIndex = questions.length + 1;
     setQuestions([
@@ -36,16 +38,16 @@ export default function AddQuestionSetPage({ onBack }) {
     e.preventDefault();
 
     if (questions.length < 1) {
-      alert('Bạn cần tạo ít nhất 1 câu hỏi');
+      notify('Bạn cần tạo ít nhất 1 câu hỏi');
       return;
     }
 
     const res = await createMilraceQuestionSet({ title, questions });
     if (res.success) {
-      alert(res.message || res.error);
+      notify(res.message || res.error);
       onBack();
     } else {
-      alert(res.message || res.error);
+      notify(res.message || res.error);
     }
   };
 

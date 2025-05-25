@@ -4,9 +4,11 @@ import {
   getMilraceQuestionSetById,
   updateMilraceQuestionSet,
 } from '@/features/milrace/api/milraceQuestionSet';
+import { useModal } from '@/lib/ModalContext';
 import { useEffect, useState } from 'react';
 
 export default function EditQuestionSetPage({ id, onBack }) {
+  const { notify } = useModal();
   const [title, setTitle] = useState('');
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +21,7 @@ export default function EditQuestionSetPage({ id, onBack }) {
         setTitle(res.data.title);
         setQuestions(res.data.questions);
       } else {
-        alert(res.message || res.error);
+        notify(res.message || res.error);
       }
       setLoading(false);
     };
@@ -30,16 +32,16 @@ export default function EditQuestionSetPage({ id, onBack }) {
     e.preventDefault();
 
     if (questions.length < 1) {
-      alert('Bạn cần có ít nhất 1 câu hỏi');
+      notify('Bạn cần có ít nhất 1 câu hỏi');
       return;
     }
 
     const res = await updateMilraceQuestionSet(id, { title, questions });
     if (res.success) {
-      alert(res.message);
+      notify(res.message);
       onBack();
     } else {
-      alert(res.message || res.error);
+      notify(res.message || res.error);
     }
   };
 

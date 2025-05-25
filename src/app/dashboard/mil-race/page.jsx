@@ -7,6 +7,7 @@ import GameHistoryList from '@/features/dashboard/Race/components/GameHistoryLis
 import EditQuestionSetPage from '@/features/dashboard/Race/components/EditQuestionSetPage';
 import { useState } from 'react';
 import Link from 'next/link';
+import { ModalProvider } from '@/lib/ModalContext';
 
 export default function DashboardPage() {
   const [tab, setTab] = useState('historyQues');
@@ -39,31 +40,33 @@ export default function DashboardPage() {
 
       {/* Main content */}
       <div className="p-2 w-full h-full">
-        {tab === 'list' && (
-          <QuestionSetList
-            onEdit={(id) => {
-              setEditingId(id);
-              setTab('edit');
-            }}
-          />
-        )}
-        {tab === 'add' && (
-          <AddQuestionSetPage
-            onBack={() => {
-              setTab('list');
-            }}
-          />
-        )}
-        {tab === 'historyQues' && <GameHistoryList />}
-        {tab === 'edit' && editingId && (
-          <EditQuestionSetPage
-            id={editingId}
-            onBack={() => {
-              setEditingId(null);
-              setTab('list');
-            }}
-          />
-        )}
+        <ModalProvider>
+          {tab === 'list' && (
+            <QuestionSetList
+              onEdit={(id) => {
+                setEditingId(id);
+                setTab('edit');
+              }}
+            />
+          )}
+          {tab === 'add' && (
+            <AddQuestionSetPage
+              onBack={() => {
+                setTab('list');
+              }}
+            />
+          )}
+          {tab === 'historyQues' && <GameHistoryList />}
+          {tab === 'edit' && editingId && (
+            <EditQuestionSetPage
+              id={editingId}
+              onBack={() => {
+                setEditingId(null);
+                setTab('list');
+              }}
+            />
+          )}
+        </ModalProvider>
       </div>
     </div>
   );

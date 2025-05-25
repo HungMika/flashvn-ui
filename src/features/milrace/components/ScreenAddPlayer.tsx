@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getAllMilraceQuestionSets, getMilraceQuestionSetById } from '../api/milraceQuestionSet';
 import { PlayerHistoryData, MilraceQuestionSet } from '@/types/milrace';
+import { useModal } from '@/lib/ModalContext';
 
 interface ScreenAddPlayerProps {
   onNext: () => void;
@@ -12,6 +13,7 @@ interface ScreenAddPlayerProps {
 }
 
 const ScreenAddPlayer: React.FC<ScreenAddPlayerProps> = ({ onNext, playersArr, setPlayersArr, setQuestionSet }) => {
+  const { notify } = useModal();
   const [namePlayer, setNamePlayer] = useState<string>('');
   const [questionSets, setQuestionSets] = useState<MilraceQuestionSet[]>([]);
   const [selectedSetId, setSelectedSetId] = useState<string>('');
@@ -23,11 +25,11 @@ const ScreenAddPlayer: React.FC<ScreenAddPlayerProps> = ({ onNext, playersArr, s
         if (res.success) {
           setQuestionSets(res.data);
         } else {
-          alert(res.message);
+          notify(res.message);
         }
       } catch (err) {
         console.error('Lỗi tải bộ câu hỏi:', err);
-        alert('Không tải được bộ câu hỏi');
+        notify('Không tải được bộ câu hỏi');
       }
     }
     loadQuestionSets();
@@ -35,10 +37,10 @@ const ScreenAddPlayer: React.FC<ScreenAddPlayerProps> = ({ onNext, playersArr, s
 
   const handleAddPlayer = () => {
     const name = namePlayer.trim();
-    if (name === '') return alert('Tên không được để trống!');
-    if (name.length > 10) return alert('Tên tối đa 10 ký tự!');
-    if (playersArr.length >= 5) return alert('Tối đa 5 người chơi!');
-    if (playersArr.some((p) => p.name === name)) return alert(`Tên ${name} đã tồn tại!`);
+    if (name === '') return notify('Tên không được để trống!');
+    if (name.length > 10) return notify('Tên tối đa 10 ký tự!');
+    if (playersArr.length >= 5) return notify('Tối đa 5 người chơi!');
+    if (playersArr.some((p) => p.name === name)) return notify(`Tên ${name} đã tồn tại!`);
 
     const newPlayer: PlayerHistoryData = {
       index: playersArr.length + 1,
@@ -70,25 +72,25 @@ const ScreenAddPlayer: React.FC<ScreenAddPlayerProps> = ({ onNext, playersArr, s
   };
 
   const startGame = async () => {
-    if (playersArr.length < 2) return alert('Cần ít nhất 2 người chơi!');
-    if (!selectedSetId) return alert('Vui lòng chọn một bộ câu hỏi!');
+    if (playersArr.length < 2) return notify('Cần ít nhất 2 người chơi!');
+    if (!selectedSetId) return notify('Vui lòng chọn một bộ câu hỏi!');
 
     try {
       const res = await getMilraceQuestionSetById(selectedSetId);
       if (res.success) {
         if (!res.data.questions || res.data.questions.length === 0) {
-          alert('Bộ câu hỏi không có dữ liệu!');
+          notify('Bộ câu hỏi không có dữ liệu!');
           return;
         }
         setQuestionSet(res.data);
         shuffleArray();
         onNext();
       } else {
-        alert(res.message);
+        notify(res.message);
       }
     } catch (err) {
       console.error(err);
-      alert('Không thể tải bộ câu hỏi. Vui lòng thử lại.');
+      notify('Không thể tải bộ câu hỏi. Vui lòng thử lại.');
     }
   };
 

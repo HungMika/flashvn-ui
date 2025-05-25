@@ -11,9 +11,6 @@ interface ScreenLobbyProps {
 const ScreenLobby: FC<ScreenLobbyProps> = ({ onNext, onPopupHowtoplay }) => {
   return (
     <div id="lobby-screen" className="min-h-screen min-w-screen flex flex-col items-center justify-center">
-      <Link href="/admin/milrace" className="fixed top-3 right-4 bg-amber-300 px-4 py-2 rounded-full font-bold">
-        Admin
-      </Link>
       <div className="flex flex-col items-center justify-between">
         <img className="w-36 mb-5 md:w-44" src="/milrace/img/logo/flashvn.png" alt="FLASHVN LOGO" />
         <img className="img_milrace w-3xs md:w-md" src="/milrace/img/logo/milrace.png" alt="MILRACE LOGO" />
