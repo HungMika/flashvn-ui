@@ -9,7 +9,7 @@ import StartScreen from '@/features/dashboard/TrustOrSelf/components/StartScreen
 import ResultScreen from '@/features/dashboard/TrustOrSelf/components/ResultScreen';
 import QuestionScreen from '@/features/dashboard/TrustOrSelf/components/QuestionScreen';
 import FinishScreen from '@/features/dashboard/TrustOrSelf/components/FinishScreen';
-import { fetchAllQuestions, incrementTrustCount, incrementSelfCount } from '@/features/dashboard/TrustOrSelf/api/api';
+import { fetchAllQuestions, fetchQuestionById, incrementTrustCount, incrementSelfCount } from '@/features/dashboard/TrustOrSelf/api/api';
 
 export default function TrustGamePage() {
   const router = useRouter();
@@ -46,7 +46,7 @@ export default function TrustGamePage() {
 
   const updateState = (updates: Partial<typeof state>) => setState((prev) => ({ ...prev, ...updates }));
 
-  const handleSettings = useCallback(() => router.push('/login'), [router]);
+  const handleSettings = useCallback(() => router.push('/auth'), [router]);
 
   const fetchGameData = useCallback(async () => {
     try {
@@ -128,13 +128,27 @@ export default function TrustGamePage() {
     updateState({ showChoices: false, timerSeconds: null });
 
     try {
+      const trustCount = state.currentQuestion.trustCount ?? 50;
+      const selfCount = state.currentQuestion.selfCount ?? 50;
+
+      // Calculate percentage using pre-increment counts
+      const newTrustCount = choice === 'trust' ? trustCount + 1 : trustCount;
+      const newSelfCount = choice === 'self' ? selfCount + 1 : selfCount;
+      const total = newTrustCount + newSelfCount;
+      let percentage = total === 0 ? 0 : (choice === 'trust' ? newTrustCount : newSelfCount) / total * 100;
+      percentage = Number.isInteger(percentage) ? percentage : Number(percentage.toFixed(1));
+
+      // Calculate complementary percentage
+      const otherPercentage = 100 - percentage;
+      console.log(`Choice: ${choice}`);
+      console.log(`Pre-increment - Trust: ${trustCount}, Self: ${selfCount}`);
+      console.log(`Post-increment - Trust: ${newTrustCount}, Self: ${newSelfCount}, Total: ${total}`);
+      console.log(`Percentage: ${percentage}% (${choice}), Other: ${otherPercentage}%`);
       const updatedQuestion = await (choice === 'trust'
         ? incrementTrustCount(state.currentQuestion._id)
         : incrementSelfCount(state.currentQuestion._id));
 
-      const total = updatedQuestion.trustCount + updatedQuestion.selfCount;
-      const percentage = total === 0 ? 0 : Math.round((choice === 'trust' ? updatedQuestion.trustCount : updatedQuestion.selfCount) / total * 100);
-
+      console.log(`Database after update - Trust: ${updatedQuestion.trustCount}, Self: ${updatedQuestion.selfCount}`);
       updateState({ result: { percentage, choice }, errorMessage: null });
     } catch (error) {
       console.error('Lỗi cập nhật lựa chọn:', error);
@@ -208,7 +222,7 @@ export default function TrustGamePage() {
       )}
       {state.currentQuestion && !state.result && state.timerSeconds !== null && (
         <div
-          className={`absolute top-70 left-1/2 -translate-x-1/2 px-10 py-4 rounded-xl bg-blue-700 text-white text-6xl font-bold select-none shadow-lg z-50 border-4 border-blue-900 ${
+          className={`absolute mt-40 left-1/2 -translate-x-1/2 px-10 py-4 rounded-xl bg-blue-700 text-white text-6xl font-bold select-none shadow-lg z-50 border-4 border-blue-900 ${
             state.isLastThreeSeconds ? 'animate-pulse text-red-500 bg-red-700 border-red-900' : ''
           }`}
         >
@@ -226,7 +240,7 @@ export default function TrustGamePage() {
           </button>
           {state.showTimerMenu && (
             <div className="absolute bottom-12 right-0 bg-white rounded-lg shadow-lg flex flex-col z-50">
-              {[0.1, 2, 5, 10, 15, 30, 60].map((min) => (
+              {[0.5, 5, 10, 15, 30, 60].map((min) => (
                 <button
                   key={min}
                   className="px-6 py-2 text-[#1b1b62] hover:bg-[#feb622] hover:text-white font-bold text-lg"
@@ -235,7 +249,7 @@ export default function TrustGamePage() {
                     updateState({ timerSeconds: seconds, timeLeft: seconds, showTimerMenu: false });
                   }}
                 >
-                  {min === 0.1 ? '6s' : `${min}p`}
+                  {min === 0.5 ? '30s' : `${min}p`}
                 </button>
               ))}
             </div>

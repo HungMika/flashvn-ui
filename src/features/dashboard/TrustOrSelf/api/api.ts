@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { Question, QuestionWithCounts } from '@/features/dashboard/TrustOrSelf/components/types';
+import { QuestionWithCounts } from '@/features/dashboard/TrustOrSelf/components/types';
 
 const api = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api/trust-or-self`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}/trust-or-self`,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Gửi cookie
+  withCredentials: true,
 });
 
-// Interceptor để gắn token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -41,9 +40,14 @@ export const fetchQuestionById = async (id: string): Promise<QuestionWithCounts>
   }
 };
 
-export const createQuestion = async (content: string, title: string): Promise<QuestionWithCounts> => {
+export const createQuestion = async (
+  content: string,
+  title: string,
+  trustCount: number = 50,
+  selfCount: number = 50
+): Promise<QuestionWithCounts> => {
   try {
-    const response = await api.post('/', { content, title });
+    const response = await api.post('/', { content, title, trustCount, selfCount });
     return response.data;
   } catch (error: any) {
     console.error('createQuestion:', error.response?.status, error.message);
@@ -57,11 +61,12 @@ export const createQuestion = async (content: string, title: string): Promise<Qu
 export const updateQuestion = async (
   id: string,
   content: string,
-  trustCount?: number,
-  selfCount?: number
+  title: string,
+  trustCount: number = 50,
+  selfCount: number = 50
 ): Promise<QuestionWithCounts> => {
   try {
-    const response = await api.patch(`/${id}`, { content, trustCount, selfCount });
+    const response = await api.patch(`/${id}`, { content, title, trustCount, selfCount });
     return response.data;
   } catch (error: any) {
     console.error('updateQuestion:', error.response?.status, error.message);
@@ -94,16 +99,6 @@ export const incrementSelfCount = async (id: string): Promise<QuestionWithCounts
     return response.data;
   } catch (error: any) {
     console.error('incrementSelfCount:', error.response?.status, error.message);
-    throw error;
-  }
-};
-
-export const resetCounts = async (id: string): Promise<QuestionWithCounts> => {
-  try {
-    const response = await api.patch(`/${id}/reset`, {});
-    return response.data;
-  } catch (error: any) {
-    console.error('resetCounts:', error.response?.status, error.message);
     throw error;
   }
 };

@@ -31,20 +31,20 @@ export default function QuestionScreen({
         <FaQuestion />
       </button>
 
-      <div className="bg-white text-black p-8 pt-20 rounded-lg shadow-lg max-w-5xl w-11/12 text-center mb-5 mt-0 relative z-10">
+      <div className="bg-white text-black p-8 pt-20 rounded-lg shadow-lg max-w-5xl w-11/12 text-center mb-15 mt-0 relative z-10">
         <p className="text-2xl font-bold">{currentQuestion?.content}</p>
       </div>
 
       {showChoices && (
         <div className="flex gap-40 justify-center w-full max-w-3xl mt-10">
-          <div className="flex flex-col items-center w-48 cursor-pointer">
+          <div className="flex flex-col items-center w-69 cursor-pointer">
             <button
               onClick={() => {
                 console.log('Trust click');
                 onChoice('trust');
               }}
             >
-              <Image src="/trust-button.png" alt="Trust" width={120} height={120} className="w-36 h-36 cursor-pointer" />
+              <Image src="/trust-button.png" alt="Trust" width={120} height={120} className="w-48 h-48 cursor-pointer" />
             </button>
             <span className="text-white text-4xl font-bold mt-4 text-center w-full">Trust</span>
           </div>
@@ -55,7 +55,7 @@ export default function QuestionScreen({
                 onChoice('self');
               }}
             >
-              <Image src="/self-button.png" alt="Self" width={120} height={120} className="w-36 h-36 cursor-pointer" />
+              <Image src="/self-button.png" alt="Self" width={120} height={120} className="w-48 h-48 cursor-pointer" />
             </button>
             <span className="text-white text-4xl font-bold mt-4 text-center w-full">Self</span>
           </div>
