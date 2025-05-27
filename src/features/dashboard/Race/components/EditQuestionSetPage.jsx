@@ -3,7 +3,7 @@ import {
   createMilraceQuestionSet,
   getMilraceQuestionSetById,
   updateMilraceQuestionSet,
-} from '@/features/milrace/api/milraceQuestionSet';
+} from '@/features/dashboard/Race/api/milraceQuestionSet';
 import { useModal } from '@/lib/ModalContext';
 import { useEffect, useState } from 'react';
 

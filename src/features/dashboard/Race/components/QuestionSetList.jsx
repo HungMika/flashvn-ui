@@ -1,5 +1,5 @@
 'use client';
-import { deleteMilraceQuestionSet, getAllMilraceQuestionSets } from '@/features/milrace/api/milraceQuestionSet';
+import { deleteMilraceQuestionSet, getAllMilraceQuestionSets } from '@/features/dashboard/Race/api/milraceQuestionSet';
 import { useModal } from '@/lib/ModalContext';
 import { useEffect, useState } from 'react';
 

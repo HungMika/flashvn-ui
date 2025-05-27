@@ -1,5 +1,5 @@
 'use client';
-import { createMilraceQuestionSet } from '@/features/milrace/api/milraceQuestionSet';
+import { createMilraceQuestionSet } from '@/features/dashboard/Race/api/milraceQuestionSet';
 import { useModal } from '@/lib/ModalContext';
 import { useState } from 'react';
 
@@ -14,7 +14,7 @@ export default function AddQuestionSetPage({ onBack }) {
       ans: 'A',
     },
   ]);
-  
+
   const addQuestion = () => {
     const nextIndex = questions.length + 1;
     setQuestions([
