@@ -20,7 +20,7 @@ export default function FinishScreen({ onReplay, onSettings, onShowRules }: Fini
       >
         Chơi lại
       </button>
-      <button className="absolute bottom-5 right-5 text-white text-2xl cursor-pointer" onClick={onSettings}><FaCog /></button>
+      <button className="absolute bottom-5 right-5 w-12 h-12 bg-[#1b1b62] rounded-full flex items-center justify-center text-white text-2xl hover:bg-[#feb622] transition-colors duration-300 cursor-pointer" onClick={onSettings}><FaCog /></button>
       <button className="absolute top-5 right-5 w-10 h-10 bg-[#1b1b62] rounded-full flex items-center justify-center text-white text-xl hover:bg-[#feb622] transition-colors duration-300 cursor-pointer" onClick={onShowRules}>
         <FaQuestion />
       </button>

@@ -1,6 +1,7 @@
-import React from 'react'; 
+import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { ICardData, ISuggestData } from '@/features/dashboard/Teller/components/types';
+import Image from 'next/image'; 
 
 interface AdminTableProps {
   data: ICardData[] | ISuggestData[];
@@ -54,9 +55,14 @@ const AdminTable: React.FC<AdminTableProps> = ({ data, table, onEdit, onDelete }
                   </th>
                 </>
               ) : (
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  {getTableHeader()}
-                </th>
+                <>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {getTableHeader()}
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Hình ảnh
+                  </th>
+                </>
               )}
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Thao tác
@@ -83,7 +89,32 @@ const AdminTable: React.FC<AdminTableProps> = ({ data, table, onEdit, onDelete }
                     </td>
                   </>
                 ) : (
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{(item as ICardData).title}</td>
+                  <>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{(item as ICardData).title}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {(item as ICardData).image ? (
+                        <Image
+                          src={`/${(item as ICardData).image}`} 
+                          alt={(item as ICardData).title}
+                          width={50} 
+                          height={50} 
+                          className="object-cover rounded"
+                          onError={(e) => {
+                            console.error('Image failed to load:', (item as ICardData).image);
+                            e.currentTarget.src = '/default-image.png'; 
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          src="/default-image.png" 
+                          alt="Default"
+                          width={50}
+                          height={50}
+                          className="object-cover rounded"
+                        />
+                      )}
+                    </td>
+                  </>
                 )}
                 <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                   <button
