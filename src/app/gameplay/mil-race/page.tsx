@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import ScreenLobby from '@/features/milrace/components/ScreenLobby';
-import ScreenAddPlayer from '@/features/milrace/components/ScreenAddPlayer';
-import ScreenMillRace from '@/features/milrace/components/ScreenMillRace';
-import ScreenMilRaceResult from '@/features/milrace/components/ScreenMilRaceResult';
-import PopupHowtoplay from '@/features/milrace/components/PopupHowtoplay';
+import ScreenLobby from '@/features/dashboard/Race/components/ScreenLobby';
+import ScreenAddPlayer from '@/features/dashboard/Race/components/ScreenAddPlayer';
+import ScreenMillRace from '@/features/dashboard/Race/components/ScreenMillRace';
+import ScreenMilRaceResult from '@/features/dashboard/Race/components/ScreenMilRaceResult';
+import PopupHowtoplay from '@/features/dashboard/Race/components/PopupHowtoplay';
 import { PlayerHistoryData, MilraceQuestionSet } from '@/types/milrace';
 import './milrace.css';
 import { ModalProvider } from '@/lib/ModalContext';

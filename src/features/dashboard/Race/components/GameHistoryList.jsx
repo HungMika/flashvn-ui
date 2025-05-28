@@ -1,5 +1,5 @@
 'use client';
-import { getAllMilraceGameHistories } from '@/features/milrace/api/milraceGameHistory';
+import { getAllMilraceGameHistories } from '@/features/dashboard/Race/api/milraceGameHistory';
 import { useModal } from '@/lib/ModalContext';
 import { useEffect, useState } from 'react';
 

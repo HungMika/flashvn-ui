@@ -22,6 +22,14 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/gameplay/mil-race/page.tsx", "src/app/dashboard/mil-race/page.jsx", "src/features/milrace/components/ScreenAddPlayer.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/gameplay/mil-race/page.tsx",
+    "src/app/dashboard/mil-race/page.jsx",
+    "src/features/dashboard/Race/components/ScreenAddPlayer.tsx"
+  ],
   "exclude": ["node_modules"]
 }
