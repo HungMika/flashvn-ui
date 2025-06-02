@@ -68,6 +68,7 @@ const Page: React.FC = () => {
   const [dealtCards, setDealtCards] = useState<ICardData[]>([]);
   const [showQuestionBox, setShowQuestionBox] = useState<boolean>(false);
   const [fontScale, setFontScale] = useState<number>(1);
+  const [cardsPosition, setCardsPosition] = useState<'initial' | 'down'>('initial');
 
   const [cardPool, setCardPool] = useState<{
     times: ICardData[];
@@ -128,6 +129,7 @@ const Page: React.FC = () => {
     setDealtCards([]);
     setCards([]);
     setShowQuestionBox(false);
+    setCardsPosition('initial');
   };
 
   const dealCards = () => {
@@ -147,6 +149,7 @@ const Page: React.FC = () => {
     setFlippedCards([false, false, false, false]);
     setShowQuestionBox(false);
     setQuestion('');
+    setCardsPosition('initial');
 
     const newCards: ICardData[] = [
       generateRandomCard('times'),
@@ -167,7 +170,8 @@ const Page: React.FC = () => {
 
           setTimeout(() => {
             setGameState('flipping');
-            newCards.forEach((_, flipIndex) => {
+            const flipOrder = [0, 1, 2, 3]; // Left to right
+            flipOrder.forEach((flipIndex, i) => {
               setTimeout(() => {
                 setFlippedCards((prev) => {
                   const newFlipped = [...prev];
@@ -175,31 +179,34 @@ const Page: React.FC = () => {
                   return newFlipped;
                 });
 
-                if (flipIndex === newCards.length - 1) {
-                  const timeTitle = newCards[0]?.title || 'một thời điểm nào đó';
-                  const majorTitle = newCards[1]?.title || 'một ngành nào đó';
-                  const technologyTitle = newCards[2]?.title || 'một công nghệ nào đó';
-                  const impactTitle = newCards[3]?.title || 'một tác động nào đó';
+                if (i === flipOrder.length - 1) {
+                  setCardsPosition('down');
+                  setTimeout(() => {
+                    const timeTitle = newCards[0]?.title || 'một thời điểm nào đó';
+                    const majorTitle = newCards[1]?.title || 'một ngành nào đó';
+                    const technologyTitle = newCards[2]?.title || 'một công nghệ nào đó';
+                    const impactTitle = newCards[3]?.title || 'một tác động nào đó';
 
-                  let generatedQuestion: string;
-                  if (timeTitle === 'Con người có thể sống trên Mặt trăng') {
-                    generatedQuestion = `${timeTitle}, khi ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} như thế nào?`;
-                  } else if (timeTitle === 'Sau Thế chiến thứ 3') {
-                    generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} ra sao?`;
-                  } else if (impactTitle === 'mâu thuẫn xã hội') {
-                    generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} như thế nào?`;
-                  } else if (impactTitle === 'khủng hoảng kinh tế') {
-                    generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} ra sao?`;
-                  } else {
-                    generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} gì?`;
-                  }
+                    let generatedQuestion: string;
+                    if (timeTitle === 'Con người có thể sống trên Mặt trăng') {
+                      generatedQuestion = `${timeTitle}, khi ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} như thế nào?`;
+                    } else if (timeTitle === 'Sau Thế chiến thứ 3') {
+                      generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} ra sao?`;
+                    } else if (impactTitle === 'mâu thuẫn xã hội') {
+                      generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} như thế nào?`;
+                    } else if (impactTitle === 'khủng hoảng kinh tế') {
+                      generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} ra sao?`;
+                    } else {
+                      generatedQuestion = `${timeTitle}, ${majorTitle} có sự hỗ trợ của công nghệ ${technologyTitle} sẽ ${impactTitle} gì?`;
+                    }
 
-                  setQuestion(generatedQuestion);
-                  setShowQuestionBox(true);
-                  setGameState('flipped');
-                  toast.info('Tất cả bài đã lật! Hãy thảo luận về câu hỏi tiên tri!');
+                    setQuestion(generatedQuestion);
+                    setShowQuestionBox(true);
+                    setGameState('flipped');
+                    toast.info('Tất cả bài đã lật! Hãy thảo luận về câu hỏi tiên tri!');
+                  }, 500);
                 }
-              }, flipIndex * 500);
+              }, i * 500);
             });
           }, 2000);
         }
@@ -208,13 +215,14 @@ const Page: React.FC = () => {
   };
 
   const resetGame = () => {
-    setGameState('initial');
-    setShowStartScreen(true);
+    setGameState('emptySlots');
+    setShowStartScreen(false);
     setCards([]);
     setQuestion('');
     setFlippedCards([false, false, false, false]);
     setDealtCards([]);
     setShowQuestionBox(false);
+    setCardsPosition('initial');
   };
 
   const openSuggestion = () => {
@@ -261,20 +269,18 @@ const Page: React.FC = () => {
   };
 
   const goToLogin = () => {
-    router.push('/');
+    router.push('/auth');
   };
 
   const suggestionContent = outlines[currentOutlineIndex] ? (
-    <div className="flex flex-col items-center p-4">
-      <p className="text-blue-600 font-semibold mb-2">
-        {outlines[currentOutlineIndex].step} - {outlines[currentOutlineIndex].time}
+    <div className="flex flex-col items-start p-4">
+      <p className="text-center text-3xl font-semibold mb-2">
+        Bước {outlines[currentOutlineIndex].step}: {outlines[currentOutlineIndex].title} (
+        {outlines[currentOutlineIndex].time})
       </p>
-      <p className="font-bold text-xl mb-2 text-center">{outlines[currentOutlineIndex].title}</p>
-      <p className="text-center mb-4">{outlines[currentOutlineIndex].content}</p>
-      <p className="text-gray-600 italic text-sm">Gợi ý: {outlines[currentOutlineIndex].suggest}</p>
-      {outlines[currentOutlineIndex].emoji && (
-        <span className="text-5xl mt-4">{outlines[currentOutlineIndex].emoji}</span>
-      )}
+      <p className="text-left text-xl mb-4">{outlines[currentOutlineIndex].content}</p>
+      <p className="w-full text-center font-semibold text-2xl mb-2">Gợi ý</p>
+      <p className="text-left text-xl">{outlines[currentOutlineIndex].suggest}</p>
     </div>
   ) : (
     <p>Đang tải gợi ý...</p>
@@ -283,13 +289,13 @@ const Page: React.FC = () => {
   const howToPlayContent = (
     <div className="text-left p-4">
       <p className="mb-2">
-        Future Teller là một trò chơi kích thích tư duy, thảo luận nhóm để đưa ra các dự đoán về tương lai theo các câu hỏi
-        tương ứng với 4 yếu tố gồm: Thời điểm, Ngành, Công nghệ, và Tác động.
+        Future Teller là một trò chơi kích thích tư duy, thảo luận nhóm để đưa ra các dự đoán về tương lai theo các câu
+        hỏi tương ứng với 4 yếu tố gồm: Thời điểm, Ngành, Công nghệ, và Tác động.
       </p>
       <p className="mb-2">
-        Khi chọn ‘Bắt đầu’, mỗi nhóm sẽ được phát 4 thẻ bài tương ứng với 4 yếu tố khác nhau được ghép thành câu hỏi hoàn
-        chỉnh. Sau khi (các) nhóm có đủ câu hỏi, giáo viên/ quản trò có thể chọn nút ‘Gợi ý thảo luận’ để dẫn dắt cuộc
-        thảo luận.
+        Khi chọn ‘Bắt đầu’, mỗi nhóm sẽ được phát 4 thẻ bài tương ứng với 4 yếu tố khác nhau được ghép thành câu hỏi
+        hoàn chỉnh. Sau khi (các) nhóm có đủ câu hỏi, giáo viên/ quản trò có thể chọn nút ‘Gợi ý thảo luận’ để dẫn dắt
+        cuộc thảo luận.
       </p>
     </div>
   );
@@ -313,18 +319,18 @@ const Page: React.FC = () => {
 
       {!showStartScreen && gameState === 'emptySlots' && <WaitScreen onDeal={dealCards} />}
 
-      {!showStartScreen &&
-        (gameState === 'dealing' || gameState === 'dealt' || gameState === 'flipping') && (
-          <DealScreen
-            gameState={gameState}
-            cards={cards}
-            dealtCards={dealtCards}
-            flippedCards={flippedCards}
-            showQuestionBox={showQuestionBox}
-          />
-        )}
+      {!showStartScreen && (gameState === 'dealing' || gameState === 'dealt' || gameState === 'flipping') && (
+        <DealScreen
+          gameState={gameState}
+          cards={cards}
+          dealtCards={dealtCards}
+          flippedCards={flippedCards}
+          showQuestionBox={showQuestionBox}
+          cardsPosition={cardsPosition}
+        />
+      )}
 
-      {!showStartScreen && gameState === 'flipped' && showQuestionBox && (
+      {!showStartScreen && gameState === 'flipped' && (
         <ShowScreen
           cards={cards}
           dealtCards={dealtCards}
@@ -333,6 +339,8 @@ const Page: React.FC = () => {
           onReset={resetGame}
           onSuggest={openSuggestion}
           fontScale={fontScale}
+          showQuestionBox={showQuestionBox}
+          cardsPosition={cardsPosition}
         />
       )}
 
@@ -345,20 +353,9 @@ const Page: React.FC = () => {
         onNext={nextSuggestion}
         onPrev={prevSuggestion}
         step={currentOutlineIndex + 1}
-        fontScale={fontScale}
-        onIncreaseSize={increaseFontSize}
-        onDecreaseSize={decreaseFontSize}
       />
 
-      <GamePopup
-        isOpen={isHowToPlayOpen}
-        onClose={closeHowToPlay}
-        title="Cách chơi"
-        content={howToPlayContent}
-        fontScale={fontScale}
-        onIncreaseSize={increaseFontSize}
-        onDecreaseSize={decreaseFontSize}
-      />
+      <GamePopup isOpen={isHowToPlayOpen} onClose={closeHowToPlay} title="Cách chơi" content={howToPlayContent} />
 
       <ToastContainer
         position="top-right"

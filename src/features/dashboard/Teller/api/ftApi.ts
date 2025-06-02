@@ -1,93 +1,147 @@
 import axios from 'axios';
 import { ICardData, ISuggestData } from '@/features/dashboard/Teller/components/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:5000/api/future-teller';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
 
 const ftApi = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
 });
 
 ftApi.interceptors.request.use(
   (config) => {
-    // Không gửi token cho các API công khai
-    if (
-      config.method === 'get' &&
-      (config.url?.includes('/cards/group') || config.url?.includes('/suggests/'))
-    ) {
-      return config;
-    }
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
-);
-
-ftApi.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const message = error.response?.data?.message || error.message || 'Đã xảy ra lỗi';
-    switch (error.response?.status) {
-      case 400:
-        throw new Error(`Dữ liệu không hợp lệ: ${message}`);
-      case 401:
-        throw new Error('Vui lòng đăng nhập lại');
-      case 404:
-        return { data: [] }; // Trả về mảng rỗng cho 404
-      case 409:
-        throw new Error(`Dữ liệu đã tồn tại: ${message}`);
-      default:
-        throw new Error(`Lỗi máy chủ: ${message}`);
-    }
-  }
+  (error) => Promise.reject(error),
 );
 
 export const ftCardApi = {
   getAllByGroup: async (group: string): Promise<ICardData[]> => {
-    const response = await ftApi.get(`/cards/group?query=${group}`);
-    return response.data;
+    if (!group?.trim()) return [];
+    try {
+      const response = await ftApi.get(`/api/future-teller/cards/group?query=${group}`);
+      console.log('API DATA:', response.data); 
+      if (Array.isArray(response.data)) {
+        return response.data;
+      }
+      if (response.data && Array.isArray(response.data.data)) {
+        return response.data.data;
+      }
+      return [];
+    } catch (error: any) {
+      throw error;
+    }
   },
-  getById: async (id: string): Promise<ICardData> => {
-    const response = await ftApi.get(`/cards/${id}`);
-    return response.data;
+
+  getCardById: async (id: string): Promise<ICardData> => {
+    try {
+      const response = await ftApi.get(`/api/future-teller/cards/${id}`);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
   },
-  create: async (cardData: FormData): Promise<ICardData> => {
-    const response = await ftApi.post('/cards/', cardData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return response.data;
+
+  createCard: async (data: { title: string; group: string; image: File }): Promise<ICardData> => {
+    try {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('group', data.group);
+      formData.append('image', data.image);
+      const response = await ftApi.post('/api/future-teller/cards', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.data?.message === 'Future Teller card already exists!') {
+        throw new Error('Thẻ đã tồn tại với thông tin này!');
+      }
+      throw error;
+    }
   },
-  update: async (id: string, cardData: FormData): Promise<ICardData> => {
-    const response = await ftApi.patch(`/cards/${id}`, cardData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return response.data;
+
+  updateCard: async (id: string, data: { title: string; group: string; image?: File }): Promise<ICardData> => {
+    try {
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('group', data.group);
+      if (data.image) formData.append('image', data.image);
+      const response = await ftApi.patch(`/api/future-teller/cards/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.data?.message === 'Future Teller card already exists!') {
+        throw new Error('Thẻ đã tồn tại với thông tin này!');
+      }
+      throw error;
+    }
   },
-  delete: async (id: string): Promise<void> => {
-    await ftApi.delete(`/cards/${id}`);
+
+  deleteCard: async (id: string): Promise<void> => {
+    try {
+      await ftApi.delete(`/api/future-teller/cards/${id}`);
+    } catch (error: any) {
+      throw error;
+    }
   },
 };
 
 export const ftSuggestApi = {
   getAll: async (): Promise<ISuggestData[]> => {
-    const response = await ftApi.get('/suggests/');
-    return response.data;
+    try {
+      const response = await ftApi.get('/api/future-teller/suggests');
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
   },
-  getById: async (id: string): Promise<ISuggestData> => {
-    const response = await ftApi.get(`/suggests/${id}`);
-    return response.data;
+
+  getSuggestById: async (id: string): Promise<ISuggestData> => {
+    try {
+      const response = await ftApi.get(`/api/future-teller/suggests/${id}`);
+      return response.data;
+    } catch (error: any) {
+      throw error;
+    }
   },
-  create: async (suggestData: ISuggestData): Promise<ISuggestData> => {
-    const response = await ftApi.post('/suggests/', suggestData);
-    return response.data;
+
+  createSuggest: async (data: ISuggestData): Promise<ISuggestData> => {
+    try {
+      const response = await ftApi.post('/api/future-teller/suggests', data);
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.data?.message === 'Future Teller suggest already exists!') {
+        throw new Error('Đề xuất đã tồn tại!');
+      }
+      throw error;
+    }
   },
-  update: async (id: string, suggestData: ISuggestData): Promise<ISuggestData> => {
-    const response = await ftApi.patch(`/suggests/${id}`, suggestData);
-    return response.data;
+
+  updateSuggest: async (id: string, data: ISuggestData): Promise<ISuggestData> => {
+    try {
+      const response = await ftApi.patch(`/api/future-teller/suggests/${id}`, data);
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.data?.message === 'Future Teller suggest already exists!') {
+        throw new Error('Đề xuất đã tồn tại!');
+      }
+      throw error;
+    }
   },
-  delete: async (id: string): Promise<void> => {
-    await ftApi.delete(`/suggests/${id}`);
+
+  deleteSuggest: async (id: string): Promise<void> => {
+    try {
+      await ftApi.delete(`/api/future-teller/suggests/${id}`);
+    } catch (error: any) {
+      throw error;
+    }
   },
 };

@@ -11,7 +11,7 @@ const WaitScreen: React.FC<WaitScreenProps> = ({ onDeal }) => {
       style={{ backgroundImage: `url('/Background.jpg')` }}
     >
       <div className="relative w-full max-w-screen-2xl h-[calc(100vw*9/16)] max-h-[80vh] aspect-video flex flex-col items-center justify-center p-4">
-        <div className="p-4 rounded-2xl shadow-xl border-2 border-black mb-1 max-w-xl w-full text-center animate-fade-in-up">
+        <div className="p-4 bg-white rounded-2xl shadow-xl border-2 border-black mb-1 max-w-xl w-full text-center animate-fade-in-up">
           <p className="text-xl font-bold text-black">Bạn đã sẵn sàng cho câu hỏi chưa nào?</p>
         </div>
         <div className="flex justify-center gap-4 sm:gap-6 flex-wrap mb-10">
