@@ -9,28 +9,28 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const logout = useAuthStore((state) => state.logout);
+  // const router = useRouter();
+  // const logout = useAuthStore((state) => state.logout);
 
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ['auth', 'me'],
-    queryFn: getCurrentUser,
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
+  // const { isLoading, isError, data } = useQuery({
+  //   queryKey: ['auth', 'me'],
+  //   queryFn: getCurrentUser,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  // });
 
-  useEffect(() => {
-    if (!isLoading && (isError || !data?.isAuthenticated)) {
-      toast.error('Session expired.');
-      logout();
-      router.replace('/auth');
-      toast.error('Redirecting to login page...');
-    }
-  }, [isLoading, isError, data, logout, router]);
+  // useEffect(() => {
+  //   if (!isLoading && (isError || !data?.isAuthenticated)) {
+  //     toast.error('Session expired.');
+  //     logout();
+  //     router.replace('/auth');
+  //     toast.error('Redirecting to login page...');
+  //   }
+  // }, [isLoading, isError, data, logout, router]);
 
-  if (isLoading || isError || !data?.isAuthenticated) {
-    return null;
-  }
+  // if (isLoading || isError || !data?.isAuthenticated) {
+  //   return null;
+  // }
 
   return (
     <>

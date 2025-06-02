@@ -1,19 +1,24 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import AddEditPopupBase from '@/features/dashboard/Teller/components/AddEditPopupBase';
-import { AddEditCardFormProps, ICardData } from '@/features/dashboard/Teller/components/types';
+import AddEditPopupBase from './AddEditPopupBase';
+import { AddEditCardFormProps, ICardFormData } from '@/features/dashboard/Teller/components/types';
 
-const AddEditCardForm: React.FC<AddEditCardFormProps> = ({ 
-  isOpen, 
-  onClose, 
-  onSave, 
-  initialData, 
-  table 
+const AddEditCardForm: React.FC<AddEditCardFormProps> = ({
+  isOpen,
+  onClose,
+  onSave,
+  initialData,
+  table,
 }) => {
-  const [formData, setFormData] = useState<ICardData>({
+  const [formData, setFormData] = useState<{
+    title: string;
+    group: 'times' | 'majors' | 'technologies' | 'impacts';
+  }>({
     title: '',
     group: table,
-    image: '',
   });
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string>('');
 
@@ -21,64 +26,69 @@ const AddEditCardForm: React.FC<AddEditCardFormProps> = ({
     if (initialData && isOpen) {
       setFormData({
         title: initialData.title,
-        group: initialData.group,
-        image: initialData.image,
-        _id: initialData._id,
-        id: initialData.id,
+        group: initialData.group as 'times' | 'majors' | 'technologies' | 'impacts',
       });
-      setImagePreview(typeof initialData.image === 'string' ? initialData.image : null);
+      setImagePreview(typeof initialData.image === 'string' && initialData.image.startsWith('http') ? initialData.image : null);
+      setImageFile(null);
     } else {
-      setFormData({ title: '', group: table, image: '' });
+      setFormData({ title: '', group: table });
       setImagePreview(null);
+      setImageFile(null);
     }
     setError('');
   }, [initialData, isOpen, table]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, files } = e.target as HTMLInputElement;
-
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target;
     if (name === 'image' && files && files[0]) {
       const file = files[0];
-      setFormData((prev) => ({ ...prev, image: file }));
+      setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
       setError('');
-    } else if (name !== 'image') {
+    } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   const handleSubmit = () => {
     if (!formData.title) {
-      setError('Tiêu đề là bắt buộc');
+      setError('Title is required');
       return;
     }
-    if (!formData.image && !initialData) {
-      setError('Hình ảnh là bắt buộc');
+    if (!initialData && !imageFile) {
+      setError('Image is required');
       return;
     }
-    const dataToSave = { ...formData, group: table };
+
+    const dataToSave: ICardFormData = {
+      title: formData.title.trim(),
+      group: table,
+      image: imageFile || (initialData?.image as string) || '',
+    };
+
+    console.log('Saving card data:', dataToSave);
     onSave(dataToSave);
     onClose();
   };
 
   const getPopupTitle = () => {
-    const action = initialData ? 'Sửa' : 'Thêm';
+    const action = initialData ? 'Repair' : 'Add';
     let tableTitle = '';
     switch (table) {
       case 'times':
-        tableTitle = 'Thời điểm';
+        tableTitle = 'Time';
         break;
       case 'majors':
-        tableTitle = 'Ngành';
+        tableTitle = 'Major';
         break;
       case 'technologies':
-        tableTitle = 'Công nghệ';
+        tableTitle = 'Technology';
         break;
       case 'impacts':
-        tableTitle = 'Tác động';
+        tableTitle = 'Impact';
         break;
       default:
-        tableTitle = 'Dữ liệu';
+        tableTitle = 'Data';
     }
     return `${action} ${tableTitle}`;
   };
@@ -88,20 +98,20 @@ const AddEditCardForm: React.FC<AddEditCardFormProps> = ({
       <div className="flex flex-col space-y-4">
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-          Tiêu đề:
+          Title:
         </label>
         <input
           type="text"
           id="title"
           name="title"
-          value={formData.title || ''}
+          value={formData.title}
           onChange={handleChange}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           required
         />
 
         <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-          Hình ảnh:
+          Choose image:
         </label>
         <input
           type="file"
@@ -113,7 +123,7 @@ const AddEditCardForm: React.FC<AddEditCardFormProps> = ({
         />
 
         {imagePreview && (
-          <img src={imagePreview} alt="Preview" className="mt-2 w-20 h-20 object-cover rounded-md" />
+          <img src={imagePreview} alt="Preview" className="mt-2 w-20 h-20 object-cover rounded-md" onError={() => setImagePreview(null)} />
         )}
       </div>
 
@@ -122,13 +132,13 @@ const AddEditCardForm: React.FC<AddEditCardFormProps> = ({
           onClick={handleSubmit}
           className="px-4 py-2 bg-blue-400 cursor-pointer text-white rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          Lưu
+          Save
         </button>
         <button
           onClick={onClose}
           className="px-4 py-2 cursor-pointer bg-orange-400 text-white rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
         >
-          Hủy
+          Cancle
         </button>
       </div>
     </AddEditPopupBase>

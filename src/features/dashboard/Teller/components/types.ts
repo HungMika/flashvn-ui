@@ -5,12 +5,15 @@ export interface BasePopupProps<T> {
   initialData: T | null;
 }
 
-export interface ICardData {
-  _id?: string;
-  id?: string;
+export interface ICardFormData {
   title: string;
   group: string;
-  image: File | string; // File chỉ sử dụng form, api trả về string
+  image: string | File;
+}
+
+export interface ICardData extends ICardFormData {
+  _id?: string;        
+  imageUrl?: string;      
 }
 
 export interface ISuggestData {
@@ -21,12 +24,10 @@ export interface ISuggestData {
   title: string;
   content: string;
   suggest: string;
-  emoji?: string;
 }
 
-export interface AddEditCardFormProps extends BasePopupProps<ICardData> {
+export interface AddEditCardFormProps extends BasePopupProps<ICardFormData> {
   table: 'times' | 'majors' | 'technologies' | 'impacts';
 }
 
-export interface AddEditSuggestFormProps extends BasePopupProps<ISuggestData> {
-}
+export interface AddEditSuggestFormProps extends BasePopupProps<ISuggestData> {}
