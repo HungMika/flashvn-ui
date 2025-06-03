@@ -12,6 +12,8 @@ const routes = [
   { name: 'Future Teller', path: 'future-teller' },
   { name: 'Mil Race', path: 'mil-race' },
   { name: 'Trust-or-Self', path: 'trust-or-self' },
+  { name: 'Post', path: 'posts' },
+  { name: 'Social Media', path: 'social-links' },
 ];
 
 export default function DashboardPage() {
