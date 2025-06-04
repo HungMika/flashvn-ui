@@ -1,22 +1,44 @@
+'use client'
+
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import QuestionTag from "@/features/dashboard/Cyber/components/QuestionTag";
+import { getQuestions } from "@/features/dashboard/Cyber/api/question"; 
+import { useEffect, useState } from "react";
+
+type Question = {
+  _id: string;
+  topic: string;
+  question: string;
+  answers: string[];
+  rightAnswer: string
+}
 
 export default function CyberDashboardPage() {
+  const [questions, setQuestions] = useState<Question[]>([])
+  useEffect(()=>{
+    const fetchQuestions = async () => {
+      const data = await getQuestions();
+      setQuestions(data);
+    };
+    fetchQuestions();
+  }, [])
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="bg-blue-500 min-h-10 min-w-full mt-15 font-bold text-5xl text-center" style={{color: "#5202ba"}}>
+      <div className="min-h-10 min-w-full mt-15 font-bold text-5xl text-center" style={{color: "#5202ba"}}>
         Cyberfighter Quizes
       </div>
-      <div className="bg-yellow-500 mt-15 min-h-150 min-w-9/10 overflow-y-scroll">
+      <div className="mt-15 min-h-150 max-h-150 min-w-9/10 overflow-y-scroll">
         <div className="grid grid-cols-2 gap-4">
-          <QuestionTag id={1} question="What is" answers={["Option 1", "Option 2", "Option 3"]} rightAnswer="Option 2"></QuestionTag>
+          {questions.map((aQuestion, index)=>(
+            <QuestionTag key={aQuestion._id} id={aQuestion._id} ordinalNumber={(index + 1).toString()} topic={aQuestion.topic} question={aQuestion.question} answers={aQuestion.answers} rightAnswer={aQuestion.rightAnswer}></QuestionTag>
+          ))}
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center bg-blue-500 mt-10 min-h-15 min-w-full">
+      <div className="flex flex-row items-center justify-center mt-10 min-h-15 min-w-full">
         <Dialog>
           <DialogTrigger asChild>
-            <button className="flex flex-row items-center justify-center bg-red-500 min-h-15 min-w-60 rounded-3xl cursor-pointer">
-              <label className="font-semibold text-xl cursor-pointer">Add new quiz</label>
+            <button className="flex flex-row items-center justify-center min-h-15 min-w-60 rounded-3xl cursor-pointer" style={{backgroundColor: "#5202ba"}}>
+              <label className="font-semibold text-xl text-white cursor-pointer">Add new quiz</label>
             </button>
           </DialogTrigger>
           <DialogContent>

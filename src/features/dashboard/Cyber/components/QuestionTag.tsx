@@ -5,21 +5,24 @@ import recycleBinImg from "../../../../../public/icons8-recycle-bin-100.png"
 import { Button } from "@/components/ui/button";
 
 type QuestionTagProps = {
-  id: number;
+  id: string;
+  ordinalNumber: string,
+  topic: string;
   question: string;
   answers: string[];
   rightAnswer: string;
 };
 
-export default function QuestionTag({id, question, answers, rightAnswer} : QuestionTagProps){
+export default function QuestionTag({id, ordinalNumber, topic, question, answers, rightAnswer} : QuestionTagProps){
+  var rightAnswerIdx = answers.indexOf(rightAnswer);
     return(
-        <div className="flex flex-row min-h-25 min-w-2/5 rounded-xl">
-            <div className="flex bg-red-500 min-h-full min-w-4/5 items-center">
+        <div className="flex flex-row min-h-25 min-w-2/5 rounded-xl bg-gray-100 shadow-lg">
+            <div className="flex min-h-full min-w-4/5 items-center">
               <label className="ml-5 text-xl text-wrap">
-                Question {id}. {question}
+                Question {ordinalNumber}. {question}
               </label>
             </div>
-            <div className="flex flex-row gap-5 items-center justify-center bg-green-500 min-h-full min-w-1/5">
+            <div className="flex flex-row gap-5 items-center justify-center min-h-full min-w-1/5">
               <Dialog>
                 <DialogTrigger asChild>
                     <button className="flex items-center justify-center min-w-1/5 min-h-1/5 bg-white cursor-pointer">
@@ -34,7 +37,7 @@ export default function QuestionTag({id, question, answers, rightAnswer} : Quest
                     <div className="flex flex-col gap-6">
                       <div>
                         <label className="block text-sm font-medium">Question</label>
-                        <input type="text" className="w-full border px-3 py-2 rounded mt-1" defaultValue="What is 2 + 2?" />
+                        <input type="text" className="w-full border px-3 py-2 rounded mt-1" defaultValue={question}/>
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="block text-sm font-medium">Answers</label>
@@ -44,7 +47,7 @@ export default function QuestionTag({id, question, answers, rightAnswer} : Quest
                             <input
                               type="text"
                               className="flex-1 border px-3 py-2 rounded"
-                              defaultValue={["3", "4", "5", "6"][index]}
+                              defaultValue={answers[index]}
                             />
                           </div>
                         ))}
@@ -52,14 +55,21 @@ export default function QuestionTag({id, question, answers, rightAnswer} : Quest
                       <div>
                         <label className="block text-sm font-medium mb-2">Right Answer</label>
                         <div className="flex gap-3">
-                          {["A", "B", "C", "D"].map((opt) => (
-                            <button
-                              key={opt}
-                              className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-green-500 hover:text-white hover:border-green-600 transition cursor-pointer"
-                            >
-                              {opt}
-                            </button>
-                          ))}
+                          {["A", "B", "C", "D"].map((opt, index) => {
+                            const isSelected = index === rightAnswerIdx;
+                            return (
+                              <button
+                                key={opt}
+                                className={`w-10 h-10 flex items-center justify-center rounded-full border transition cursor-pointer
+                                  ${isSelected 
+                                    ? "bg-green-500 text-white border-green-600" 
+                                    : "bg-white text-gray-700 border-gray-300 hover:bg-green-500 hover:text-white hover:border-green-600"
+                                  }`}
+                              >
+                                {opt}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                       <div className="flex justify-end gap-4 pt-4">
@@ -72,7 +82,7 @@ export default function QuestionTag({id, question, answers, rightAnswer} : Quest
                 </DialogContent>
               </Dialog>
               <Dialog>
-                <DialogTrigger>
+                <DialogTrigger asChild>
                     <button className="flex items-center justify-center min-w-1/5 min-h-1/5 bg-white cursor-pointer">
                       <img src={recycleBinImg.src} className="w-7 h-7"/>
                     </button>
