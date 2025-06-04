@@ -20,24 +20,24 @@ export default function Footer() {
   const [socialLinks, setSocialLinks] = useState<Social[]>([]);
 
   useEffect(() => {
-  async function fetchSocials() {
-    try {
-      const res = await fetch(`${BACKEND_URL}/socials`);
-      console.log('Fetching social links from /api/socials', res);
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`Lỗi fetch: ${res.status} - ${text}`);
+    async function fetchSocials() {
+      try {
+        const res = await fetch(`${BACKEND_URL}/socials`);
+        console.log('Fetching social links from /api/socials', res);
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Lỗi fetch: ${res.status} - ${text}`);
+        }
+
+        const data = await res.json();
+        setSocialLinks(data);
+      } catch (error) {
+        console.error('Lỗi khi tải dữ liệu mạng xã hội:', error);
       }
-
-      const data = await res.json();
-      setSocialLinks(data);
-    } catch (error) {
-      console.error('Lỗi khi tải dữ liệu mạng xã hội:', error);
     }
-  }
 
-  fetchSocials();
-}, []);
+    fetchSocials();
+  }, []);
 
   if (hiddenPaths.includes(pathname)) return null;
 
@@ -61,19 +61,13 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row items-start md:space-x-12 space-y-4 md:space-y-0 w-full">
               <div className="flex items-center space-x-2">
                 <span className="font-bold">Mail:</span>
-                <a
-                  href="mailto:contact@flashasean.org"
-                  className="hover:text-blue-600 transition-colors"
-                >
+                <a href="mailto:contact@flashasean.org" className="hover:text-blue-600 transition-colors">
                   contact@flashasean.org
                 </a>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="font-bold">Phone:</span>
-                <a
-                  href="tel:+84 939 249 127"
-                  className="hover:text-blue-600 transition-colors"
-                >
+                <a href="tel:+84 939 249 127" className="hover:text-blue-600 transition-colors">
                   +84 939 249 127
                 </a>
               </div>
