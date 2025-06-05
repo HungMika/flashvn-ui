@@ -35,9 +35,7 @@ const AdminPosts = () => {
       filtered = filtered.filter((post) => post.category === selectedCategory);
     }
     if (searchTerm.trim() !== '') {
-      filtered = filtered.filter((post) =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      filtered = filtered.filter((post) => post.title.toLowerCase().includes(searchTerm.toLowerCase()));
     }
     setFilteredPosts(filtered);
   }, [selectedCategory, posts, searchTerm]);
@@ -52,22 +50,17 @@ const AdminPosts = () => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
     if (name === 'bool' && type === 'checkbox') {
       if (checked) {
         setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post._id === editingId ? { ...post, bool: true } : { ...post, bool: false }
-          )
+          prevPosts.map((post) => (post._id === editingId ? { ...post, bool: true } : { ...post, bool: false })),
         );
         setPostData((prev) => ({ ...prev, bool: true }));
       } else {
         setPostData((prev) => ({ ...prev, bool: false }));
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post._id === editingId ? { ...post, bool: false } : post
-          )
-        );
+        setPosts((prevPosts) => prevPosts.map((post) => (post._id === editingId ? { ...post, bool: false } : post)));
       }
     } else if (name === 'eventDate') {
       setPostData((prev) => ({ ...prev, eventDate: value }));
@@ -126,7 +119,14 @@ const AdminPosts = () => {
         formData.append('content', postData.content);
         formData.append('category', postData.category);
         formData.append('bool', String(postData.bool));
-        formData.append('eventDate', postData.eventDate);
+        formData.append(
+          'eventDate',
+          postData.eventDate
+            ? typeof postData.eventDate === 'string'
+              ? postData.eventDate
+              : new Date(postData.eventDate).toISOString().substring(0, 10)
+            : '',
+        );
         formData.append('image', imageFile);
         if (editingId) {
           await axios.put(`${BACKEND_URL}/posts/${editingId}`, formData);
@@ -229,7 +229,13 @@ const AdminPosts = () => {
                     type="date"
                     id="eventDate"
                     name="eventDate"
-                    value={postData.eventDate}
+                    value={
+                      postData.eventDate
+                        ? typeof postData.eventDate === 'string'
+                          ? postData.eventDate
+                          : new Date(postData.eventDate).toISOString().substring(0, 10)
+                        : ''
+                    }
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
@@ -324,15 +330,15 @@ const AdminPosts = () => {
             </form>
           </div>
         </div>
-      <div className="flex justify-between items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search posts..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full md:w-1/3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
+        <div className="flex justify-between items-center mb-4">
+          <input
+            type="text"
+            placeholder="Search posts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full md:w-1/3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         {/* Posts List Section */}
         <div className="p-6">

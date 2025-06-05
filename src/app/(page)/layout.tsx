@@ -12,13 +12,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="mdl-js">
-      <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-        <Navbar />
-        <Breadcrumb />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <FixedLoginButton />
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <div className="min-h-screen flex flex-col bg-gray-50 text-black">
+          <Navbar />
+          <Breadcrumb />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+          <FixedLoginButton />
+        </div>
       </body>
     </html>
   );

@@ -5,7 +5,7 @@ export interface PostType {
   imageUrl?: string;
   category: 'educator' | 'youth' | 'digcomp' | 'other';
   bool?: boolean;
-  eventDate?: Date;
+  eventDate?: Date | string;
   createdAt?: string;
   updatedAt?: string;
 }
