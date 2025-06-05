@@ -12,3 +12,65 @@ export const getQuestions = async () => {
       return [];
     }
 };
+
+export const createQuiz = async ({
+  topic,
+  question,
+  rightAnswer,
+  answers,
+}: {
+  topic: string;
+  question: string;
+  rightAnswer: string;
+  answers: string[];
+}) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/createQuiz`, {
+      topic,
+      question: question.trim(),
+      rightAnswer,
+      answers,
+    });
+    return res.data;
+  } catch (error: any) {
+    console.error('Error creating quiz:', error);
+    throw error;
+  }
+};
+
+export const deleteQuiz = async (id: string) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/removeQuiz/${id}`);
+    return res.data;
+  } catch (error: any) {
+    console.error('Error deleting quiz:', error);
+    throw error;
+  }
+};
+
+export const editQuiz = async ({
+  id,
+  topic,
+  question,
+  rightAnswer,
+  answers,
+}: {
+  id: string;
+  topic: string;
+  question: string;
+  rightAnswer: string;
+  answers: string[];
+}) => {
+  try {
+    const res = await axios.put(`${BASE_URL}/editQuiz/${id}`, {
+      topic,
+      question: question.trim(),
+      rightAnswer: rightAnswer.trim(),
+      answers: answers.map((a) => a.trim()),
+    });
+    return res.data;
+  } catch (error: any) {
+    console.error('Error editing quiz:', error);
+    throw error; 
+  }
+};
