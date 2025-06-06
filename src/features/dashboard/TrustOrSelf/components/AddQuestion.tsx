@@ -89,7 +89,7 @@ export default function AddQuestionPopup({
                 onClick={onClose}
                 className="cancelButton bg-[#F5C035] text-white px-3 py-1 sm:p-2 rounded hover:bg-[#B18B00] transition-colors text-xs sm:text-sm md:text-base"
               >
-                Cancle
+                Cancel
               </button>
             </div>
           </form>

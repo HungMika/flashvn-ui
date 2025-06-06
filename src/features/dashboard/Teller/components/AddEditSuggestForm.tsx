@@ -134,7 +134,7 @@ const AddEditSuggestForm: React.FC<AddEditSuggestFormProps> = ({ isOpen, onClose
           onClick={onClose}
           className="px-4 py-2 cursor-pointer bg-orange-400 text-white rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
         >
-          Cancle
+          Cancel
         </button>
       </div>
     </AddEditPopupBase>

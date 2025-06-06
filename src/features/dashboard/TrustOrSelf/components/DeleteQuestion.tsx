@@ -43,7 +43,7 @@ export default function DeleteQuestionPopup({ onClose, onConfirm }: DeleteQuesti
               onClick={handleCancel}
               className="cancelButton bg-[#F5C035] text-white px-3 py-1 sm:px-4 sm:py-2 rounded hover:bg-[#1B1B62] transition-colors text-xs sm:text-sm md:text-base"
             >
-              Cancle
+              Cancel
             </button>
           </div>
         </div>
