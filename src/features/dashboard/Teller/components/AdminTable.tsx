@@ -18,11 +18,16 @@ const AdminTable: React.FC<AdminTableProps> = ({ data, table, onEdit, onDelete }
 
   const getTableHeader = () => {
     switch (table) {
-      case 'times': return 'Time';
-      case 'majors': return 'Major';
-      case 'technologies': return 'Technology';
-      case 'impacts': return 'Impact';
-      default: return '';
+      case 'times':
+        return 'Time';
+      case 'majors':
+        return 'Major';
+      case 'technologies':
+        return 'Technology';
+      case 'impacts':
+        return 'Impact';
+      default:
+        return '';
     }
   };
 
@@ -46,17 +51,44 @@ const AdminTable: React.FC<AdminTableProps> = ({ data, table, onEdit, onDelete }
               </th>
               {table === 'outlines' ? (
                 <>
-                  <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">Step</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">Time</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">Title</th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider"
+                  >
+                    Step
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider"
+                  >
+                    Time
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider"
+                  >
+                    Title
+                  </th>
                 </>
               ) : (
                 <>
-                  <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">{getTableHeader()}</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">Image</th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider"
+                  >
+                    {getTableHeader()}
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider"
+                  >
+                    Image
+                  </th>
                 </>
               )}
-              <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">Operation</th>
+              <th scope="col" className="px-6 py-3 text-left text-xl font-medium text-black uppercase tracking-wider">
+                Operation
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -67,7 +99,9 @@ const AdminTable: React.FC<AdminTableProps> = ({ data, table, onEdit, onDelete }
                   <>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{(item as ISuggestData).step}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{(item as ISuggestData).time}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{(item as ISuggestData).title}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {(item as ISuggestData).title}
+                    </td>
                   </>
                 ) : (
                   <>

@@ -33,7 +33,8 @@ const DealScreen: React.FC<DealScreenProps> = ({ gameState, cards, dealtCards, f
               {!flippedCards[index] ? (
                 <div className="absolute w-full h-full rounded-xl bg-orange-500 border-2 border-black flex items-center justify-center" />
               ) : (
-                card.image && typeof card.image === 'string' && (
+                card.image &&
+                typeof card.image === 'string' && (
                   <img
                     src={card.image}
                     alt={card.title}

@@ -26,7 +26,7 @@ export const ftCardApi = {
   getAllByGroup: async (group: string): Promise<ICardData[]> => {
     if (!group?.trim()) return [];
     try {
-      const response = await ftApi.get(`/api/future-teller/cards/group?query=${group}`);
+      const response = await ftApi.get(`/future-teller/cards/group?query=${group}`);
       console.log('API DATA:', response.data); 
       if (Array.isArray(response.data)) {
         return response.data;
@@ -42,7 +42,7 @@ export const ftCardApi = {
 
   getCardById: async (id: string): Promise<ICardData> => {
     try {
-      const response = await ftApi.get(`/api/future-teller/cards/${id}`);
+      const response = await ftApi.get(`/future-teller/cards/${id}`);
       return response.data;
     } catch (error: any) {
       throw error;
@@ -55,7 +55,7 @@ export const ftCardApi = {
       formData.append('title', data.title);
       formData.append('group', data.group);
       formData.append('image', data.image);
-      const response = await ftApi.post('/api/future-teller/cards', formData, {
+      const response = await ftApi.post('/future-teller/cards', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
@@ -73,7 +73,7 @@ export const ftCardApi = {
       formData.append('title', data.title);
       formData.append('group', data.group);
       if (data.image) formData.append('image', data.image);
-      const response = await ftApi.patch(`/api/future-teller/cards/${id}`, formData, {
+      const response = await ftApi.patch(`/future-teller/cards/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
@@ -87,7 +87,7 @@ export const ftCardApi = {
 
   deleteCard: async (id: string): Promise<void> => {
     try {
-      await ftApi.delete(`/api/future-teller/cards/${id}`);
+      await ftApi.delete(`/future-teller/cards/${id}`);
     } catch (error: any) {
       throw error;
     }
@@ -97,7 +97,7 @@ export const ftCardApi = {
 export const ftSuggestApi = {
   getAll: async (): Promise<ISuggestData[]> => {
     try {
-      const response = await ftApi.get('/api/future-teller/suggests');
+      const response = await ftApi.get('/future-teller/suggests');
       return response.data;
     } catch (error: any) {
       throw error;
@@ -106,7 +106,7 @@ export const ftSuggestApi = {
 
   getSuggestById: async (id: string): Promise<ISuggestData> => {
     try {
-      const response = await ftApi.get(`/api/future-teller/suggests/${id}`);
+      const response = await ftApi.get(`/future-teller/suggests/${id}`);
       return response.data;
     } catch (error: any) {
       throw error;
@@ -127,7 +127,7 @@ export const ftSuggestApi = {
 
   updateSuggest: async (id: string, data: ISuggestData): Promise<ISuggestData> => {
     try {
-      const response = await ftApi.patch(`/api/future-teller/suggests/${id}`, data);
+      const response = await ftApi.patch(`/future-teller/suggests/${id}`, data);
       return response.data;
     } catch (error: any) {
       if (error.response?.data?.message === 'Future Teller suggest already exists!') {
@@ -139,7 +139,7 @@ export const ftSuggestApi = {
 
   deleteSuggest: async (id: string): Promise<void> => {
     try {
-      await ftApi.delete(`/api/future-teller/suggests/${id}`);
+      await ftApi.delete(`/future-teller/suggests/${id}`);
     } catch (error: any) {
       throw error;
     }

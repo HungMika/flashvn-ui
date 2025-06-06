@@ -10,6 +10,8 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-react": "^9.5.0",
     "@radix-ui/react-dialog": "^1.1.11",
     "@radix-ui/react-select": "^2.2.4",
     "@radix-ui/react-separator": "^1.1.4",
@@ -19,7 +21,6 @@
     "axios": "^1.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "emoji-picker-react": "^4.12.2",
     "flowbite-react": "^0.11.7",
     "framer-motion": "^12.10.0",
     "lucide-react": "^0.503.0",
