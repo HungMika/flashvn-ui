@@ -55,7 +55,7 @@ export default function ModulePage() {
         <div className="relative flex items-center justify-center h-12">
           <ArrowLeft
             className="w-10 h-10 absolute left-0 border border-gray-400 rounded-md p-2 text-muted-foreground cursor-pointer hover:scale-110 transition-transform duration-200"
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/what-we-do/mil-play')}
           />
           <img src="/FLASH-logo-colorful.png" alt="Flash Logo" className="h-10 object-contain" />
         </div>

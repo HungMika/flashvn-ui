@@ -70,7 +70,7 @@ export default function GroupPage() {
       <div className="flex items-center w-full mb-4 sticky top-0 bg-white z-10 p-2">
         <BiSolidLeftArrowCircle
           className="text-green-500 text-3xl cursor-pointer hover:text-green-600 transition"
-          onClick={() => router.push('/gameplay')}
+          onClick={() => router.push('/gameplay/mil-card')}
         />
         <div className="text-1xl font-bold mx-auto border-b border-gray-300">Nhóm Lớp: {group}</div>
       </div>

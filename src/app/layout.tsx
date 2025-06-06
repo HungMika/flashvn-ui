@@ -26,11 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ReactQueryProvider>
-          {children}
-          </ReactQueryProvider>
-        <Toaster position="top-center" reverseOrder={false} />
+      <body>
+        <div className={`${geistSans.variable} ${geistMono.variable}`}>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <Toaster position="top-center" reverseOrder={false} />
+        </div>
       </body>
     </html>
   );

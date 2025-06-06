@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+    <div lang="en">
+      <div>
         <div className="min-h-screen flex flex-col bg-gray-50 text-black">
           <Navbar />
           <Breadcrumb />
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <FixedLoginButton />
         </div>
-      </body>
-    </html>
+      </div>
+    </div>
   );
 }
