@@ -9,7 +9,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import QuestionTag from "@/features/dashboard/Cyber/components/QuestionTag";
-import { getQuestions, createQuiz } from "@/features/dashboard/Cyber/api/question"; 
+import { getQuestions, createQuiz, getQuizByTopic } from "@/features/dashboard/Cyber/api/question"; 
 import { getTopics, createTopic } from "@/features/dashboard/Cyber/api/topics";
 import { useEffect, useState } from "react";
 import TopicTag from "@/features/dashboard/Cyber/components/TopicTag";
@@ -32,6 +32,7 @@ export default function CyberDashboardPage() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [topicName, setTopicName] = useState("");
   const [selectedCreateTopic, setSelectedCreateTopic] = useState("");
+  const [selectedSearchTopic, setSelectedSearchTopic] = useState("all");
   const [questionContent, setQuestionContent] = useState("");
   const [answers, setAnswers] = useState<string[]>(['', '', '', '']);
   const [rightAnswerIndex, setRightAnswerIndex] = useState<number | null>(null);
@@ -85,14 +86,23 @@ export default function CyberDashboardPage() {
       alert(err.response?.data?.message || 'Failed to create quiz');
     }
   }
+
   useEffect(()=>{
     const fetchQuestions = async () => {
-      const data = await getQuestions();
-      setQuestions(data);
+      try{
+        const data = await getQuizByTopic(selectedSearchTopic);
+        setQuestions(data);
+      } catch (err: any) {
+        alert(err.response?.data?.message || 'Failed to read quiz');
+      }
     };
     const fetchTopics = async () => {
-      const data = await getTopics();
-      setTopics(data);
+      try{
+        const data = await getTopics();
+        setTopics(data);
+      } catch (err: any) {
+        alert(err.response?.data?.message || 'Failed to read topic');
+      }
     }
     fetchQuestions();
     fetchTopics();
@@ -102,63 +112,84 @@ export default function CyberDashboardPage() {
       <div className="min-h-10 min-w-full mt-15 font-bold text-5xl text-center" style={{color: "#5202ba"}}>
         Cyberfighter Quizes
       </div>
-      <div className="flex flex-row-reverse mt-10 min-h-15 min-w-9/10">
-      <Dialog /*onOpenChange={(isOpen)=>onTopicDialogOpen(isOpen)*/>
-        <DialogTrigger asChild>
-          <button className="flex flex-row items-center justify-center min-h-15 min-w-40 rounded-3xl cursor-pointer" style={{backgroundColor: "#5202ba"}}>
-            <label className="font-semibold text-xl text-white cursor-pointer">See topics</label>
-          </button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Topics information</DialogTitle>
-            <DialogDescription>You can perform Add, Update or Remove topic action with the list below</DialogDescription>
-          </DialogHeader>
-          <div className="min-h-70 max-h-70 min-w-3/4 overflow-y-scroll">
-            <div className="grid grid-rows-1 gap-4">
-              {topics.map((aTopic, index)=>(
-                <TopicTag 
-                key={aTopic._id} 
-                id={aTopic._id} 
-                ordinalNumber={(index + 1).toString()} 
-                triggerRefresh={() => setRefresh(prev => !prev)}
-                topicName={aTopic.topicName}></TopicTag>
-              ))}
+      <div className="flex flex-row-reverse items-center gap-4 mt-10 min-h-15 min-w-9/10 justify-between">
+        <Dialog /*onOpenChange={(isOpen)=>onTopicDialogOpen(isOpen)*/>
+          <DialogTrigger asChild>
+            <button className="flex flex-row items-center justify-center min-h-15 min-w-40 rounded-3xl cursor-pointer" style={{backgroundColor: "#5202ba"}}>
+              <label className="font-semibold text-xl text-white cursor-pointer">See topics</label>
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Topics information</DialogTitle>
+              <DialogDescription>You can perform Add, Update or Remove topic action with the list below</DialogDescription>
+            </DialogHeader>
+            <div className="min-h-70 max-h-70 min-w-3/4 overflow-y-scroll">
+              <div className="grid grid-rows-1 gap-4">
+                {topics.map((aTopic, index)=>(
+                  <TopicTag 
+                  key={aTopic._id} 
+                  id={aTopic._id} 
+                  ordinalNumber={(index + 1).toString()} 
+                  triggerRefresh={() => setRefresh(prev => !prev)}
+                  topicName={aTopic.topicName}></TopicTag>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="flex items-center justify-center gap-4 pt-4">
-            <Dialog onOpenChange={()=>setTopicName("")}>
-                <DialogTrigger asChild>
-                    <button className="px-4 py-2 bg-green-500 text-white rounded cursor-pointer">Add new topic</button>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Create topic</DialogTitle>
-                        <DialogDescription>Add a new topic</DialogDescription>
-                    </DialogHeader>
-                    <div className="flex flex-col gap-6">
-                      <div>
-                        <label className="block text-sm font-medium">Topic name</label>
-                        <input 
-                        type="text" 
-                        value={topicName}
-                        onChange={(e) => setTopicName(e.target.value)}
-                        className="w-full border px-3 py-2 rounded mt-1"/>
+            <div className="flex items-center justify-center gap-4 pt-4">
+              <Dialog onOpenChange={()=>setTopicName("")}>
+                  <DialogTrigger asChild>
+                      <button className="px-4 py-2 bg-green-500 text-white rounded cursor-pointer">Add new topic</button>
+                  </DialogTrigger>
+                  <DialogContent>
+                      <DialogHeader>
+                          <DialogTitle>Create topic</DialogTitle>
+                          <DialogDescription>Add a new topic</DialogDescription>
+                      </DialogHeader>
+                      <div className="flex flex-col gap-6">
+                        <div>
+                          <label className="block text-sm font-medium">Topic name</label>
+                          <input 
+                          type="text" 
+                          value={topicName}
+                          onChange={(e) => setTopicName(e.target.value)}
+                          className="w-full border px-3 py-2 rounded mt-1"/>
+                        </div>
+                        <div className="flex justify-end gap-4 pt-4">
+                          <DialogClose asChild>
+                            <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 cursor-pointer" onClick={onCreateTopicClicked}>Save</button>
+                          </DialogClose>
+                          <DialogClose asChild>
+                            <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer">Cancel</button>
+                          </DialogClose>
+                        </div>
                       </div>
-                      <div className="flex justify-end gap-4 pt-4">
-                        <DialogClose asChild>
-                          <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 cursor-pointer" onClick={onCreateTopicClicked}>Save</button>
-                        </DialogClose>
-                        <DialogClose asChild>
-                          <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer">Cancel</button>
-                        </DialogClose>
-                      </div>
-                    </div>
-                </DialogContent>
-              </Dialog>
-          </div>
-        </DialogContent>
-      </Dialog>
+                  </DialogContent>
+                </Dialog>
+            </div>
+          </DialogContent>
+        </Dialog>
+        <div className="flex flex-row items-center gap-2">
+          <Select value={selectedSearchTopic} onValueChange={setSelectedSearchTopic}>
+            <SelectTrigger className="min-w-60 h-12">
+              <SelectValue placeholder="-- All Topics --" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">-- All Topics --</SelectItem>
+              {topics.map((topic) => (
+                <SelectItem key={topic._id} value={topic.topicName}>
+                  {topic.topicName}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <button
+            className="h-12 px-6 bg-blue-600 text-white rounded-3xl hover:bg-blue-700 transition"
+            onClick={() => setRefresh(prev=>!prev)}
+          >
+            Search
+          </button>
+        </div>
       </div>
       <div className="mt-10 min-h-150 max-h-150 min-w-9/10 overflow-y-scroll">
         <div className="grid grid-cols-2 gap-4">

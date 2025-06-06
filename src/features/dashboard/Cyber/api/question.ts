@@ -5,12 +5,27 @@ const BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/cyber`;
 //[GET] all question by subjectId
 export const getQuestions = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}/allQuestions`);
+      const res = await axios.get(`${BASE_URL}/allQuiz`);
       return res.data;
     } catch (error) {
       console.error('Error reading questions:', error);
       return [];
     }
+};
+
+export const getQuizByTopic = async (topicName: string) => {
+  try {
+    const endpoint =
+      topicName === 'all'
+        ? `${BASE_URL}/allQuiz`
+        : `${BASE_URL}/getQuizByTopic?topic=${encodeURIComponent(topicName)}`;
+
+    const res = await axios.get(endpoint);
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching quizzes by topic:', error);
+    return [];
+  }
 };
 
 export const createQuiz = async ({
