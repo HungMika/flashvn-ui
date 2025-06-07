@@ -38,7 +38,8 @@ export default function ModulePage() {
 
   const handleSelectModule = (moduleId: string) => {
     setLoadingModule(moduleId);
-    router.push(`/gameplay/mil-bingo/module/${moduleId}`);  };
+    router.push(`/gameplay/mil-bingo/module/${moduleId}`);
+  };
 
   if (loading) {
     return (

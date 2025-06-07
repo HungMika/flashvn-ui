@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function ChooseGame() {
   const games = [
@@ -18,6 +18,12 @@ export default function ChooseGame() {
       image: '/images/games/mil-trolley.png',
       link: '/gameplay/mil-card',
     },
+    // {image: '/images/games/mil-cyber.png',
+    // link: '/gameplay/cyber',
+    // },
+    // {image: '/images/games/trust-or-self.png',
+    // link: '/gameplay/trust-or-self',
+    // },
   ];
 
   return (
@@ -26,7 +32,9 @@ export default function ChooseGame() {
       style={{ backgroundImage: "url('/images/mil-play-banner.png')" }}
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <p className="absolute top-0 left-0 p-4 text-xl text-white font-normal">A project by <span className='font-bold'>FLASH VN</span> </p>
+      <p className="absolute top-0 left-0 p-4 text-xl text-white font-normal">
+        A project by <span className="font-bold">FLASH VN</span>{' '}
+      </p>
       <p className="absolute top-0 right-0 p-4 text-xl text-white font-bold">#WiseByPlay</p>
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center">
         <h1 className="text-3xl font-bold mb-8">Choose your game</h1>
@@ -37,11 +45,7 @@ export default function ChooseGame() {
               href={game.link}
               className="flex flex-col items-center bg-white text-black rounded-lg p-1 transform transition-all hover:scale-110 hover:shadow-xl"
             >
-              <img
-                src={game.image}
-                alt={`Game ${index}`}
-                className="w-[200px] h-[200px] object-contain"
-              />
+              <img src={game.image} alt={`Game ${index}`} className="w-[200px] h-[200px] object-contain" />
             </Link>
           ))}
         </div>

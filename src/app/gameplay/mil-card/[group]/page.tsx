@@ -67,12 +67,12 @@ export default function GroupPage() {
   return (
     <div className="flex flex-col items-center min-h-screen p-4 w-full max-w-2xl">
       {/* Header */}
-      <div className="flex items-center w-full mb-4 sticky top-0 bg-white z-10 p-2">
+      <div className="flex items-center w-full max-w-md mb-4 rounded-full sticky top-0 bg-blue-700 z-10 p-2">
         <BiSolidLeftArrowCircle
-          className="text-green-500 text-3xl cursor-pointer hover:text-green-600 transition"
+          className="text-yellow-400 bg-white rounded-full text-3xl cursor-pointer hover:text-yellow-500 transition"
           onClick={() => router.push('/gameplay/mil-card')}
         />
-        <div className="text-1xl font-bold mx-auto border-b border-gray-300">Nhóm Lớp: {group}</div>
+        <div className="text-1xl text-white font-bold mx-auto border-b border-yellow-300">Nhóm Lớp: {group}</div>
       </div>
 
       {subjects.length === 0 ? (
@@ -83,13 +83,13 @@ export default function GroupPage() {
             {subjects.map((subject: Subject) => (
               <button
                 key={subject._id}
-                className="bg-white border border-gray-300 p-4 rounded-lg text-lg font-semibold 
-                text-center shadow-md hover:shadow-lg transition cursor-pointer hover:bg-gray-100 relative"
+                className="bg-yellow-400 text-white border p-4 rounded-lg text-lg font-semibold 
+                text-center shadow-md hover:shadow-lg transition cursor-pointer hover:bg-yellow-500 relative"
                 onClick={() => handleSelectSubject(subject._id)}
                 disabled={loadingSubject === subject._id}
               >
                 {loadingSubject === subject._id ? (
-                  <Loader2 className="animate-spin text-muted-foreground mx-auto" />
+                  <Loader2 className="animate-spin text-white mx-auto" />
                 ) : (
                   subject.title
                 )}

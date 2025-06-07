@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className={`${geistSans.variable} ${geistMono.variable}`}>
+        <div className={`${geistSans.variable} ${geistMono.variable} h-full`}>
           <ReactQueryProvider>{children}</ReactQueryProvider>
           <Toaster position="top-center" reverseOrder={false} />
         </div>
