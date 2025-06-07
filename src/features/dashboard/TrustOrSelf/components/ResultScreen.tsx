@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCog, FaQuestion } from 'react-icons/fa';
+import { FaQuestion } from 'react-icons/fa';
 import { Result } from '@/features/dashboard/TrustOrSelf/components/types';
 import Image from 'next/image';
 
@@ -30,7 +30,10 @@ export default function ResultScreen({ result, onNextQuestion, onSettings, onSho
         Câu kế tiếp
       </button>
       {/* <button className="absolute bottom-5 right-5 w-12 h-12 bg-[#1b1b62] rounded-full flex items-center justify-center text-white text-2xl hover:bg-[#feb622] transition-colors duration-300 cursor-pointer" onClick={onSettings}><FaCog /></button> */}
-      <button className="absolute top-5 right-5 w-10 h-10 bg-[#1b1b62] rounded-full flex items-center justify-center text-white text-xl hover:bg-[#feb622] transition-colors duration-300 cursor-pointer" onClick={onShowRules}>
+      <button
+        className="absolute top-5 right-5 w-10 h-10 bg-[#1b1b62] rounded-full flex items-center justify-center text-white text-xl hover:bg-[#feb622] transition-colors duration-300 cursor-pointer"
+        onClick={onShowRules}
+      >
         <FaQuestion />
       </button>
     </div>

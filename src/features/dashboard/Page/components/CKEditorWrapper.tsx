@@ -13,7 +13,7 @@ type Props = {
 const CKEditorWrapper = ({ data, onChange }: Props) => {
   return (
     <CKEditor
-      editor={ClassicEditor}
+      editor={ClassicEditor as any}
       data={data}
       onChange={(event: any, editor: any) => {
         const data = editor.getData();

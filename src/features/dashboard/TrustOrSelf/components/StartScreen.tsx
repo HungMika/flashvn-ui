@@ -10,7 +10,7 @@ interface StartScreenProps {
   onCloseRulesPopup: () => void;
 }
 
-export default function StartScreen({ onStartGame, onShowRulesPopup, onSettings, showRulesPopup, onCloseRulesPopup }: StartScreenProps) {
+export default function StartScreen({ onStartGame, onSettings, showRulesPopup, onCloseRulesPopup }: StartScreenProps) {
   return (
     <div className="relative w-full h-screen bg-cover bg-center flex flex-col items-center justify-center" style={{ backgroundImage: "url('/splash-background.jpg')" }}>
       <button

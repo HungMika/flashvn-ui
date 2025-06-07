@@ -18,7 +18,6 @@ export default function DashboardLayout({
   setShowEditQuestionPopup,
   setShowDeleteQuestionPopup,
   setShowAddQuestionPopup,
-  handleLogout,
 }: DashboardLayoutProps) {
   return (
     <div className="w-full min-h-screen flex flex-col">

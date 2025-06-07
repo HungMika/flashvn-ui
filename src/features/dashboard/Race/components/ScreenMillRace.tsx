@@ -5,7 +5,7 @@ import PopupQuestion from './PopupQuestion';
 import GameMobile from './GameMobile';
 import GamePC from './GamePC';
 import { createMilraceGameHistory } from '../api/milraceGameHistory';
-import { MilraceQuestionSet, Player, PlayerHistoryData } from '@/types/milrace';
+import { MilraceQuestionSet, Player } from '@/types/milrace';
 import { useModal } from '@/lib/ModalContext';
 
 interface ScreenMillRaceProps {
