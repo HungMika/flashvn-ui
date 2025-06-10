@@ -153,13 +153,13 @@ export default function ScreenMillRace({
     const WIN_POSITION = 32;
     let moved = false;
 
-    let diceRoll = getRandomInt(1, 6);
+    const diceRoll = getRandomInt(1, 6);
     console.log(`Rolling... Rolled a ${diceRoll}`);
     await sleep(200);
     rollTheDice(diceRoll);
     await sleep(3200);
 
-    let potentialPosition = startPosition + diceRoll;
+    const potentialPosition = startPosition + diceRoll;
     let finalPosition = startPosition;
 
     if (potentialPosition === WIN_POSITION) {
