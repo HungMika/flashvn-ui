@@ -35,6 +35,7 @@ export default function ModuleDashboardPage() {
 
   const handleModuleAdded = () => {
     refetch();
+    //console.log(modules);
   };
 
   const handleModuleDeleted = (moduleId: string) => {

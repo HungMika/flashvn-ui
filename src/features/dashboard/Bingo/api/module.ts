@@ -5,14 +5,30 @@ const BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/bingo/modules`;
 
 // [GET] /bingo/modules
 export const getAllModules = async () => {
+  console.log("🔥 getAllModules CALLED");
   try {
     const res = await axios.get(BASE_URL, { withCredentials: true });
-    return res.data;
-  } catch (error) {
-    console.log(error);
+    console.log("🔍 BASE_URL:", BASE_URL);
+
+    console.log("📡 GET Success", res.data);
+    console.log("✅ res.data type:", typeof res.data);
+    console.log("✅ isArray:", Array.isArray(res.data));
+    console.log("✅ full res.data:", res.data);
+
+
+    if (Array.isArray(res.data)) {
+      return res.data;
+    } else {
+      console.warn("⚠️ Not array:", res.data);
+      return [];
+    }
+  } catch (error: any) {
+    console.error("❌ GET Error", error?.response?.data || error);
     return [];
   }
 };
+
+
 
 // [GET] /bingo/modules/:id
 export const getModuleById = async (moduleId: string) => {
