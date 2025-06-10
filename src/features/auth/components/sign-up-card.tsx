@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+// import { Separator } from '@/components/ui/separator';
 import { TriangleAlert, Eye, EyeOff } from 'lucide-react';
 //hooks
 import toast from 'react-hot-toast';
@@ -11,9 +11,10 @@ import { useState, useRef } from 'react';
 //API services
 import { signUp } from '@/features/auth/api/auth';
 import { SignInflow } from '../auth-type';
+import { useRouter } from 'next/navigation';
 
 interface SignUpCardProps {
-  setstate: (state: SignInflow) => void;
+  setstate?: (state: SignInflow) => void;
 }
 
 export const SignUpCard = ({ setstate }: SignUpCardProps) => {
@@ -27,6 +28,7 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
 
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
@@ -71,7 +73,8 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
       //TODO: call signUp api here
       await signUp(username, email, password);
       toast.success('Account created successfully.');
-      setstate('SignIn');
+      // setstate('SignIn');
+      router.push('/dashboard/account');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Something went wrong!');
     } finally {
@@ -82,14 +85,8 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
   return (
     <Card className="w-full h-full p-8 max-w-md mx-auto mt-20">
       <CardHeader className="pt-0 px-0 flex flex-col items-center text-center gap-4">
-        <img
-          src="/FLASH-logo-colorful.png"
-          alt="Flash Logo"
-          className="h-16 w-auto"
-        />
-        <CardTitle className="text-xl font-semibold text-[#1b1b62]">
-          Create an account
-        </CardTitle>
+        <img src="/FLASH-logo-colorful.png" alt="Flash Logo" className="h-16 w-auto" />
+        <CardTitle className="text-xl font-semibold text-[#1b1b62]">Create an account</CardTitle>
       </CardHeader>
 
       {error && (
@@ -128,15 +125,9 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
               required
             />
             {showPassword ? (
-              <EyeOff
-                className="absolute right-3 top-2 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              />
+              <EyeOff className="absolute right-3 top-2 cursor-pointer" onClick={togglePasswordVisibility} />
             ) : (
-              <Eye
-                className="absolute right-3 top-2 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              />
+              <Eye className="absolute right-3 top-2 cursor-pointer" onClick={togglePasswordVisibility} />
             )}
           </div>
           <div className="relative">
@@ -150,28 +141,17 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
               required
             />
             {showConfirmPassword ? (
-              <EyeOff
-                className="absolute right-3 top-2 cursor-pointer"
-                onClick={toggleConfirmPasswordVisibility}
-              />
+              <EyeOff className="absolute right-3 top-2 cursor-pointer" onClick={toggleConfirmPasswordVisibility} />
             ) : (
-              <Eye
-                className="absolute right-3 top-2 cursor-pointer"
-                onClick={toggleConfirmPasswordVisibility}
-              />
+              <Eye className="absolute right-3 top-2 cursor-pointer" onClick={toggleConfirmPasswordVisibility} />
             )}
           </div>
-          <Button
-            type="submit"
-            className="w-full font-semibold"
-            size="lg"
-            disabled={pending}
-          >
+          <Button type="submit" className="w-full font-semibold" size="lg" disabled={pending}>
             Create Account
           </Button>
         </form>
 
-        <Separator />
+        {/* <Separator />
 
         <p className="text-xs text-muted-foreground">
           Already have an account?{' '}
@@ -181,7 +161,7 @@ export const SignUpCard = ({ setstate }: SignUpCardProps) => {
           >
             Sign in
           </span>
-        </p>
+        </p> */}
       </CardContent>
     </Card>
   );

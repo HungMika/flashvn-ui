@@ -71,3 +71,13 @@ export async function resetPassword(token: string, newPassword: string) {
   );
   return res.data;
 }
+
+//[GET] curent user
+export async function getCurrentUser() {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/me`, 
+    {
+      withCredentials: true,
+    },
+  )
+  return res.data;
+}

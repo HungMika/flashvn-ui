@@ -48,8 +48,7 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
       setUser(user);
       router.push('/dashboard');
     } catch (err: any) {
-      const backendMessage =
-        err?.response?.data?.message || 'Login failed. Please try again.';
+      const backendMessage = err?.response?.data?.message || 'Login failed. Please try again.';
 
       setError(backendMessage);
     } finally {
@@ -59,15 +58,9 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
 
   return (
     <Card className="w-full max-w-md p-8 mx-auto mt-10">
-      <CardHeader className="pt-0 px-0 flex flex-col items-center text-center gap-4">
-        <img
-          src="/FLASH-logo-colorful.png"
-          alt="Flash Logo"
-          className="h-16 w-auto"
-        />
-        <CardTitle className="text-xl font-semibold text-[#1b1b62]">
-          Log in to your account
-        </CardTitle>
+      <CardHeader className="pt-0 px-0 flex flex-col items-center text-center gap-4 mb-4">
+        <img src="/FLASH-logo-colorful.png" alt="Flash Logo" className="h-16 w-auto" />
+        <CardTitle className="text-xl font-semibold text-[#1b1b62]">Administrator log in</CardTitle>
       </CardHeader>
 
       {error && (
@@ -77,7 +70,7 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
         </div>
       )}
 
-      <CardContent className="space-y-5 px-0 pb-0">
+      <CardContent className="px-0">
         <form className="space-y-2.5" onSubmit={onSubmit}>
           <Input
             value={username}
@@ -103,18 +96,13 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
               {showPassword ? <EyeOff /> : <Eye />}
             </div>
           </div>
-          <Button
-            type="submit"
-            className="w-full font-semibold"
-            disabled={pending}
-            size={'lg'}
-          >
+          <Button type="submit" className="w-full font-semibold" disabled={pending} size={'lg'}>
             {pending ? 'Logging in ...' : 'Continue'}
           </Button>
         </form>
         <Separator />
 
-        <div className="flex flex-col gap-y-2.5">
+        {/* <div className="flex flex-col gap-y-2.5">
           <p
             className="text-center text-sm underline text-blue-400 hover:text-blue-500 cursor-pointer"
             onClick={() => setstate('ForgotPassword')}
@@ -130,7 +118,7 @@ export const SignInCard = ({ setstate }: SignInCardProps) => {
           >
             Sign up
           </span>
-        </p>
+        </p> */}
       </CardContent>
     </Card>
   );
