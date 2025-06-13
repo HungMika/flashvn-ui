@@ -1,6 +1,7 @@
 'use client';
 import toast from 'react-hot-toast';
 import { MdLogout } from 'react-icons/md';
+import { HiHome } from 'react-icons/hi2';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
@@ -10,8 +11,9 @@ import { useAuthStore } from '@/features/auth/api/auth-store';
 
 export const DashboardHeader = () => {
   const router = useRouter();
-  const [ConfirmDialog, confirm] = useConfirm('Do you want to log out?', 'Please confirm, see you later 👋');
-  const [ReturnDialog, confirmReturn] = useConfirm('Return to Dashboard?', 'This will redirect you to dashboard.');
+  const [ConfirmDialog, confirm] = useConfirm('Do you want to log out?', 'Please confirm, see you later');
+  const [ReturnHomeDialog, confirmReturnHome] = useConfirm('Return to Home?', 'This will redirect you to Home Page.');
+  const [ReturnDialog, confirmReturn] = useConfirm('Return to Dashboard?', 'This will redirect you to Dashboard Page.');
 
   const user = useAuthStore((state) => state.user);
 
@@ -27,6 +29,12 @@ export const DashboardHeader = () => {
     }
   };
 
+  const handleReturnHome = async () => {
+    const confirmed = await confirmReturnHome();
+    if (!confirmed) return;
+    router.push('/');
+  };
+
   const handleReturnDashboard = async () => {
     const confirmed = await confirmReturn();
     if (!confirmed) return;
@@ -39,6 +47,7 @@ export const DashboardHeader = () => {
     <>
       <ConfirmDialog />
       <ReturnDialog />
+      <ReturnHomeDialog />
 
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 shadow-md bg-[#1b1b62] text-white sticky top-0 z-50">
@@ -48,7 +57,7 @@ export const DashboardHeader = () => {
             src="/FLASH_logo-white_yellow.png"
             alt="Flash Bingo Logo"
             className="w-14 h-14 object-contain cursor-pointer"
-            onClick={handleReturnDashboard}
+            onClick={handleReturnHome}
           />
 
           <div className="flex flex-col leading-snug">
@@ -59,10 +68,14 @@ export const DashboardHeader = () => {
           </div>
         </div>
 
-        {/* Log out button */}
-        <Button className="bg-[#e65a00] hover:bg-orange-700 text-white cursor-pointer" onClick={handleLogOut}>
-          <MdLogout className="w-6 h-6 mx-1" />
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button className="bg-blue-500 hover:bg-blue-700 text-white cursor-pointer" onClick={handleReturnDashboard}>
+            <HiHome className="w-10 h-10 mx-1" />
+          </Button>
+          <Button className="bg-[#e65a00] hover:bg-orange-700 text-white cursor-pointer" onClick={handleLogOut}>
+            <MdLogout className="w-6 h-6 mx-1" />
+          </Button>
+        </div>
       </header>
     </>
   );
