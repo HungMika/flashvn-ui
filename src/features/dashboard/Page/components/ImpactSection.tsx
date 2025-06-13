@@ -1,31 +1,31 @@
+'use client';
+
 import Image from 'next/image';
-
-interface ImpactStat {
-  value: string;
-  label: string;
-}
-
-const impactStats: ImpactStat[] = [
-  {
-    value: '2,300',
-    label: 'beneficiaries',
-  },
-  {
-    value: '32',
-    label: 'conducted programs',
-  },
-  {
-    value: '13K+',
-    label: 'social media followers',
-  },
-];
+import { useI18n } from '@/contexts/i18nContext';
 
 export default function ImpactSection() {
+  const { t } = useI18n();
+
+  const impactStats = [
+    {
+      value: '2,300',
+      label: t('page.impact.beneficiaries'),
+    },
+    {
+      value: '32',
+      label: t('page.impact.programs'),
+    },
+    {
+      value: '13K+',
+      label: t('page.impact.followers'),
+    },
+  ];
+
   return (
     <section className="bg-white py-10">
       <div className="container mx-auto px-4 flex flex-col md:flex-row gap-12 relative">
+        {/* Left content */}
         <div className="flex-1 relative">
-          {/* Ảnh nằm phía trên tiêu đề */}
           <div className="w-16 h-16 ml-24 animate-float-diagonal">
             <Image
               src="/images/icons/icon2.png"
@@ -35,7 +35,9 @@ export default function ImpactSection() {
             />
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">Our impact</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">
+            {t('page.impact.title')}
+          </h2>
 
           {impactStats.map((stat, index) => (
             <div key={index} className="space-y-1">
@@ -45,9 +47,8 @@ export default function ImpactSection() {
           ))}
         </div>
 
-        {/* Bản đồ ASEAN */}
+        {/* Map with markers */}
         <div className="relative w-full max-w-3xl mx-auto">
-          {/* Bản đồ - responsive để giữ đúng tỷ lệ */}
           <Image
             src="/images/asean-map.png"
             alt="ASEAN Map"
@@ -57,7 +58,6 @@ export default function ImpactSection() {
             priority
           />
 
-          {/* Các icon được đặt theo phần trăm, vị trí cố định theo cha */}
           <Image
             src="/images/icons/icon3.png"
             alt="Marker Vietnam"
@@ -65,7 +65,6 @@ export default function ImpactSection() {
             height={50}
             className="absolute top-[40%] left-[30%] animate-float-diagonal"
           />
-
           <Image
             src="/images/icons/icon3.png"
             alt="Marker Malaysia"
@@ -73,7 +72,6 @@ export default function ImpactSection() {
             height={24}
             className="absolute top-[85%] left-[30%] animate-float-diagonal"
           />
-
           <Image
             src="/images/icons/icon3.png"
             alt="Marker Philippines"

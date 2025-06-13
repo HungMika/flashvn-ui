@@ -1,0 +1,325 @@
+{
+  "navbar": {
+    "about": "VỀ CHÚNG TÔI",
+    "whatWeDo": "CHÚNG TÔI LÀM GÌ",
+    "contact": "LIÊN HỆ",
+    "en": "TIẾNG ANH",
+    "vi": "TIẾNG VIỆT"
+  },
+  "innovative-solution": {
+      "programs": {
+    "educator": "FLASH4 Giáo viên",
+    "youth": "FLASH4 Thanh niên",
+    "digcomp": "FLASH4 Năng lực số",
+    "date": "Ngày",
+    "readMore": "Xem chi tiết",
+    "loading": "Đang tải bài viết...",
+    "error": "Không thể tải bài viết.",
+    "alt": {
+      "educator": "FLASH4 Giáo viên",
+      "youth": "FLASH4 Thanh niên",
+      "digcomp": "FLASH4 Năng lực số"
+    }
+  },
+  "versions": {
+    "heading": "Nhiều phiên bản để phù hợp với nhu cầu của bạn!",
+    "labels": {
+      "price": "Giá",
+      "internet": "Internet",
+      "physicalSet": "Bộ dụng cụ vật lý",
+      "editable": "Có thể chỉnh sửa"
+    },
+    "printed": {
+      "title": "Bản in",
+      "price": "Miễn phí",
+      "internet": "Không\nCó thể chơi ngoại tuyến",
+      "physicalSet": "Có\nBạn phải có bộ dụng cụ",
+      "editable": "Không, nhưng bạn có thể tự làm theo cách của mình",
+      "button": "Đến cửa hàng"
+    },
+    "sheets": {
+      "title": "Google Sheets",
+      "price": "Miễn phí",
+      "internet": "Có\nCần kết nối internet",
+      "physicalSet": "Không\nChơi trực tuyến",
+      "editable": "Mọi người đều có thể chỉnh sửa câu hỏi",
+      "button": "Dùng thử"
+    },
+    "web": {
+      "title": "Phiên bản Web",
+      "price": "Miễn phí",
+      "internet": "Có\nCần kết nối internet",
+      "physicalSet": "Không\nChơi trực tuyến",
+      "editable": "Chỉ admin",
+      "button": "Dùng thử"
+    }
+  },
+  "edu": {
+    "heading": {
+      "highlight": "Khoa học giáo dục",
+      "normal": "phía sau MIL Play"
+    },
+    "context": "MIL Play được xây dựng dựa trên kiến thức từ hơn 1.000 giáo viên và tư vấn với hơn 30 chuyên gia ở cả vùng sâu ĐBSCL và TP.HCM. Những kinh nghiệm này hình thành nên phương pháp dựa trên trò chơi phù hợp với nhiều lớp học.",
+    "statement": "MIL Play dựa trên các lý thuyết giáo dục hiện đại phù hợp với học tập thế kỷ 21:",
+    "imageAlt": "Minh họa Khoa học Giáo dục",
+    "theories": {
+      "playBased": {
+        "title": "Học thông qua chơi",
+        "desc": "Tăng mức độ hứng thú và ghi nhớ lên tới 70%, theo UNESCO (2023)."
+      },
+      "zpd": {
+        "title": "Vùng phát triển gần",
+        "desc": "Khuyến khích học nhóm với sự hỗ trợ tối thiểu từ giáo viên."
+      },
+      "constructivism": {
+        "title": "Chủ nghĩa kiến tạo",
+        "desc": "Người học xây dựng kiến thức thông qua thực hành và phản tư."
+      },
+      "sel": {
+        "title": "Học cảm xúc - xã hội (SEL)",
+        "desc": "Thúc đẩy sự đồng cảm, giao tiếp và tranh luận tích cực."
+      }
+    }
+  },
+  "hero": {
+    "bannerAlt": "Ảnh banner MIL Play",
+    "projectBy": "Một dự án của",
+    "hashtag": "#WiseByPlay",
+    "tagline": "Thông minh truyền thông qua trò chơi",
+    "cta": "Chơi ngay",
+    "bannerText": {
+      "normal": "Một",
+      "highlight": "cách tiếp cận sáng tạo",
+      "after": "để dạy học về truyền thông và thông tin"
+    }
+  },
+  "why": {
+    "heading": {
+      "highlight": "Vì sao",
+      "normal": "chọn trò chơi của chúng tôi?"
+    },
+    "accessibility": {
+      "title": "Khả năng tiếp cận",
+      "description": "Thiết kế phù hợp cả vùng thành thị và nông thôn, MIL Play giúp tiếp cận dễ dàng qua phiên bản vật lý và kỹ thuật số—đảm bảo học tập về truyền thông phù hợp trong mọi điều kiện."
+    },
+    "scalability": {
+      "title": "Tính mở rộng",
+      "description": "Với luật chơi đơn giản và định dạng linh hoạt, MIL Play dễ dàng triển khai từ lớp học đến các chiến dịch cộng đồng và có thể địa phương hóa theo ngôn ngữ và bối cảnh khác nhau."
+    },
+    "inclusivity": {
+      "title": "Tính bao trùm",
+      "description": "Trò chơi dễ chơi và nhanh chóng khuyến khích sự tham gia từ nhiều nhóm khác nhau, tôn vinh sự đa dạng giới, văn hóa và nền tảng để tạo nên không gian học tập toàn diện."
+    }
+  }
+  },
+  "capacity-training": {
+    "hero": {
+      "title": "Danh sách",
+      "highlight": "các chương trình đào tạo đã thực hiện",
+      "alt": "Minh họa đào tạo năng lực"
+    },
+    "programs": {
+      "loading": "Đang tải nội dung...",
+      "loadError": "Không thể tải nội dung.",
+      "readMore": "Xem thêm",
+      "date": "Ngày",
+      "close": "Đóng",
+      "educator": "Giáo viên",
+      "youth": "Thanh niên",
+      "digcomp": "Năng lực số"
+    }
+  },
+  "milplay": {
+    "chooseGame": {
+      "projectBy": "Một dự án của",
+      "hashtag": "#WiseByPlay",
+      "title": "Chọn trò chơi của bạn"
+    }
+  },
+  "followUs": {
+    "title": "Theo dõi chúng tôi trên",
+    "highlight": "mạng xã hội",
+    "description": "để nhận các mẹo công nghệ hữu ích và cập nhật thông tin mới nhất!",
+    "facebook": "Fanpage",
+    "tiktok": "Tiktok",
+    "youtube": "Youtube"
+  },
+  "footer": {
+    "email": "Email",
+    "phone": "Điện thoại",
+    "followUs": "Theo dõi chúng tôi trên mạng xã hội"
+  },
+  "page":{
+    "hero": {
+      "title": {
+        "prefix": "Xây dựng",
+        "highlight": "#sẵn-sàng-cho-tương-lai",
+        "suffix": "cộng đồng"
+      },
+      "description": "Bằng cách cung cấp đào tạo kỹ năng số và các giải pháp đổi mới cho thanh niên và giáo viên",
+      "cta": "Tìm hiểu thêm",
+      "alt1": "Nhóm sinh viên và giáo viên",
+      "alt2": "Trao quyền cho giáo viên",
+      "alt3": "Truyền cảm hứng cho thanh thiếu niên"
+    },
+    "impact": {
+      "title": "Tác động của chúng tôi",
+      "beneficiaries": "người thụ hưởng",
+      "programs": "chương trình đã thực hiện",
+      "followers": "người theo dõi trên mạng xã hội"
+    },
+    "solutions": {
+      "title": "Giải pháp của chúng tôi",
+      "capacityTraining": {
+        "title": "Đào tạo năng lực",
+        "alt": "Minh họa đào tạo năng lực"
+      },
+      "innovativeSolution": {
+        "title": "Giải pháp đổi mới",
+        "alt": "Minh họa giải pháp đổi mới"
+      },
+      "socialMediaContent": {
+        "title": "Nội dung mạng xã hội",
+        "alt": "Minh họa nội dung mạng xã hội"
+      }
+    },
+    "sponsorsAndPartners": {
+      "sponsorsTitle": "Nhà tài trợ của chúng tôi",
+      "sponsorsAlt": "Hình ảnh các nhà tài trợ",
+      "partnersTitle": "Đối tác của chúng tôi",
+      "partnersAlt": "Hình ảnh các đối tác"
+    },
+     "updateSection": {
+      "sectionTitle": "Cập nhật mới!",
+      "loading": "Đang tải bản cập nhật...",
+      "error": "Lỗi",
+      "latestProgramTitle": "Chương trình mới nhất",
+      "noSummary": "[Không có mô tả]",
+      "readMore": "Đọc thêm",
+      "youthFundTitle": "Quỹ Tăng Cường Năng Lực Thanh Niên",
+      "youthFundSummary": "Đại diện FLASH VN vinh dự nhận được tài trợ từ EU và Global Youth Mobilization",
+      "newsletterTitle": "Bản tin",
+      "newsletterSummary": "Bản tin được cập nhật định kỳ hàng tháng.",
+      "download": "Tải xuống"
+    }
+  },
+  "about-us" :{
+    "staticHero": {
+      "titleStart": "Chúng tôi đang nỗ lực",
+      "titleHighlight": "xóa bỏ khoảng cách số",
+      "description": "Được thành lập vào năm 2021, FLASH VN là một sáng kiến nhằm nâng cao năng lực số với mục tiêu thu hẹp khoảng cách trong việc tiếp cận giáo dục tại khu vực Đồng bằng sông Cửu Long thông qua đào tạo và các giải pháp đổi mới.",
+      "imageAlt": "Xóa bỏ khoảng cách số"
+    },
+    "jn":{
+       "journeyTitle": "Hành Trình Của Chúng Tôi",
+        "journey": [
+          {
+            "year": "2021",
+            "title": "Tia Lửa Đầu Tiên",
+            "content": "FLASH VN, khi đó được biết đến như một sáng kiến, ra đời từ một ý tưởng nhỏ nhưng đầy tâm huyết từ những người trẻ mong muốn tạo ra sự thay đổi tích cực trong giáo dục thông qua công nghệ. Chúng tôi bắt đầu với các buổi tập huấn về kỹ năng số và công cụ học tập đơn giản cho học sinh nông thôn.",
+            "icon": "/images/journey/spark.png",
+            "illustration1": "/images/journey/2021a.jpg",
+            "illustration2": "/images/journey/2021b.jpg"
+          },
+          {
+            "year": "2022",
+            "title": "Bén Rễ",
+            "content": "Nhận được phản hồi tích cực, chúng tôi mở rộng hoạt động khắp Đồng bằng sông Cửu Long, hợp tác với các trường học và giáo viên để đồng xây dựng trải nghiệm học tập sinh động hơn. Đây cũng là năm đánh dấu bước chuyển mình của chúng tôi thành một doanh nghiệp xã hội có định hướng rõ ràng.",
+            "icon": "/images/journey/root.png",
+            "illustration1": "/images/journey/2022a.jpg",
+            "illustration2": "/images/journey/2022b.jpg"
+          },
+          {
+            "year": "2023",
+            "title": "Trở Thành Doanh Nghiệp Xã Hội",
+            "content": "Chúng tôi chính thức đăng ký trở thành Công ty TNHH Doanh nghiệp Xã hội FLASH VN vào tháng 7. Sự thay đổi này giúp chúng tôi tiếp cận được các nguồn tài trợ mới, tuyển sinh viên thực tập, và hợp tác sâu hơn với các tổ chức phi lợi nhuận và mạng lưới giáo dục. Công việc được mở rộng bao gồm đào tạo kỹ năng số và phát triển tài liệu học tập phù hợp với từng môi trường học.",
+            "icon": "/images/journey/enterprise.png",
+            "illustration1": "/images/journey/2023a.jpg",
+            "illustration2": "/images/journey/2023b.jpg"
+          },
+          {
+            "year": "2024",
+            "title": "Lan Toả Đến Cộng Đồng Rộng Hơn",
+            "content": "Với khẩu hiệu \"Xây dựng cộng đồng sẵn sàng cho tương lai\", chúng tôi mở rộng đối tượng phục vụ đến nhiều nhóm người học và giáo viên hơn. FLASH phát triển những giải pháp sáng tạo, ít phụ thuộc vào công nghệ như trò chơi bảng VN-Tiny để hỗ trợ người học hạn chế tiếp cận kỹ thuật số. Qua các quan hệ đối tác với trường học và tổ chức, chúng tôi cùng xây dựng các sáng kiến từ cơ sở nhằm thúc đẩy kỹ năng số và truyền thông.",
+            "icon": "/images/journey/community.png",
+            "illustration1": "/images/journey/2024a.jpg",
+            "illustration2": "/images/journey/2024b.jpg"
+          },
+          {
+            "year": "2025",
+            "title": "Tiến Bước Với Sứ Mệnh Rõ Ràng",
+            "content": "Nhìn về phía trước, FLASH VN cam kết:\n• Tăng cường các chương trình kỹ năng số cho giáo viên và học sinh phổ thông\n• Phát triển các chương trình năng lực số toàn diện, phù hợp với nhiều đối tượng\n• Đồng sáng tạo các bộ công cụ và mô hình bài học linh hoạt\n\nChúng tôi tin rằng sự thay đổi ý nghĩa bắt đầu từ những bước nhỏ—qua từng giáo viên được đào tạo, từng người học được trao quyền và từng câu chuyện được chia sẻ. Hãy cùng đồng hành trong hành trình này.",
+            "icon": "/images/journey/purpose.png",
+            "illustration1": "/images/journey/2025.jpg"
+          }
+        ]
+      },
+    "teamSection": {
+      "title": "Gặp gỡ đội ngũ của chúng tôi 🎓💻",
+      "intro": "Chúng tôi là một nhóm giáo viên nhỏ với ước mơ lớn — dùng công nghệ để trao quyền cho người học và thu hẹp khoảng cách số.",
+      "technicalTeam": "👩‍💻Đội kỹ thuật👨‍💻",
+      "marcomTeam": "🔥Đội truyền thông & hậu cần🔥",
+      "flexibleModelText": "💪💪💪<br/>Với <strong>mô hình linh hoạt theo dự án</strong>, chúng tôi chào đón <br/><span class='text-black bg-[#FFCF24] px-1 rounded font-bold'>thực tập sinh và tình nguyện viên tài năng</span> cùng phát triển <br/>và tạo ra tác động thực sự.",
+      "flexibleModelAlt": "Minh họa mô hình linh hoạt"
+    }
+  },
+  "whatWeDo": {
+    "hero": {
+      "titleStart": "Hướng tới",
+      "highlight": "phương pháp toàn diện",
+      "description": {
+        "line1": "Chúng tôi không phải là một đơn vị đào tạo truyền thống. Thay vào đó, chúng tôi luôn",
+        "line2": "tìm kiếm những cách sáng tạo để nâng cao năng lực số và truyền thông",
+        "line3": "thông qua mạng xã hội, sáng kiến cộng đồng và trải nghiệm thực tế."
+      },
+      "imageAlt": "Minh họa phương pháp toàn diện"
+    },
+    "solutions": [
+      {
+        "title": "Đào tạo năng lực",
+        "image": "/images/solutions/capacity-training.png",
+        "alt": "Minh họa đào tạo năng lực",
+        "link": "/what-we-do/capacity-training"
+      },
+      {
+        "title": "Giải pháp đổi mới",
+        "image": "/images/solutions/innovative-solution.png",
+        "alt": "Minh họa giải pháp đổi mới",
+        "link": "/what-we-do/innovative-solution"
+      },
+      {
+        "title": "Nội dung truyền thông xã hội",
+        "image": "/images/solutions/social-media-content.png",
+        "alt": "Minh họa nội dung truyền thông xã hội",
+        "link": "/what-we-do/social-media-content"
+      }
+    ],
+    "quote": {
+      "part1": "Công việc của chúng tôi là một hành trình",
+      "highlight": "học hỏi, sáng tạo và phát triển",
+      "part2": "cùng với cộng đồng mà chúng tôi phục vụ.",
+      "imageAlt": "Minh họa câu nói"
+    }
+  },
+  "contact": {
+    "orgName": "FLASH VN",
+    "orgType": "Công ty TNHH Doanh nghiệp Xã hội",
+    "registration": "Mã số doanh nghiệp: 0317922010",
+    "address": "Địa chỉ: 102A Lê Trung Nghĩa, Quận Tân Bình, TP. Hồ Chí Minh, 700000",
+    "email": "Email: contact@flashasean.org",
+    "phone": "Di động/Zalo: +84 939 249 127",
+    "linkText": "Khám phá các chương trình của chúng tôi",
+
+    "supportTitle": "Hỗ trợ chúng tôi 💖💖💖",
+    "para1": "Với tinh thần phục vụ cộng đồng, hầu hết các hoạt động do FLASH VN tổ chức đều hoàn toàn phi lợi nhuận. Chúng tôi không thu bất kỳ khoản phí nào khi thực hiện hội thảo tại các trường học hoặc các phòng giáo dục địa phương. Tuy nhiên, các chi phí như di chuyển, hỗ trợ giảng viên, và duy trì truyền thông xã hội đều cần được tài trợ. Khi không có tài trợ, chúng tôi triển khai các giải pháp như tổ chức các khóa học và hội thảo nhỏ với mức phí tối thiểu để duy trì hoạt động.",
+    "para2": "Chúng tôi vô cùng trân trọng sự đóng góp từ cộng đồng để giúp duy trì và mở rộng hoạt động, nhằm mang lại nhiều lợi ích hơn cho mọi người. Mỗi đóng góp đều là động lực to lớn để chúng tôi đổi mới và phát triển trong sứ mệnh nâng cao chất lượng nguồn nhân lực Việt Nam.",
+
+    "donationTitle": "Thông tin quyên góp",
+    "recipient": "Người thụ hưởng: CÔNG TY TNHH DOANH NGHIỆP XÃ HỘI FLASH VN",
+    "bank": "Ngân hàng: VP Bank – Chi nhánh Gò Vấp",
+    "account": "Số tài khoản: 338149999",
+    "note": "Nội dung chuyển khoản: \"Ủng hộ dự án – [Họ tên] – [Email/SĐT của bạn]\"",
+    "footer": "Tất cả các mạnh thường quân sẽ nhận được bản tin hàng tháng qua email/Zalo và kết quả chi tiết của các dự án cũng sẽ được cập nhật trên website."
+  }
+
+}

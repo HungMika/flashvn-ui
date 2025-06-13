@@ -1,27 +1,28 @@
-import type { Metadata } from 'next';
-import '@/app/globals.css';
+'use client';
+
+import type { ReactNode } from 'react';
+import { I18nProvider } from '@/contexts/i18nContext';
+
 import Navbar from '@/features/dashboard/Page/components/Navbar';
 import Breadcrumb from '@/features/dashboard/Page/components/Breadcrumb';
 import Footer from '@/features/dashboard/Page/components/Footer';
 import FixedLoginButton from '@/features/dashboard/Page/components/FixedLoginButton';
+import '@/app/globals.css';
 
-export const metadata: Metadata = {
-  title: 'FLASH VN',
-  description: 'Lum',
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <div lang="en">
-      <div>
-        <div className="min-h-screen flex flex-col bg-gray-50 text-black">
-          <Navbar />
-          <Breadcrumb />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-          <FixedLoginButton />
-        </div>
-      </div>
-    </div>
+    <html lang="en">
+      <body>
+        <I18nProvider>
+          <div className="min-h-screen flex flex-col bg-gray-50 text-black">
+            <Navbar />
+            <Breadcrumb />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+            <FixedLoginButton />
+          </div>
+        </I18nProvider>
+      </body>
+    </html>
   );
 }

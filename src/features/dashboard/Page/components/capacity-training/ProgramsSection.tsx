@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
+import { useI18n } from '@/contexts/i18nContext';
 
 export interface PostType {
   _id?: string;
@@ -29,6 +30,7 @@ function formatDate(dateInput?: string | Date) {
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
 
 function ProgramModal({ post, onClose }: { post: PostType | null; onClose: () => void }) {
+  const { t } = useI18n();
   if (!post) return null;
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -50,14 +52,14 @@ function ProgramModal({ post, onClose }: { post: PostType | null; onClose: () =>
     >
       <div
         className="bg-white rounded-lg p-6 max-w-6xl border w-full max-h-[90vh] overflow-y-auto"
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-2xl font-bold">{post.title}</h3>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
-            aria-label="Close modal"
+            aria-label={t('programs.close')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,6 +94,7 @@ function ProgramModal({ post, onClose }: { post: PostType | null; onClose: () =>
 }
 
 function ProgramColumn({ title, posts }: { title: string; posts: PostType[] }) {
+  const { t } = useI18n();
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
 
   return (
@@ -102,7 +105,7 @@ function ProgramColumn({ title, posts }: { title: string; posts: PostType[] }) {
           <div key={post._id!} className="border border-gray-300 rounded-lg p-4 bg-white shadow-sm">
             <h4 className="text-lg font-bold text-black mb-2">{post.title}</h4>
             <p className="text-sm text-gray-600 mb-4">
-              Date: {formatDate(post.eventDate)}
+              {t('capacity-training.programs.date')}: {formatDate(post.eventDate)}
               <br />
             </p>
 
@@ -110,7 +113,7 @@ function ProgramColumn({ title, posts }: { title: string; posts: PostType[] }) {
               onClick={() => setSelectedPost(post)}
               className="inline-block border border-black rounded-full px-4 py-2 text-sm text-black hover:bg-[#FFCF24] hover:border-2 transition-colors"
             >
-              Read more
+              {t('capacity-training.programs.readMore')}
             </button>
           </div>
         ))}
@@ -122,6 +125,7 @@ function ProgramColumn({ title, posts }: { title: string; posts: PostType[] }) {
 }
 
 export default function ProgramsSection() {
+  const { t } = useI18n();
   const [educatorPosts, setEducatorPosts] = useState<PostType[]>([]);
   const [youthPosts, setYouthPosts] = useState<PostType[]>([]);
   const [digcompPosts, setDigcompPosts] = useState<PostType[]>([]);
@@ -134,29 +138,29 @@ export default function ProgramsSection() {
         const res = await axios.get(`${baseUrl}/posts`);
         const posts: PostType[] = res.data;
 
-        setEducatorPosts(posts.filter(p => p.category === 'educator'));
-        setYouthPosts(posts.filter(p => p.category === 'youth'));
-        setDigcompPosts(posts.filter(p => p.category === 'digcomp'));
+        setEducatorPosts(posts.filter((p) => p.category === 'educator'));
+        setYouthPosts(posts.filter((p) => p.category === 'youth'));
+        setDigcompPosts(posts.filter((p) => p.category === 'digcomp'));
         setError(null);
       } catch (error) {
         console.error('Error fetching posts:', error);
-        setError('Failed to load posts.');
+        setError(t('capacity-training.programs.loadError'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchPosts();
-  }, []);
+  }, [t]);
 
-  if (loading) return <p className="text-center py-10">Loading posts...</p>;
+  if (loading) return <p className="text-center py-10">{t('capacity-training.programs.loading')}</p>;
   if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
 
   return (
     <>
       <div className="bg-blue-100 py-16">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 items-center text-center">
+          <div className="hidden md:grid md:grid-cols-3 gap-8 items-center text-center">
             <div className="flex flex-col items-center">
               <Image
                 src="/images/icons/educator.png"
@@ -166,8 +170,7 @@ export default function ProgramsSection() {
                 className="mb-2"
               />
               <h3 className="text-lg font-bold text-black">
-                FLASH4{' '}
-                <span className="text-black bg-[#FFCF24] px-2 py-2 rounded-2xl">Educator</span>
+                FLASH4 <span className="text-black bg-[#FFCF24] px-2 py-2 rounded-2xl">{t('capacity-training.programs.educator')}</span>
               </h3>
             </div>
             <div className="flex flex-col items-center">
@@ -179,8 +182,7 @@ export default function ProgramsSection() {
                 className="mb-2"
               />
               <h3 className="text-lg font-bold text-black">
-                FLASH4{' '}
-                <span className="text-black bg-[#3F99E9] px-2 py-2 rounded-2xl">Youth</span>
+                FLASH4 <span className="text-black bg-[#3F99E9] px-2 py-2 rounded-2xl">{t('capacity-training.programs.youth')}</span>
               </h3>
             </div>
             <div className="flex flex-col items-center">
@@ -192,8 +194,7 @@ export default function ProgramsSection() {
                 className="mb-2"
               />
               <h3 className="text-lg font-bold text-black">
-                FLASH4{' '}
-                <span className="text-black bg-[#E65A00] px-2 py-2 rounded-2xl">Digcomp</span>
+                FLASH4 <span className="text-black bg-[#E65A00] px-2 py-2 rounded-2xl">{t('capacity-training.programs.digcomp')}</span>
               </h3>
             </div>
           </div>

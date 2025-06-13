@@ -1,0 +1,324 @@
+{
+  "navbar": {
+    "about": "ABOUT US",
+    "whatWeDo": "WHAT WE DO",
+    "contact": "CONTACT US",
+    "en": "EN",
+    "vi": "VI"
+  },
+  "innovative-solution":  {
+    "programs": {
+      "educator": "FLASH4 Educator",
+      "youth": "FLASH4 Youth",
+      "digcomp": "FLASH4 Digcomp",
+      "date": "Date",
+      "readMore": "Read more",
+      "loading": "Loading posts...",
+      "error": "Failed to load posts.",
+      "alt": {
+        "educator": "FLASH4 Educator",
+        "youth": "FLASH4 Youth",
+        "digcomp": "FLASH4 Digcomp"
+      }
+    },
+    "versions": {
+      "heading": "Different versions to best fit your needs!",
+      "labels": {
+        "price": "Price",
+        "internet": "Internet",
+        "physicalSet": "Physical set",
+        "editable": "Editable"
+      },
+      "printed": {
+        "title": "Printed set",
+        "price": "Free",
+        "internet": "No\nIt can be played offline",
+        "physicalSet": "Yes\nYou must own a set",
+        "editable": "No, but you can make it your way",
+        "button": "Go to store"
+      },
+      "sheets": {
+        "title": "Google Sheets",
+        "price": "Free",
+        "internet": "Yes\nIt requires internet",
+        "physicalSet": "No\nJust play it online",
+        "editable": "Everyone can edit game questions",
+        "button": "Try it"
+      },
+      "web": {
+        "title": "Web version",
+        "price": "Free",
+        "internet": "Yes\nIt requires internet",
+        "physicalSet": "No\nJust play it online",
+        "editable": "Only admin",
+        "button": "Try it"
+      }
+    },
+    "edu": {
+      "heading": {
+        "highlight": "Educational science",
+        "normal": "behind MIL Play"
+      },
+      "context": "MIL Play is built on insights from training over 1,000 teachers and consulting with 30+ educators in both rural Mekong Delta areas and Ho Chi Minh City. These learnings shaped a game-based approach that fits diverse classroom needs.",
+      "statement": "MIL Play is grounded in contemporary education theories that align with 21st-century learning:",
+      "imageAlt": "Educational Science Illustration",
+      "theories": {
+        "playBased": {
+          "title": "Play-Based Learning",
+          "desc": "Increases engagement and memory retention up to 70% higher, per UNESCO (2023)."
+        },
+        "zpd": {
+          "title": "Zone of Proximal Development",
+         "desc": "Encourages group learning with minimal teacher intervention."
+        },
+        "constructivism": {
+          "title": "Constructivism",
+          "desc": "Learners build knowledge through hands-on practice and reflection."
+        },
+        "sel": {
+          "title": "Social-Emotional Learning (SEL)",
+          "desc": "Promotes empathy, communication, and positive debate."
+       }
+      }
+    },
+    "hero": {
+      "bannerAlt": "MIL Play Banner",
+      "projectBy": "A project by",
+      "hashtag": "#WiseByPlay",
+      "tagline": "Be Media-Smart by Play",
+      "cta": "Play it online",
+      "bannerText": {
+        "normal": "An",
+        "highlight": "innovative way",
+        "after": "to teach Media and Information Literacy"
+      }
+    },
+    "why": {
+      "heading": {
+       "highlight": "Why",
+        "normal": "our game?"
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "description": "Designed for both urban and rural settings, MIL Play ensures equal access through physical and digital formats—making media literacy learning inclusive regardless of internet or resource availability."
+      },
+      "scalability": {
+        "title": "Scalability",
+        "description": "With simple rules and adaptable formats, MIL Play easily scales from classrooms to community campaigns and can be localized into different languages and contexts."
+      },
+      "inclusivity": {
+        "title": "Inclusivity",
+        "description": "Quick and easy-to-play games invite participation from diverse groups, celebrating differences in gender, culture, and background to foster a truly inclusive learning space."
+      }
+    }
+  },
+  "capacity-training": {
+      "hero": {
+          "title": "List of",
+          "highlight": "conducted training programs",
+          "alt": "Capacity Training Illustration"
+      },
+      "programs": {
+      "loading": "Loading posts...",
+      "loadError": "Failed to load posts.",
+      "readMore": "Read more",
+      "date": "Date",
+      "close": "Close modal",
+      "educator": "Educator",
+      "youth": "Youth",
+      "digcomp": "Digcomp"
+    }
+  },
+  "milplay":{
+    "chooseGame": {
+      "projectBy": "A project by",
+      "hashtag": "#WiseByPlay",
+      "title": "Choose your game"
+    }
+  },
+  "followUs": {
+    "title": "Follow us on",
+    "highlight": "social media",
+    "description": "for the useful tech tips and update the latest information!",
+    "facebook": "Fanpage",
+    "tiktok": "Tiktok",
+    "youtube": "Youtube"
+  },
+  "footer": {
+    "email": "Mail",
+    "phone": "Phone",
+    "followUs": "Follow us on social media"
+  },
+  "page":{
+    "hero": {
+      "title": {
+        "prefix": "Building a",
+        "highlight": "#future-ready",
+        "suffix": "community"
+      },
+      "description": "By providing digital-capacity training and innovative solutions for youth and educators",
+      "cta": "Find out more",
+      "alt1": "Group of students and educators",
+      "alt2": "Empowering educators",
+      "alt3": "Inspiring youth"
+    },
+    "impact": {
+      "title": "Our impact",
+      "beneficiaries": "beneficiaries",
+      "programs": "conducted programs",
+      "followers": "social media followers"
+    },
+    "solutions": {
+      "title": "Our solutions",
+      "capacityTraining": {
+        "title": "Capacity training",
+        "alt": "Capacity training illustration"
+      },
+      "innovativeSolution": {
+        "title": "Innovative solution",
+        "alt": "Innovative solution illustration"
+      },
+      "socialMediaContent": {
+        "title": "Social media content",
+        "alt": "Social media content illustration"
+      }
+    },
+    "sponsorsAndPartners": {
+      "sponsorsTitle": "Our sponsors",
+      "sponsorsAlt": "Our Sponsors",
+      "partnersTitle": "Our partners",
+      "partnersAlt": "Our Partners"
+    },
+    "updateSection": {
+      "sectionTitle": "Stay update!",
+      "loading": "Loading updates...",
+      "error": "Error",
+      "latestProgramTitle": "Latest program",
+      "noSummary": "[No summary available]",
+      "readMore": "Read more",
+      "youthFundTitle": "Winning Youth Empowerment Fund",
+      "youthFundSummary": "The representative of FLASH VN proudly secured the funding of Youth Empowerment Fund by European Union and Global Youth Mobilization",
+      "newsletterTitle": "Newsletter",
+      "newsletterSummary": "Every month, the newsletters are regularly updated.",
+      "download": "Download"
+    }
+  },
+  "about-us" :{
+    "staticHero": {
+      "titleStart": "We are making efforts to",
+      "titleHighlight": "eliminate digital gap",
+      "description": "Founded in 2021, FLASH VN is an initiative to enhance digital competency with the goal of bridging the gap in education accessibility in the Mekong Delta region through training and innovative approaches.",
+      "imageAlt": "Eliminating digital gap"
+    },
+    "jn":{
+    "journeyTitle": "Our Journey",
+    "journey": [
+      {
+        "year": "2021",
+        "title": "The First Spark",
+        "content": "FLASH VN, then known as the FLASH initiative, was born from a small but heartfelt idea from passionate youths wanting to ignite positive change in education through technology. We began by designing digital literacy workshops and simple tools for underserved rural students.",
+        "icon": "/images/journey/spark.png",
+        "illustration1": "/images/journey/2021a.jpg",
+        "illustration2": "/images/journey/2021b.jpg"
+      },
+      {
+        "year": "2022",
+        "title": "Taking Root",
+        "content": "Encouraged by strong feedback, we expanded our work across the Mekong Delta, collaborating with schools and teachers to co-create more engaging learning experiences. This year also marked our transition into a structured social enterprise with a clear vision.",
+        "icon": "/images/journey/root.png",
+        "illustration1": "/images/journey/2022a.jpg",
+        "illustration2": "/images/journey/2022b.jpg"
+      },
+      {
+        "year": "2023",
+        "title": "Becoming a Social Enterprise",
+        "content": "We officially registered as FLASH VN Social Enterprise LLC in July. This change enabled us to receive new funding, find university interns, and collaborate more deeply with nonprofits and educational networks. Our work expanded to include digital literacy training, educational content and toolkits tailored to different learning environments.",
+        "icon": "/images/journey/enterprise.png",
+        "illustration1": "/images/journey/2023a.jpg",
+        "illustration2": "/images/journey/2023b.jpg"
+      },
+      {
+        "year": "2024",
+        "title": "Reaching Wider Communities",
+        "content": "With the motto \"Building Future-ready Communities\", we expanded our focus to serve more diverse groups of learners and educators. We developed innovative, low-tech solutions like the VN-Tiny Board game to teach learners with limited digital access. Through partnerships with schools and organizations, we helped develop grassroots partnerships to promote digital and media literacy.",
+        "icon": "/images/journey/community.png",
+        "illustration1": "/images/journey/2024a.jpg",
+        "illustration2": "/images/journey/2024b.jpg"
+      },
+      {
+        "year": "2025",
+        "title": "Moving Forward with Purpose",
+        "content": "Looking ahead, FLASH VN is committed to:\n• Strengthening digital literacy programs for teachers and high school students\n• Developing inclusive digital competency programs for diverse audiences\n• Co-creating adaptable educational toolkits and lesson models\n\nWe believe that meaningful change begins with small steps—through every teacher trained, every learner empowered, and every story shared. Stay here for the journey, growing hand-in-hand with our communities.",
+        "icon": "/images/journey/purpose.png",
+        "illustration1": "/images/journey/2025.jpg"
+      }
+    ]
+  },
+    "teamSection": {
+      "title": "Meet our team 🎓💻",
+      "intro": "We're a small team of educators with big dreams—using tech to empower learners and close the digital gap.",
+      "technicalTeam": "👩‍💻Technical team👨‍💻",
+      "marcomTeam": "🔥Marcom & Logistic team🔥",
+      "flexibleModelText": "💪💪💪\nWith a <strong>flexible, project-based model</strong>, we welcome \n<span>talented interns and volunteers</span> to grow with us \nwhile creating real impact.",
+      "flexibleModelAlt": "Flexible model illustration"
+    }
+  },
+  "whatWeDo": {
+    "hero": {
+      "titleStart": "Toward a",
+      "highlight": "holistic approach",
+      "description": {
+        "line1": "We are not a traditional training provider. Instead, we are continually",
+        "line2": "exploring creative ways to enhance digital and media literacy —",
+        "line3": "through social media, grassroots initiatives, and hands-on experiences."
+      },
+      "imageAlt": "Holistic approach illustration"
+    },
+    "solutions": [
+      {
+        "title": "Capacity training",
+        "image": "/images/solutions/capacity-training.png",
+        "alt": "Capacity training illustration",
+        "link": "/what-we-do/capacity-training"
+      },
+      {
+        "title": "Innovative solution",
+        "image": "/images/solutions/innovative-solution.png",
+        "alt": "Innovative solution illustration",
+        "link": "/what-we-do/innovative-solution"
+      },
+      {
+        "title": "Social media content",
+        "image": "/images/solutions/social-media-content.png",
+        "alt": "Social media content illustration",
+        "link": "/what-we-do/social-media-content"
+      }
+    ],
+    "quote": {
+      "part1": "Our work is a journey of",
+      "highlight": "learning, creating, and growing",
+      "part2": "alongside the communities we serve.",
+      "imageAlt": "Quote illustration"
+    }
+  },
+  "contact": {
+    "orgName": "FLASH VN",
+    "orgType": "Social Enterprise LLC",
+    "registration": "Business Registration Number: 0317922010",
+    "address": "Address: 102A Le Trung Nghia, Tan Binh District, Ho Chi Minh, 700000",
+    "email": "Email: contact@flashasean.org",
+    "phone": "Mobile/Whatsapp: +84 939 249 127",
+    "linkText": "Discover our programs",
+
+    "supportTitle": "Support us 💖💖💖",
+    "para1": "With a spirit of community service, most activities organized by FLASH VN are entirely non-profit. We do not charge any fees for workshops at schools or local education departments. However, costs such as travel, instructor support, and social media maintenance require funding. When sponsorship is unavailable, we’ve implemented solutions like organizing small courses and workshops with minimal fees to sustain operations.",
+    "para2": "We deeply appreciate contributions from the community to help maintain and expand our activities, ensuring greater benefits for everyone. Every contribution serves as a vital motivation for us to innovate and grow in our mission to improve the quality of human resources in Vietnam.",
+
+    "donationTitle": "Donation Information",
+    "recipient": "Recipient: FLASH VN SOCIAL ENTERPRISE LLC",
+    "bank": "Bank: VP Bank – Go Vap Branch",
+    "account": "Account Number: 338149999",
+    "note": "Transfer Note: \"Support Project – [Your Name] – [Your Email/Phone Number]\"",
+    "footer": "All benefactors will receive monthly updates (newsletters) via email/Zalo, and detailed project outcomes will also be updated on the project’s website."
+  }
+}

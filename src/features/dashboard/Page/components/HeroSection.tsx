@@ -3,22 +3,24 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import '@/features/dashboard/Page/styles/globals.css'; 
-
+import { useI18n } from '@/contexts/i18nContext'; // hook dịch
+import '@/features/dashboard/Page/styles/globals.css';
 
 export default function HeroSection() {
+  const { t } = useI18n();
+
   const banners = [
     {
       image: '/images/banner/banner1.jpg',
-      alt: 'Group of students and educators',
+      alt: t('page.hero.alt1'),
     },
     {
       image: '/images/banner/banner2.jpg',
-      alt: 'Empowering educators',
+      alt: t('page.hero.alt2'),
     },
     {
       image: '/images/banner/banner3.jpg',
-      alt: 'Inspiring youth',
+      alt: t('page.hero.alt3'),
     },
   ];
 
@@ -35,26 +37,29 @@ export default function HeroSection() {
     <div className="relative w-full bg-white">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8 items-center py-8">
+          {/* Left section */}
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-500">
-              Building a{' '}<br />
+              {t('page.hero.title.prefix')} <br />
               <span className="text-black bg-[#FFCF24] px-2 rounded-2xl">
-                #future-ready
+                {t('page.hero.title.highlight')}
               </span>{' '}
-              community
+              {t('page.hero.title.suffix')}
             </h1>
             <p className="text-lg text-gray-700 max-w-lg">
-              By providing digital-capacity training and innovative solutions for youth and educators
+              {t('page.hero.description')}
             </p>
             <div>
               <Link
                 href="/what-we-do"
                 className="inline-block px-8 py-3 border-2 border-gray-900 text-gray-900 hover:bg-[#FFCF24] hover:text-black transition-colors rounded-full text-lg font-medium"
               >
-                Find out more
+                {t('page.hero.cta')}
               </Link>
             </div>
           </div>
+
+          {/* Right section */}
           <div className="w-full">
             <div className="relative h-[400px] w-full">
               <Image
@@ -64,6 +69,8 @@ export default function HeroSection() {
                 className="object-cover border-2 border-black rounded-lg shadow-lg"
                 priority
               />
+
+              {/* Floating icons */}
               <img
                 src="/images/icons/icon2.png"
                 alt="Floating circle 1"
@@ -76,6 +83,8 @@ export default function HeroSection() {
                 className="absolute -bottom-10 -left-10 w-[70px] h-[70px] rounded-full animate-float-diagonal"
               />
             </div>
+
+            {/* Dots indicator */}
             <div className="mt-4 flex justify-center space-x-2">
               {banners.map((_, index) => (
                 <div

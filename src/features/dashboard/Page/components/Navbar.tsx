@@ -1,21 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-
-const navLinks = [
-  { href: '/about-us', label: 'ABOUT US' },
-  { href: '/what-we-do', label: 'WHAT WE DO' },
-  { href: '/contact-us', label: 'CONTACT US' },
-];
+import { useI18n } from '@/contexts/i18nContext';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { locale, t, setLocale } = useI18n();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const hiddenPaths = ["/admin"];
+  const navLinks = [
+    { href: '/about-us', label: t('navbar.about') },
+    { href: '/what-we-do', label: t('navbar.whatWeDo') },
+    { href: '/contact-us', label: t('navbar.contact') },
+  ];
+
+  const hiddenPaths = ['/admin'];
   if (hiddenPaths.includes(pathname)) return null;
+
+  const changeLocale = (newLocale: 'en' | 'vi') => {
+    setLocale(newLocale);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-black font-bold">
@@ -29,7 +36,6 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                prefetch={false}
                 className={`text-sm ${
                   pathname === href
                     ? 'text-gray-900'
@@ -41,29 +47,19 @@ export default function Navbar() {
             ))}
           </nav>
           <div className="hidden md:flex items-center space-x-2">
-            <Link
-              href="/en"
-              prefetch={false}
-              className={`text-sm ${
-                pathname.startsWith('/en')
-                  ? 'text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+            <button
+              onClick={() => changeLocale('en')}
+              className={`text-sm ${locale === 'en' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-900'}`}
             >
               EN
-            </Link>
+            </button>
             <span className="text-gray-300">|</span>
-            <Link
-              href="/vi"
-              prefetch={false}
-              className={`text-sm ${
-                pathname.startsWith('/vi')
-                  ? 'text-gray-900'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
+            <button
+              onClick={() => changeLocale('vi')}
+              className={`text-sm ${locale === 'vi' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-900'}`}
             >
               VI
-            </Link>
+            </button>
           </div>
           <button
             className="md:hidden p-2"
@@ -84,6 +80,7 @@ export default function Navbar() {
             </svg>
           </button>
         </div>
+
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t border-black">
             <nav className="flex flex-col space-y-4 p-4">
@@ -103,29 +100,25 @@ export default function Navbar() {
               ))}
             </nav>
             <div className="flex items-center space-x-2 p-4 border-t border-black">
-              <Link
-                href="/en"
-                className={`text-sm ${
-                  pathname.startsWith('/en')
-                    ? 'text-gray-900'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => {
+                  changeLocale('en');
+                  setIsMenuOpen(false);
+                }}
+                className={`text-sm ${locale === 'en' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 EN
-              </Link>
+              </button>
               <span className="text-gray-300">|</span>
-              <Link
-                href="/vi"
-                className={`text-sm ${
-                  pathname.startsWith('/vi')
-                    ? 'text-gray-900'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => {
+                  changeLocale('vi');
+                  setIsMenuOpen(false);
+                }}
+                className={`text-sm ${locale === 'vi' ? 'text-gray-900' : 'text-gray-600 hover:text-gray-900'}`}
               >
                 VI
-              </Link>
+              </button>
             </div>
           </div>
         )}

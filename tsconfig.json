@@ -30,6 +30,6 @@
     "src/app/gameplay/mil-race/page.tsx",
     "src/app/dashboard/mil-race/page.jsx",
     "src/features/dashboard/Race/components/ScreenAddPlayer.tsx"
-  ],
+, "middleware.ts"  ],
   "exclude": ["node_modules"]
 }

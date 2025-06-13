@@ -1,7 +1,9 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useI18n } from '@/contexts/i18nContext';
 
 interface PostType {
   _id?: string;
@@ -18,6 +20,7 @@ interface PostType {
 const backendUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 export default function UpdateSection() {
+  const { t } = useI18n();
   const [posts, setPosts] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,24 +42,21 @@ export default function UpdateSection() {
   }, []);
 
   if (loading) {
-    return <p>Loading updates...</p>;
+    return <p>{t('page.updateSection.loading')}</p>;
   }
 
   if (error) {
-    return <p className="text-red-500">Error: {error}</p>;
+    return <p className="text-red-500">{t('page.updateSection.error')}: {error}</p>;
   }
 
-  // Tìm post có bool === true
   const activePost = posts.find(post => post.bool === true);
 
-  // Hàm lọc bỏ thẻ html, trả về text thuần
   const stripHtml = (html: string) => {
     const div = document.createElement('div');
     div.innerHTML = html;
     return div.textContent || div.innerText || '';
   };
 
-  // Kiểm tra URL tuyệt đối
   const isAbsoluteUrl = (url: string) => /^https?:\/\//i.test(url);
 
   const imageUrl = activePost?.imageUrl
@@ -65,29 +65,27 @@ export default function UpdateSection() {
       : `${backendUrl}${activePost.imageUrl.startsWith('/') ? '' : '/'}${activePost.imageUrl}`
     : '/images/updates/latest-program.jpg';
 
-  // Cấu hình updates, phần đầu lấy dynamic từ activePost
   const updates = [
     {
-      title: 'Latest program',
-      summary: activePost && activePost.content ? stripHtml(activePost.content) : '[No summary available]',
+      title: t('page.updateSection.latestProgramTitle'),
+      summary: activePost && activePost.content ? stripHtml(activePost.content) : t('page.updateSection.noSummary'),
       link: '/what-we-do/capacity-training',
       image: imageUrl,
-      buttonText: 'Read more',
+      buttonText: t('page.updateSection.readMore'),
     },
     {
-      title: 'Winning Youth Empowerment Fund',
-      summary:
-        'The representative of FLASH VN proudly secured the funding of Youth Empowerment Fund by European Union and Global Youth Mobilization',
+      title: t('page.updateSection.youthFundTitle'),
+      summary: t('page.updateSection.youthFundSummary'),
       link: '#',
       image: '/images/updates/youth-empowerment.jpg',
-      buttonText: 'Read more',
+      buttonText: t('page.updateSection.readMore'),
     },
     {
-      title: 'Newsletter',
-      summary: 'Every month, the newsletters are regularly updated.',
+      title: t('page.updateSection.newsletterTitle'),
+      summary: t('page.updateSection.newsletterSummary'),
       link: 'https://drive.google.com/drive/folders/1MOS8_wekEpWQ7ujreZwyzOUGcxFykV2V?usp=sharing',
       image: '/images/updates/newsletter.jpg',
-      buttonText: 'Download',
+      buttonText: t('page.updateSection.download'),
     },
   ];
 
@@ -95,7 +93,7 @@ export default function UpdateSection() {
     <section className="bg-white py-10">
       <div className="container mx-auto px-4 space-y-12">
         <div>
-          <h2 className="text-2xl font-bold text-black mb-8">Stay update!</h2>
+          <h2 className="text-2xl font-bold text-black mb-8">{t('page.updateSection.sectionTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {updates.map((item, index) => (
               <div key={index} className="p-4 space-y-4 bg-white">

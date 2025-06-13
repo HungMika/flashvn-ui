@@ -1,26 +1,31 @@
+'use client';
+
 import Image from 'next/image';
+import { useI18n } from '@/contexts/i18nContext';
 
 export default function EducationalScience() {
+  const { t } = useI18n();
+
   const theories = [
     {
       icon: '/images/icons/play-based-learning.png',
-      title: 'Play-Based Learning',
-      description: 'Increases engagement and memory retention up to 70% higher, per UNESCO (2023).',
+      title: t('innovative-solution.edu.theories.playBased.title'),
+      description: t('innovative-solution.edu.theories.playBased.desc'),
     },
     {
       icon: '/images/icons/zone-of-proximal-development.png',
-      title: 'Zone of Proximal Development',
-      description: 'Encourages group learning with minimal teacher intervention.',
+      title: t('innovative-solution.edu.theories.zpd.title'),
+      description: t('innovative-solution.edu.theories.zpd.desc'),
     },
     {
       icon: '/images/icons/constructivism.png',
-      title: 'Constructivism',
-      description: 'Learners build knowledge through hands-on practice and reflection.',
+      title: t('innovative-solution.edu.theories.constructivism.title'),
+      description: t('innovative-solution.edu.theories.constructivism.desc'),
     },
     {
       icon: '/images/icons/social-emotional-learning.png',
-      title: 'Social-Emotional Learning (SEL)',
-      description: 'Promotes empathy, communication, and positive debate.',
+      title: t('innovative-solution.edu.theories.sel.title'),
+      description: t('innovative-solution.edu.theories.sel.desc'),
     },
   ];
 
@@ -30,19 +35,16 @@ export default function EducationalScience() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 items-center">
           <div className="md:col-span-2">
             <h2 className="text-4xl font-bold text-black py-4">
-              <span className="text-black bg-[#FFCF24] px-2 rounded-2xl py-2">Educational science</span> behind MIL Play
+              <span className="text-black bg-[#FFCF24] px-2 rounded-2xl py-2">
+                {t('innovative-solution.edu.heading.highlight')}
+              </span>{' '}
+              {t('innovative-solution.edu.heading.normal')}
             </h2>
-            <p className="text-gray-700 mt-4 text-xl">
-              MIL Play is built on insights from training over 1,000 teachers and consulting with 30+ educators in both
-              rural Mekong Delta areas and Ho Chi Minh City. These learnings shaped a game-based approach that fits
-              diverse classroom needs.
-            </p>
-            <p className="text-gray-700 mt-4 font-bold text-xl">
-              MIL Play is grounded in contemporary education theories that align with 21st-century learning:
-            </p>
+            <p className="text-gray-700 mt-4 text-xl">{t('innovative-solution.edu.context')}</p>
+            <p className="text-gray-700 mt-4 font-bold text-xl">{t('innovative-solution.edu.statement')}</p>
             <Image
               src="/images/education-science-illustration.png"
-              alt="Educational Science Illustration"
+              alt={t('innovative-solution.edu.imageAlt')}
               width={400}
               height={300}
               className="w-full h-[300px] object-contain"

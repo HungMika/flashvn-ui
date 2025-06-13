@@ -1,22 +1,25 @@
+'use client';
+
+import { useI18n } from '@/contexts/i18nContext';
+
 export default function WhyOurGame() {
+  const { t } = useI18n();
+
   const features = [
     {
       icon: '/images/icons/accessibility.png',
-      title: 'Accessibility',
-      description:
-        'Designed for both urban and rural settings, MIL Play ensures equal access through physical and digital formats—making media literacy learning inclusive regardless of internet or resource availability.',
+      title: t('innovative-solution.why.accessibility.title'),
+      description: t('innovative-solution.why.accessibility.description'),
     },
     {
       icon: '/images/icons/scalability.png',
-      title: 'Scalability',
-      description:
-        'With simple rules and adaptable formats, MIL Play easily scales from classrooms to community campaigns and can be localized into different languages and contexts.',
+      title: t('innovative-solution.why.scalability.title'),
+      description: t('innovative-solution.why.scalability.description'),
     },
     {
       icon: '/images/icons/inclusivity.png',
-      title: 'Inclusivity',
-      description:
-        'Quick and easy-to-play games invite participation from diverse groups, celebrating differences in gender, culture, and background to foster a truly inclusive learning space.',
+      title: t('innovative-solution.why.inclusivity.title'),
+      description: t('innovative-solution.why.inclusivity.description'),
     },
   ];
 
@@ -26,8 +29,8 @@ export default function WhyOurGame() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="flex justify-center">
             <h2 className="text-4xl font-bold text-left text-black">
-              <span className="text-black bg-[#FFCF24] px-2 py-2 rounded-2xl">Why</span>
-              <br /> our game?
+              <span className="text-black bg-[#FFCF24] px-2 py-2 rounded-2xl">{t('innovative-solution.why.heading.highlight')}</span>
+              <br /> {t('innovative-solution.why.heading.normal')}
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-8">

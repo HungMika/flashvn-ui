@@ -1,33 +1,38 @@
-import Link from "next/link";
+'use client';
+
+import Link from 'next/link';
+import { useI18n } from '@/contexts/i18nContext';
 
 export default function DifferentVersions() {
+  const { t } = useI18n();
+
   const versions = [
     {
-      title: "Printed set",
-      price: "Free",
-      internet: "No\nIt can be played offline",
-      physicalSet: "Yes\nYou must own a set",
-      editable: "No, but you can make it by your way",
-      buttonText: "Go to store",
-      buttonLink: "#",
+      title: t('innovative-solution.versions.printed.title'),
+      price: t('innovative-solution.versions.printed.price'),
+      internet: t('innovative-solution.versions.printed.internet'),
+      physicalSet: t('innovative-solution.versions.printed.physicalSet'),
+      editable: t('innovative-solution.versions.printed.editable'),
+      buttonText: t('innovative-solution.versions.printed.button'),
+      buttonLink: '#',
     },
     {
-      title: "Google Sheets",
-      price: "Free",
-      internet: "Yes\nIt requires internet",
-      physicalSet: "No\nJust play it online",
-      editable: "Everyone can edit game questions",
-      buttonText: "Try it",
-      buttonLink: "#",
+      title: t('innovative-solution.versions.sheets.title'),
+      price: t('innovative-solution.versions.sheets.price'),
+      internet: t('innovative-solution.versions.sheets.internet'),
+      physicalSet: t('innovative-solution.versions.sheets.physicalSet'),
+      editable: t('innovative-solution.versions.sheets.editable'),
+      buttonText: t('innovative-solution.versions.sheets.button'),
+      buttonLink: '#',
     },
     {
-      title: "Web version",
-      price: "Free",
-      internet: "Yes\nIt requires internet",
-      physicalSet: "No\nJust play it online",
-      editable: "Only admin",
-      buttonText: "Try it",
-      buttonLink: "/what-we-do/mil-play",
+      title: t('innovative-solution.versions.web.title'),
+      price: t('innovative-solution.versions.web.price'),
+      internet: t('innovative-solution.versions.web.internet'),
+      physicalSet: t('innovative-solution.versions.web.physicalSet'),
+      editable: t('innovative-solution.versions.web.editable'),
+      buttonText: t('innovative-solution.versions.web.button'),
+      buttonLink: '/what-we-do/mil-play',
     },
   ];
 
@@ -35,14 +40,14 @@ export default function DifferentVersions() {
     <section className="py-12 bg-[#EBFAFF]">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-bold text-black text-center mb-8 pb-10">
-          Different versions to best fit your needs!
+          {t('versions.heading')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="hidden md:flex flex-col space-y-18 pt-[60px] pr-2 items-center">
-            <p className="font-bold text-gray-700 text-right">Price:</p>
-            <p className="font-bold text-gray-700 text-right">Internet:</p>
-            <p className="font-bold text-gray-700 text-right">Physical set:</p>
-            <p className="font-bold text-gray-700 text-right">Editable:</p>
+            <p className="font-bold text-gray-700 text-right">{t('innovative-solution.versions.labels.price')}</p>
+            <p className="font-bold text-gray-700 text-right">{t('innovative-solution.versions.labels.internet')}</p>
+            <p className="font-bold text-gray-700 text-right">{t('innovative-solution.versions.labels.physicalSet')}</p>
+            <p className="font-bold text-gray-700 text-right">{t('innovative-solution.versions.labels.editable')}</p>
           </div>
           {versions.map((version, index) => (
             <div
@@ -55,22 +60,22 @@ export default function DifferentVersions() {
 
               <ul className="text-gray-700 space-y-6 w-full">
                 <li className="text-center">
-                  <p className="md:hidden font-bold text-gray-700">Price:</p>
+                  <p className="md:hidden font-bold text-gray-700">{t('innovative-solution.versions.labels.price')}</p>
                   <p>✅<br />{version.price}</p>
                 </li>
                 <hr className="border-gray-300" />
                 <li className="text-center whitespace-pre-line">
-                  <p className="md:hidden font-bold text-gray-700">Internet:</p>
+                  <p className="md:hidden font-bold text-gray-700">{t('innovative-solution.versions.labels.internet')}</p>
                   <p>{version.internet}</p>
                 </li>
                 <hr className="border-gray-300" />
                 <li className="text-center whitespace-pre-line">
-                  <p className="md:hidden font-bold text-gray-700">Physical set:</p>
+                  <p className="md:hidden font-bold text-gray-700">{t('innovative-solution.versions.labels.physicalSet')}</p>
                   <p>{version.physicalSet}</p>
                 </li>
                 <hr className="border-gray-300" />
                 <li className="text-center whitespace-pre-line">
-                  <p className="md:hidden font-bold text-gray-700">Editable:</p>
+                  <p className="md:hidden font-bold text-gray-700">{t('innovative-solution.versions.labels.editable')}</p>
                   <p>{version.editable}</p>
                 </li>
               </ul>
