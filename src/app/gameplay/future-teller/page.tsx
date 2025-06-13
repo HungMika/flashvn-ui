@@ -35,7 +35,7 @@ const ftCardApi = {
 const ftSuggestApi = {
   getAll: async (): Promise<ISuggestData[]> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/suggests`);
+      const response = await fetch(`${API_BASE_URL}/future-teller/suggests`);
       if (!response.ok) {
         if (response.status === 404) {
           console.warn('No suggests found. Using fallback.');
