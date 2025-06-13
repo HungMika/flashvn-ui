@@ -115,7 +115,7 @@ export const ftSuggestApi = {
 
   createSuggest: async (data: ISuggestData): Promise<ISuggestData> => {
     try {
-      const response = await ftApi.post('/api/future-teller/suggests', data);
+      const response = await ftApi.post('/future-teller/suggests', data);
       return response.data;
     } catch (error: any) {
       if (error.response?.data?.message === 'Future Teller suggest already exists!') {
