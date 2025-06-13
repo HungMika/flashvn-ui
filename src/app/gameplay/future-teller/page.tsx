@@ -11,11 +11,11 @@ import DealScreen from '@/features/dashboard/Teller/components/DealScreen';
 import ShowScreen from '@/features/dashboard/Teller/components/ShowScreen';
 import { ICardData, ISuggestData } from '@/features/dashboard/Teller/components/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/future-teller';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/future-teller';
 const ftCardApi = {
   getAllByGroup: async (group: string): Promise<ICardData[]> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/cards/group?query=${group}`);
+      const response = await fetch(`${API_BASE_URL}/future-teller/cards/group?query=${group}`);
       if (!response.ok) {
         if (response.status === 404) {
           console.warn(`No cards found for group: ${group}. Using fallback.`);
