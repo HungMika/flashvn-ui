@@ -18,7 +18,7 @@ export default function TeamSection() {
       name: 'Kiệt CHANG',
       role: 'Operation Manager',
       description:
-        'Coordinator of Vietnam School of Development\nOperation Lead - Books in the City\nYSEALI Professional Fellows',
+        'Coordinator of Vietnam School of Development\nOperation Lead - Books in the City',
       image: '/images/team/kiet.jpg',
     },
   ];
