@@ -7,12 +7,10 @@ import { useI18n } from '@/contexts/i18nContext';
 export default function ClientComponent() {
   const { t } = useI18n();
 
-  const solutions = t('whatWeDo.solutions') as unknown as {
-    title: string;
-    image: string;
-    alt: string;
-    link: string;
-  }[];
+  const rawSolutions = t('whatWeDo.solutions');
+  const solutions = Array.isArray(rawSolutions)
+    ? (rawSolutions as { title: string; image: string; alt: string; link: string }[])
+    : [];
 
   return (
     <main className="bg-white">
@@ -27,8 +25,10 @@ export default function ClientComponent() {
               </span>
             </h1>
             <p className="text-base sm:text-lg text-gray-700">
-              {t('whatWeDo.hero.description.line1')}<br />
-              {t('whatWeDo.hero.description.line2')}<br />
+              {t('whatWeDo.hero.description.line1')}
+              <br />
+              {t('whatWeDo.hero.description.line2')}
+              <br />
               {t('whatWeDo.hero.description.line3')}
             </p>
           </div>
@@ -72,8 +72,7 @@ export default function ClientComponent() {
               />
             </div>
             <p className="text-xl sm:text-2xl md:text-3xl text-gray-800">
-              {t('whatWeDo.quote.part1')}{' '}
-              <span className="font-bold">{t('whatWeDo.quote.highlight')}</span>{' '}
+              {t('whatWeDo.quote.part1')} <span className="font-bold">{t('whatWeDo.quote.highlight')}</span>{' '}
               {t('whatWeDo.quote.part2')}
             </p>
           </div>

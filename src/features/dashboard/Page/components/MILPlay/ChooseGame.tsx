@@ -35,37 +35,37 @@ export default function ChooseGame() {
       {/* Top Banner Text */}
       <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0 px-4 py-4 text-white text-sm sm:text-base md:text-lg">
         <p className="font-normal text-center sm:text-left">
-          {t('milplay.chooseGame.projectBy')}{' '}
-          <span className="font-bold">FLASH VN</span>
+          {t('milplay.chooseGame.projectBy')} <span className="font-bold">FLASH VN</span>
         </p>
-        <p className="font-bold text-center sm:text-right">
-          {t('milplay.chooseGame.hashtag')}
-        </p>
+        <p className="font-bold text-center sm:text-right">{t('milplay.chooseGame.hashtag')}</p>
       </div>
 
       {/* Game Section */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] px-4 py-8 text-white text-center">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-10">
-          {t('milplay.chooseGame.title')}
-        </h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 sm:mb-10">{t('milplay.chooseGame.title')}</h1>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {games.map((game, index) => (
             <button
               key={index}
               onClick={() => handleGameClick(index, game.link)}
               className="relative flex items-center justify-center bg-white text-black rounded-xl w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 p-2 shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none overflow-hidden"
             >
-              {loadingIndex === index ? (
-                <Loader2 className="animate-spin w-10 h-10 text-black z-10" />
-              ) : (
-                <Image
-                  src={game.image}
-                  alt={`Game ${index}`}
-                  fill
-                  className="object-contain transition-opacity duration-300"
-                  sizes="(max-width: 768px) 40vw, 20vw"
-                />
+              <Image
+                src={game.image}
+                alt={`Game ${index}`}
+                fill
+                className={`w-full h-full object-contain transition-opacity duration-300 ${
+                  loadingIndex === index ? 'opacity-40' : 'opacity-100'
+                }`}
+                sizes="(max-width: 768px) 40vw, 20vw"
+              />
+
+              {/* Loader2 overlay khi loading */}
+              {loadingIndex === index && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader2 className="animate-spin w-12 h-12 text-blue-500" />
+                </div>
               )}
             </button>
           ))}
