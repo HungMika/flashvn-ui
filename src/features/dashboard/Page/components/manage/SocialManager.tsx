@@ -17,7 +17,7 @@ export default function SocialManager() {
   const [isLoading, setIsLoading] = useState(false);
 
   const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || '';
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   });
 
   const fetchSocials = async () => {
