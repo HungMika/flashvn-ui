@@ -31,7 +31,7 @@ export default function TeamSection() {
     'Trần Nguyễn Khang',
   ];
 
-  const marcomTeam = ['Tuấn Anh Cao', 'Bảo Nguyên', 'Tài Nguyễn', 'Châu Trương', 'Vy Lê'];
+  const marcomTeam = ['Tuấn Anh Cao', 'Bảo Nguyên', 'Tài Nguyễn'];
 
   return (
     <section className="bg-white py-10">
